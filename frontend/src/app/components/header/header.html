@@ -1,0 +1,45 @@
+<nav class="navbar navbar-expand-md header-container">
+    <div class="container-fluid align-items-center">
+
+        <a class="navbar-brand logo" routerLink="/">
+            <img src="../../../../imgs/logo.png" alt="Trka Logo">
+        </a>
+
+        <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+
+        <!-- Links -->
+        <div class="collapse navbar-collapse justify-content-end" id="mainNavbar">
+            <ul class="navbar-nav gap-md-3">
+
+                <li class="nav-item">
+                    <a class="nav-link" routerLink="index" routerLinkActive="active">Inicio</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" routerLink="contact" routerLinkActive="active">Contacto</a>
+                </li>
+
+                <!-- Dropdown -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        Cuenta
+                    </a>
+
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li>
+                            <a class="dropdown-item" routerLink="login">Iniciar sesión</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" routerLink="register">Registrarse</a>
+                        </li>
+                    </ul>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+</nav>
