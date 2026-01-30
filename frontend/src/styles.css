@@ -72,26 +72,28 @@ nav a:hover {
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding: 6rem 2rem; /* ⬅️ MÁS GRANDE */
-  min-height: 70vh; /* ⬅️ PANTALLA COMPLETA */
-  background: radial-gradient(
-    circle at top,
-    #2a2a70 0%,
-    var(--azul-oscuro) 80%
-  );
+  padding: 6rem 2rem;
+  /* ⬅️ MÁS GRANDE */
+  min-height: 70vh;
+  /* ⬅️ PANTALLA COMPLETA */
+  background: radial-gradient(circle at top,
+      #2a2a70 0%,
+      var(--azul-oscuro) 80%);
   background-size: cover;
   background-position: center;
-  }
+}
 
 .hero h1 {
-  font-size: clamp(3.5rem, 6vw, 5rem); /* ⬅️ TÍTULO GIGANTE */
+  font-size: clamp(3.5rem, 6vw, 5rem);
+  /* ⬅️ TÍTULO GIGANTE */
   font-weight: 800;
   color: var(--rosa-neon);
   margin-bottom: 1.5rem;
 }
 
 .hero p {
-  font-size: 1.4rem; /* ⬅️ TEXTO MÁS GRANDE */
+  font-size: 1.4rem;
+  /* ⬅️ TEXTO MÁS GRANDE */
   color: var(--gris-humo);
   max-width: 720px;
   margin-bottom: 3rem;
@@ -99,14 +101,13 @@ nav a:hover {
 
 /* === CTA Button === */
 .cta-btn {
-  background: linear-gradient(
-    90deg,
-    var(--morado-electrico),
-    var(--rosa-neon)
-  );
+  background: linear-gradient(90deg,
+      var(--morado-electrico),
+      var(--rosa-neon));
   border: none;
   color: white;
-  padding: 1.2rem 3rem; /* ⬅️ BOTÓN MÁS GRANDE */
+  padding: 1.2rem 3rem;
+  /* ⬅️ BOTÓN MÁS GRANDE */
   border-radius: 50px;
   font-size: 1.25rem;
   font-weight: 600;
@@ -153,6 +154,15 @@ nav a:hover {
   font-size: 1rem;
 }
 
+.feature-card a {
+  color: var(--rosa-neon);
+  font-weight: 500;
+}
+
+.feature-card a:hover {
+  text-shadow: 0 0 8px var(--rosa-neon);
+}
+
 /* === Footer === */
 footer {
   text-align: center;
@@ -161,6 +171,7 @@ footer {
   color: var(--gris-humo);
   border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
+
 .header-container {
   background: rgba(26, 26, 64, 0.8);
   backdrop-filter: blur(10px);
@@ -197,7 +208,12 @@ footer {
   background-color: transparent;
   color: var(--rosa-neon);
 }
+
 .navbar {
   align-items: center;
 }
 
+.hero--small {
+  min-height: 30vh;
+  padding: 3rem 2rem;
+}
