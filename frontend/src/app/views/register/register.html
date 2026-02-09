@@ -1,4 +1,3 @@
-
 <section class="hero hero--small">
     <h1 style="color: var(--blanco-suave);">Registrate en <span style="color: var(--rosa-neon);">trka</span></h1>
 </section>
@@ -11,13 +10,11 @@
                     <form>
                         <div class="mb-3">
                             <label for="name" class="form-label">Nombre</label>
-                            <input type="text" class="form-control" id="name" placeholder="Nombre..."
-                                required>
+                            <input type="text" class="form-control" id="name" placeholder="Nombre..." required>
                         </div>
                         <div class="mb-3">
                             <label for="surname" class="form-label">Apellidos</label>
-                            <input type="text" class="form-control" id="surname" placeholder="Apellidos..."
-                                required>
+                            <input type="text" class="form-control" id="surname" placeholder="Apellidos..." required>
                         </div>
 
                         <div class="mb-3">
@@ -31,11 +28,17 @@
                             <input type="tel" class="form-control" id="telefono" placeholder="+34 600 000 000">
                         </div>
 
-                        <div class="mb-4">
+                        <div class="mb-3">
                             <label for="contraseña" class="form-label">Contraseña</label>
-                             <input type="password" class="form-control" id="password" placeholder="Contraseña..."
+                            <input type="password" class="form-control" id="password" placeholder="Contraseña..."
                                 required>
                         </div>
+
+                        <label class="mb-4">
+                            <input type="checkbox" formControlName="acceptTerms" />
+                            Acepto los <a routerLink="/terms-conditions">Términos y Condiciones</a> y la <a
+                                routerLink="/privacy-policy">Política de Privacidad</a>
+                        </label>
 
                         <div class="d-grid">
                             <button type="submit" class="btn btn-dark fw-bold">
@@ -43,6 +46,11 @@
                             </button>
                         </div>
                     </form>
+
+                    <br>
+                    <a class="" style="cursor: pointer;" routerLink="/login" routerLinkActive="active">¿Ya tienes
+                        cuenta? Inicia sesión</a>
+
                 </div>
             </div>
         </div>

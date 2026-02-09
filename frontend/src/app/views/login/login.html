@@ -14,11 +14,17 @@
                                 required>
                         </div>
 
-                        <div class="mb-4">
+                        <div class="mb-3">
                             <label for="contraseña" class="form-label">Contraseña</label>
-                             <input type="password" class="form-control" id="password" placeholder="Contraseña..."
+                            <input type="password" class="form-control" id="password" placeholder="Contraseña..."
                                 required>
                         </div>
+
+                        <label class="mb-4">
+                            <input type="checkbox" formControlName="acceptTerms" />
+                            Acepto los <a routerLink="/terms-conditions">Términos y Condiciones</a> y la <a
+                                routerLink="/privacy-policy">Política de Privacidad</a>
+                        </label>
 
                         <div class="d-grid">
                             <button type="submit" class="btn btn-dark fw-bold">
@@ -26,6 +32,11 @@
                             </button>
                         </div>
                     </form>
+
+                    <br>
+                    <a class="" style="cursor: pointer;" routerLink="/register" routerLinkActive="active">¿Aún no tienes
+                        cuenta? Regístrate</a>
+
                 </div>
             </div>
         </div>

@@ -5,7 +5,7 @@
             <img src="../../../../imgs/logo.png" alt="Trka Logo">
         </a>
 
-        <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain">
+        <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar">
             <span class="navbar-toggler-icon"></span>
         </button>
 
@@ -22,24 +22,30 @@
                     <a class="nav-link" routerLink="contact" routerLinkActive="active">Contacto</a>
                 </li>
 
-                <!-- Dropdown -->
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                        aria-expanded="false">
-                        Cuenta
-                    </a>
-
-                    <ul class="dropdown-menu dropdown-menu-end">
-                        <li>
-                            <a class="dropdown-item" routerLink="login">Iniciar sesión</a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item" routerLink="register">Registrarse</a>
-                        </li>
-                    </ul>
+                <li class="nav-item">
+                    <a class="nav-link" routerLink="events" routerLinkActive="active">Eventos</a>
                 </li>
 
+
             </ul>
+
+            @if(!user){
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Cuenta
+            </a>
+            <ul class="dropdown-menu dropdown-menu-lg-end">
+                <li>
+                    <a class="dropdown-item" routerLink="login">Iniciar sesión</a>
+                </li>
+                <li>
+                    <a class="dropdown-item" routerLink="register">Registrarse</a>
+                </li>
+            </ul>
+            }@else{
+            <a class="nav-link" routerLink="user" routerLinkActive="active">
+                <img src="../../../../imgs/Usuario-icon.png" height="50px" width="50px" alt="">
+            </a>
+            }
         </div>
     </div>
 </nav>

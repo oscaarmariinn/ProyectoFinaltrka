@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { NgClass, NgStyle } from '@angular/common';
+import { NgStyle } from '@angular/common';
 @Component({
   selector: 'app-index',
-  imports: [NgClass, NgStyle],
+  imports: [NgStyle],
   templateUrl: './index.html',
   styleUrl: './index.css',
 })
