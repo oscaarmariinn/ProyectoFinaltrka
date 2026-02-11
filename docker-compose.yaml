@@ -1,0 +1,36 @@
+services:
+  server-php-trka:
+    container_name: servidor_php_trka
+    build:
+      dockerfile: ./Dockerfile
+      context: .
+    restart: unless-stopped
+    stdin_open: true
+    links:
+      - mariadb-server-trka
+    ports:
+      - "8080:8000"
+    volumes:
+      - ../:/var/www/html:delegated
+    networks:
+      - project_network
+
+  mariadb-server-trka:
+    container_name: servidor_db_trka
+    image: mariadb
+    ports:
+      - "3380:3306"
+    restart: unless-stopped
+    environment:
+      MYSQL_USER: root
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - db_mysql:/var/lib/mysql
+    networks:
+      - project_network
+
+volumes:
+  db_mysql:
+
+networks:
+  project_network:

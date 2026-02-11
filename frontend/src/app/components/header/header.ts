@@ -9,5 +9,5 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
   styleUrl: './header.css',
 })
 export class Header {
-  public user: boolean = false;
+  public user: boolean = true;
 }
