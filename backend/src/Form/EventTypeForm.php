@@ -44,6 +44,10 @@ class EventTypeForm extends AbstractType
                 'choice_label' => 'id',
                 'multiple' => true,
             ])
+            ->add('creator', EntityType::class, [
+                'class' => User::class,
+                'choice_label' => 'id',
+            ])
         ;
     }
 

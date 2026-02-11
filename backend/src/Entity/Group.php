@@ -24,7 +24,7 @@ class Group
     private ?string $description = null;
 
     #[ORM\Column]
-    private ?\DateTimeImmutable $createdAt = null;
+    private \DateTimeImmutable $createdAt;
 
     #[ORM\Column]
     private ?bool $isPrivate = null;
@@ -55,6 +55,7 @@ class Group
         $this->users = new ArrayCollection();
         $this->responsibles = new ArrayCollection();
         $this->events = new ArrayCollection();
+        $this->createdAt = new \DateTimeImmutable();
     }
 
     public function getId(): ?int
@@ -87,7 +88,7 @@ class Group
     }
 
 
-    public function getCreatedAt(): ?\DateTimeImmutable
+    public function getCreatedAt(): \DateTimeImmutable
     {
         return $this->createdAt;
     }
@@ -99,7 +100,7 @@ class Group
         return $this;
     }
 
-    public function isActive(): ?bool
+    public function isPrivate(): ?bool
     {
         return $this->isPrivate;
     }
