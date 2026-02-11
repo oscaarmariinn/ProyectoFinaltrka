@@ -7,7 +7,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints\DateTime;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 #[ORM\Entity(repositoryClass: EventRepository::class)]
 class Event
@@ -18,24 +19,31 @@ class Event
     private ?int $id = null;
 
     #[ORM\Column(length: 150)]
+    #[Assert\NotNull]
     private ?string $title = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
 
     #[ORM\Column]
+    #[Assert\NotNull]
+    #[Assert\DateTime]
     private ?\DateTime $eventDate = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotNull]
     private ?string $location = null;
 
     #[ORM\Column(nullable: true)]
     private ?int $maxParticipants = null;
 
     #[ORM\Column]
+    #[Assert\NotNull]
     private ?bool $isPublic = null;
 
     #[ORM\Column]
+    #[Assert\NotNull]
+    #[Assert\DateTime]
     private \DateTimeImmutable $createdAt;
 
     /**
