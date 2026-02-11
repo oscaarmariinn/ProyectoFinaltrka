@@ -58,12 +58,15 @@ class Event
     #[ORM\ManyToMany(targetEntity: Category::class, inversedBy: 'events')]
     private Collection $categories;
 
+    #[ORM\ManyToOne(inversedBy: 'createdEvents')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $creator = null;
+
 
 
     public function __construct()
     {
         $this->users = new ArrayCollection();
-        $this->creator = new ArrayCollection();
         $this->createdAt = new \DateTimeImmutable();
         $this->categories = new ArrayCollection();
     }
@@ -184,33 +187,6 @@ class Event
         return $this;
     }
 
-    /**
-     * @return Collection<int, User>
-     */
-    public function getCreator(): Collection
-    {
-        return $this->creator;
-    }
-
-    public function addOrganizer(User $organizer): static
-    {
-        if (!$this->creator->contains($organizer)) {
-            $this->creator->add($organizer);
-            $organizer->addOrganizedEvent($this);
-        }
-
-        return $this;
-    }
-
-    public function removeOrganizer(User $organizer): static
-    {
-        if ($this->creator->removeElement($organizer)) {
-            $organizer->removeOrganizedEvent($this);
-        }
-
-        return $this;
-    }
-
     public function getEventGroup(): ?Group
     {
         return $this->eventGroup;
@@ -256,6 +232,18 @@ class Event
     public function removeCategory(Category $category): static
     {
         $this->categories->removeElement($category);
+
+        return $this;
+    }
+
+    public function getCreator(): ?User
+    {
+        return $this->creator;
+    }
+
+    public function setCreator(?User $creator): static
+    {
+        $this->creator = $creator;
 
         return $this;
     }

@@ -28,7 +28,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private array $roles = [];
 
     /**
-     * @var string The hashed password
+     * @var ?string The hashed password
      */
     #[ORM\Column]
     private ?string $password = null;
@@ -69,13 +69,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: Group::class, mappedBy: 'creator')]
     private Collection $createdGroups;
 
+    /**
+     * @var Collection<int, Event>
+     */
+    #[ORM\OneToMany(targetEntity: Event::class, mappedBy: 'creator')]
+    private Collection $createdEvents;
+
     public function __construct()
     {
         $this->userGroups = new ArrayCollection();
         $this->attendingEvents = new ArrayCollection();
-        $this->createdEvents = new ArrayCollection();
         $this->responsibleGroups = new ArrayCollection();
         $this->createdGroups = new ArrayCollection();
+        $this->createdEvents = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -256,30 +262,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @return Collection<int, Event>
-     */
-    public function getCreatedEvents(): Collection
-    {
-        return $this->createdEvents;
-    }
-
-    public function addOrganizedEvent(Event $organizedEvent): static
-    {
-        if (!$this->createdEvents->contains($organizedEvent)) {
-            $this->createdEvents->add($organizedEvent);
-        }
-
-        return $this;
-    }
-
-    public function removeOrganizedEvent(Event $organizedEvent): static
-    {
-        $this->createdEvents->removeElement($organizedEvent);
-
-        return $this;
-    }
-
-    /**
      * @return Collection<int, Group>
      */
     public function getResponsibleGroups(): Collection
@@ -330,6 +312,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($createdGroup->getCreator() === $this) {
                 $createdGroup->setCreator(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Event>
+     */
+    public function getCreatedEvents(): Collection
+    {
+        return $this->createdEvents;
+    }
+
+    public function addCreatedEvent(Event $createdEvent): static
+    {
+        if (!$this->createdEvents->contains($createdEvent)) {
+            $this->createdEvents->add($createdEvent);
+            $createdEvent->setCreator($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCreatedEvent(Event $createdEvent): static
+    {
+        if ($this->createdEvents->removeElement($createdEvent)) {
+            // set the owning side to null (unless already changed)
+            if ($createdEvent->getCreator() === $this) {
+                $createdEvent->setCreator(null);
             }
         }
 
