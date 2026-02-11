@@ -21,8 +21,12 @@ class Category
     /**
      * @var Collection<int, Event>
      */
-    #[ORM\OneToMany(targetEntity: Event::class, mappedBy: 'category')]
+    #[ORM\ManyToMany(targetEntity: Event::class, mappedBy: 'categories')]
     private Collection $events;
+
+    /**
+     * @var Collection<int, Event>
+     */
 
     public function __construct()
     {
@@ -49,6 +53,10 @@ class Category
     /**
      * @return Collection<int, Event>
      */
+
+    /**
+     * @return Collection<int, Event>
+     */
     public function getEvents(): Collection
     {
         return $this->events;
@@ -58,7 +66,7 @@ class Category
     {
         if (!$this->events->contains($event)) {
             $this->events->add($event);
-            $event->setCategory($this);
+            $event->addCategory($this);
         }
 
         return $this;
@@ -67,12 +75,10 @@ class Category
     public function removeEvent(Event $event): static
     {
         if ($this->events->removeElement($event)) {
-            // set the owning side to null (unless already changed)
-            if ($event->getCategory() === $this) {
-                $event->setCategory(null);
-            }
+            $event->removeCategory($this);
         }
 
         return $this;
     }
+
 }

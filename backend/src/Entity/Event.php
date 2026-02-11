@@ -43,22 +43,29 @@ class Event
      */
     #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'attendingEvents')]
     private Collection $users;
-    
+
 
     #[ORM\ManyToOne(inversedBy: 'events')]
     private ?Group $eventGroup = null;
 
-    #[ORM\ManyToOne(inversedBy: 'events')]
-    private ?Category $category = null;
 
     #[ORM\ManyToOne(inversedBy: 'events')]
     private ?EventType $eventType = null;
+
+    /**
+     * @var Collection<int, Category>
+     */
+    #[ORM\ManyToMany(targetEntity: Category::class, inversedBy: 'events')]
+    private Collection $categories;
+
+
 
     public function __construct()
     {
         $this->users = new ArrayCollection();
         $this->creator = new ArrayCollection();
         $this->createdAt = new \DateTimeImmutable();
+        $this->categories = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -216,17 +223,6 @@ class Event
         return $this;
     }
 
-    public function getCategory(): ?Category
-    {
-        return $this->category;
-    }
-
-    public function setCategory(?Category $category): static
-    {
-        $this->category = $category;
-
-        return $this;
-    }
 
     public function getEventType(): ?EventType
     {
@@ -236,6 +232,30 @@ class Event
     public function setEventType(?EventType $eventType): static
     {
         $this->eventType = $eventType;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Category>
+     */
+    public function getCategories(): Collection
+    {
+        return $this->categories;
+    }
+
+    public function addCategory(Category $category): static
+    {
+        if (!$this->categories->contains($category)) {
+            $this->categories->add($category);
+        }
+
+        return $this;
+    }
+
+    public function removeCategory(Category $category): static
+    {
+        $this->categories->removeElement($category);
 
         return $this;
     }

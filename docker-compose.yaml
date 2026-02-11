@@ -1,4 +1,4 @@
-services:
+cd services:
   server-php-trka:
     container_name: servidor_php_trka
     build:

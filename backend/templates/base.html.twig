@@ -12,6 +12,16 @@
         {% endblock %}
     </head>
     <body>
+    {% block nav %}
+        <nav>
+            <ul>
+                <li><a href="{{ path('app_main') }}">Inicio</a></li>
+                <li><a href="{{ path('app_user_index') }}">Usuarios</a></li>
+                <li><a href="{{ path('app_event_index') }}">Eventos</a></li>
+                <li><a href="{{ path('app_group_index') }}">Grupos</a></li>
+            </ul>
+        </nav>
+    {% endblock %}
         {% block body %}{% endblock %}
     </body>
 </html>
