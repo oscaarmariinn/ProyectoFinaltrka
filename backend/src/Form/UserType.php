@@ -7,6 +7,7 @@ use App\Entity\Group;
 use App\Entity\User;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -16,29 +17,20 @@ class UserType extends AbstractType
     {
         $builder
             ->add('email')
-            ->add('roles')
+            ->add('roles', ChoiceType::class, [
+                'choices' => [
+                    'Administrador' => '"ROLE_ADMIN"',
+                    'Usuario' => '"ROLE_USER"',
+                ],
+                'multiple' => false,
+                'expanded' => false,
+                'mapped'   => false,
+                'label' => 'Rol',
+
+            ])
             ->add('password')
             ->add('name')
             ->add('surname')
-            ->add('createdAt', null, [
-                'widget' => 'single_text'
-            ])
-            ->add('active')
-            ->add('userGroups', EntityType::class, [
-                'class' => Group::class,
-                'choice_label' => 'id',
-                'multiple' => true,
-            ])
-            ->add('attendingEvents', EntityType::class, [
-                'class' => Event::class,
-                'choice_label' => 'id',
-                'multiple' => true,
-            ])
-            ->add('responsibleGroups', EntityType::class, [
-                'class' => Group::class,
-                'choice_label' => 'id',
-                'multiple' => true,
-            ])
         ;
     }
 
