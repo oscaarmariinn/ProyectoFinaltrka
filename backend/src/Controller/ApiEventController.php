@@ -2,9 +2,7 @@
 
 namespace App\Controller;
 
-use App\Entity\Category;
 use App\Entity\Event;
-use App\Entity\EventType;
 use App\Repository\CategoryRepository;
 use App\Repository\EventTypeRepository;
 use App\Repository\UserRepository;
@@ -12,7 +10,6 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[Route('/api/events', name: 'app_api_event')]
@@ -25,39 +22,75 @@ class ApiEventController extends AbstractController
         $events = $em->getRepository(Event::class)->findAll();
         $data = [];
 
-        foreach ($events as $event) {
-            $categories = $em->getRepository(Category::class)->findBy(['categoty_id' => $event->getId()], ['name' => 'ASC']);
-            $eventTypes = $em->getRepository(EventType::class)->findBy(['event_type_id' => $event->getId()], ['name' => 'ASC']);
-            $catego = [];
-            $types = [];
-            foreach ($categories as $category) {
-                $catego[] = [
-                    'id' => $category->getid(),
-                    'name' => $category->getName(),
-                ];
-            }
-            foreach ($eventTypes as $eventType) {
-                $types[] = [
-                    'id' => $eventType->getid(),
-                    'name' => $eventType->getName(),
-                ];
-            }
-            $data[] = [
-                'title' => $event->getTitle(),
-                'description' => $event->getDescription(),
-                'event_date' => $event->getEventDate(),
-                'location' => $event->getLocation(),
-                'max_participants' => $event->getMaxParticipants(),
-                'isPublic' => $event->isPublic(),
-                'isVerified' => $event->isVerified(),
-                'eventType' => $types,
-                'categories' => $catego,
-
-            ];
-        }
-
+        $data = $this->getData($events, $data);
 
         return new JsonResponse($data);
+    }
+
+    #[Route('/{id}/created', name: 'listcreated', methods: ['GET'])]
+    public function listCreated(EntityManagerInterface $em, int $id): JsonResponse
+    {
+        $events = $em->getRepository(Event::class)->findBy(['creator' => $id]);
+        $data = [];
+
+        $data = $this->getData($events, $data);
+        return new JsonResponse($data);
+    }
+
+    #[Route('/{id}', name: 'update', methods: ['PUT', 'PATCH'])]
+    public function update(
+        int                    $id,
+        Request                $request,
+        EntityManagerInterface $em,
+        CategoryRepository     $categoryRepository,
+        EventTypeRepository    $eventTypeRepository
+    ): JsonResponse {
+
+        $event = $em->getRepository(Event::class)->find($id);
+
+        if (!$event) {
+            return new JsonResponse(['message' => 'Event not found'], 404);
+        }
+
+        $data = json_decode($request->getContent(), true);
+
+        $event->setTitle($data['title'] ?? $event->getTitle());
+        $event->setDescription($data['description'] ?? $event->getDescription());
+        $event->setLocation($data['location'] ?? $event->getLocation());
+        $event->setMaxParticipants($data['max_participants'] ?? $event->getMaxParticipants());
+        $event->setIsPublic($data['isPublic'] ?? $event->isPublic());
+
+        if (isset($data['event_date'])) {
+            $event->setEventDate(new \DateTime($data['event_date']));
+        }
+
+        if (isset($data['isPublic'])) {
+            if ($event->isPublic() === 1) {
+                $eventType = $em->getRepository(Event::class)->find(0);
+                $event->setEventType($eventType);
+            }
+            if ($event->isPublic() === 0) {
+                $eventType = $em->getRepository(Event::class)->find(0);
+                $event->setEventType($eventType);
+            }
+        }
+
+        if (isset($data['categories'])) {
+            foreach ($event->getCategories() as $category) {
+                $event->removeCategory($category);
+            }
+            foreach ($data['categories'] as $categoryId) {
+                $category = $categoryRepository->find($categoryId);
+                if ($category) {
+                    $event->addCategory($category);
+                } else {
+                    return new JsonResponse(['status' => 'Bad request, category not found'], 400);
+                }
+            }
+        }
+
+        $em->flush();
+        return new JsonResponse(['message' => 'Event updated successfully']);
     }
 
     #[Route('', name: 'create', methods: ['POST'])]
@@ -124,6 +157,44 @@ class ApiEventController extends AbstractController
                 ],
             ],
         ], 201);
+    }
+
+    /**
+     * @param array $events
+     * @param array $data
+     * @return array
+     */
+    public function getData(array $events, array $data): array
+    {
+        foreach ($events as $event) {
+
+            $categories = [];
+            foreach ($event->getCategories() as $category) {
+                $categories[] = [
+                    'id' => $category->getId(),
+                    'name' => $category->getName(),
+                ];
+            }
+
+            $eventType = $event->getEventType();
+
+            $data[] = [
+                'id' => $event->getId(),
+                'title' => $event->getTitle(),
+                'description' => $event->getDescription(),
+                'event_date' => $event->getEventDate()?->format('Y-m-d H:i:s'),
+                'location' => $event->getLocation(),
+                'max_participants' => $event->getMaxParticipants(),
+                'isPublic' => $event->isPublic(),
+                'isVerified' => $event->isVerified(),
+                'eventType' => $eventType ? [
+                    'id' => $eventType->getId(),
+                    'name' => $eventType->getName(),
+                ] : null,
+                'categories' => $categories,
+            ];
+        }
+        return $data;
     }
 }
 

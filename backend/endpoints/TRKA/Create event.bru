@@ -5,22 +5,26 @@ meta {
 }
 
 post {
-  url: '''
-    {
-      "title": "Conferencia de Tecnología 2026",
-      "description": "Evento sobre las últimas tendencias en desarrollo web y IA.",
-      "event_date": "2026-03-15 18:00:00",
-      "location": "Madrid, España",
-      "max_participants": 150,
-      "isPublic": true,
-      "category_id": 1,
-    
-    
-'''
-  body: none
+  url: http://127.0.0.1:8000/api/events
+  body: json
   auth: inherit
+}
+
+body:json {
+  {
+    "title": "Conferencia de Tecnología 2026",
+    "description": "Evento sobre las últimas tendencias en desarrollo web y IA.",
+    "event_date": "2026-03-15 18:00:00",
+    "location": "Madrid, España",
+    "max_participants": 150,
+    "isPublic": true,
+    "creator_id": 1,
+    "category_id": 1,
+    "eventType_id": 2
+  }
 }
 
 settings {
   encodeUrl: true
+  timeout: 0
 }
