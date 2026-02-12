@@ -27,7 +27,6 @@ class Event
 
     #[ORM\Column]
     #[Assert\NotNull]
-    #[Assert\DateTime]
     private ?\DateTime $eventDate = null;
 
     #[ORM\Column(length: 255)]
@@ -43,8 +42,7 @@ class Event
 
     #[ORM\Column]
     #[Assert\NotNull]
-    #[Assert\DateTime]
-    private \DateTimeImmutable $createdAt;
+    private ?\DateTimeImmutable $createdAt;
 
     /**
      * @var Collection<int, User>
@@ -69,6 +67,9 @@ class Event
     #[ORM\ManyToOne(inversedBy: 'createdEvents')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $creator = null;
+
+    #[ORM\Column]
+    private ?bool $isVerified = false;
 
 
 
@@ -252,6 +253,18 @@ class Event
     public function setCreator(?User $creator): static
     {
         $this->creator = $creator;
+
+        return $this;
+    }
+
+    public function isVerified(): ?bool
+    {
+        return $this->isVerified;
+    }
+
+    public function setIsVerified(bool $isVerified): static
+    {
+        $this->isVerified = $isVerified;
 
         return $this;
     }

@@ -1,13 +1,45 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit User{% endblock %}
+{% block title %}Editar Usuario{% endblock %}
 
 {% block body %}
-    <h1>Edit User</h1>
+    <div style="min-height: calc(100vh - 100px); display: flex; align-items: center; justify-content: center; padding: 40px 20px;">
+        <div style="background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px); padding: 40px; border-radius: 15px; border: 1px solid rgba(255, 75, 145, 0.3); box-shadow: 0 8px 32px rgba(142, 45, 226, 0.2); max-width: 500px; width: 100%;">
 
-    {{ include('user/_form.html.twig', {'button_label': 'Update'}) }}
+            <h1 style="text-align: center; color: white; margin-bottom: 30px; font-size: 28px; font-weight: 600;">Editar Usuario</h1>
 
-    <a href="{{ path('app_user_index') }}">back to list</a>
+            {{ include('user/_form.html.twig', {'button_label': 'Actualizar'}) }}
 
-    {{ include('user/_delete_form.html.twig') }}
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 20px;">
+                <a href="{{ path('app_user_index') }}" style="color: var(--rosa-neon); text-decoration: none; font-weight: 500; transition: color 0.3s;">
+                    ← Volver al listado
+                </a>
+
+                {{ include('user/_delete_form.html.twig') }}
+            </div>
+        </div>
+    </div>
+
+    <style>
+        a[href*="app_user_index"]:hover {
+            color: var(--morado-electrico);
+        }
+
+        /* Estilos para el botón de eliminar */
+        .delete-form button {
+            background: rgba(231, 76, 60, 0.8) !important;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.2s;
+        }
+
+        .delete-form button:hover {
+            background: rgba(192, 57, 43, 1) !important;
+            transform: translateY(-2px);
+        }
+    </style>
 {% endblock %}

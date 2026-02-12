@@ -9,6 +9,8 @@ use App\Entity\Group;
 use App\Entity\User;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -19,34 +21,21 @@ class EventTypeForm extends AbstractType
         $builder
             ->add('title')
             ->add('description')
-            ->add('eventDate')
+            ->add('eventDate', DateTimeType::class, [
+                'widget' => 'single_text',
+            ])
             ->add('location')
             ->add('maxParticipants')
             ->add('isPublic')
-            ->add('createdAt', null, [
-                'widget' => 'single_text'
-            ])
-            ->add('users', EntityType::class, [
-                'class' => User::class,
-                'choice_label' => 'id',
-                'multiple' => true,
-            ])
-            ->add('eventGroup', EntityType::class, [
-                'class' => Group::class,
-                'choice_label' => 'id',
-            ])
+
             ->add('eventType', EntityType::class, [
-                'class' => EventTypeForm::class,
-                'choice_label' => 'id',
+                'class' => EventType::class,
+                'choice_label' => 'name',
             ])
             ->add('categories', EntityType::class, [
                 'class' => Category::class,
-                'choice_label' => 'id',
+                'choice_label' => 'name',
                 'multiple' => true,
-            ])
-            ->add('creator', EntityType::class, [
-                'class' => User::class,
-                'choice_label' => 'id',
             ])
         ;
     }

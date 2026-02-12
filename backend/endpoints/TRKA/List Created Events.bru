@@ -1,0 +1,16 @@
+meta {
+  name: List Created Events
+  type: http
+  seq: 4
+}
+
+get {
+  url: http://127.0.0.1:8000/api/events/1/created
+  body: none
+  auth: inherit
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

@@ -1,4 +1,83 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+<div style="margin-bottom: 20px;">
+    {{ form_label(form.email, 'Correo electrónico', {'label_attr': {'style': 'color: white; font-weight: 500; margin-bottom: 8px; display: block;'}}) }}
+    {{ form_widget(form.email, {'attr': {'style': 'width: 100%; padding: 12px; border: 1px solid rgba(255, 255, 255, 0.2); background: rgba(255, 255, 255, 0.1); color: white; border-radius: 8px; font-size: 16px;', 'placeholder': 'nombre@correo.com', 'class': ''}}) }}
+    {{ form_errors(form.email) }}
+</div>
+
+<div style="margin-bottom: 20px;">
+    {{ form_label(form.roles, 'Rol', {'label_attr': {'style': 'color: white; font-weight: 500; margin-bottom: 8px; display: block;'}}) }}
+    {{ form_widget(form.roles, {'attr': {'style': 'width: 100%; padding: 12px; border: 1px solid rgba(255, 255, 255, 0.2); background: rgba(255, 255, 255, 0.1); color: white; border-radius: 8px; font-size: 16px;', 'class': ''}}) }}
+    {{ form_errors(form.roles) }}
+</div>
+
+<div style="margin-bottom: 20px;">
+    {{ form_label(form.password, button_label == 'Update' ? 'Contraseña (vacío = no cambiar)' : 'Contraseña', {'label_attr': {'style': 'color: white; font-weight: 500; margin-bottom: 8px; display: block;'}}) }}
+    {{ form_widget(form.password, {'attr': {'style': 'width: 100%; padding: 12px; border: 1px solid rgba(255, 255, 255, 0.2); background: rgba(255, 255, 255, 0.1); color: white; border-radius: 8px; font-size: 16px;', 'placeholder': '••••••••', 'class': ''}}) }}
+    {{ form_errors(form.password) }}
+</div>
+
+<div style="margin-bottom: 20px;">
+    {{ form_label(form.name, 'Nombre', {'label_attr': {'style': 'color: white; font-weight: 500; margin-bottom: 8px; display: block;'}}) }}
+    {{ form_widget(form.name, {'attr': {'style': 'width: 100%; padding: 12px; border: 1px solid rgba(255, 255, 255, 0.2); background: rgba(255, 255, 255, 0.1); color: white; border-radius: 8px; font-size: 16px;', 'placeholder': 'Nombre', 'class': ''}}) }}
+    {{ form_errors(form.name) }}
+</div>
+
+<div style="margin-bottom: 30px;">
+    {{ form_label(form.surname, 'Apellido', {'label_attr': {'style': 'color: white; font-weight: 500; margin-bottom: 8px; display: block;'}}) }}
+    {{ form_widget(form.surname, {'attr': {'style': 'width: 100%; padding: 12px; border: 1px solid rgba(255, 255, 255, 0.2); background: rgba(255, 255, 255, 0.1); color: white; border-radius: 8px; font-size: 16px;', 'placeholder': 'Apellido', 'class': ''}}) }}
+    {{ form_errors(form.surname) }}
+</div>
+
+<button class="btn btn-submit">{{ button_label|default('Guardar') }}</button>
 {{ form_end(form) }}
+
+<style>
+    .btn-submit {
+        width: 100%;
+        padding: 15px;
+        background: linear-gradient(135deg, #8E2DE2 0%, #FF4B91 100%);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: transform 0.2s, box-shadow 0.3s;
+    }
+
+    .btn-submit:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 25px rgba(255, 75, 145, 0.4);
+    }
+
+    .btn-submit:active {
+        transform: translateY(0);
+    }
+
+    /* Estilos para inputs en focus */
+    input:focus, select:focus, textarea:focus {
+        outline: none !important;
+        border-color: var(--rosa-neon) !important;
+        box-shadow: 0 0 0 3px rgba(255, 75, 145, 0.1) !important;
+    }
+
+    /* Estilos para los errores */
+    .form-error-message, .invalid-feedback, ul li {
+        color: #FF4B91 !important;
+        font-size: 14px;
+        margin-top: 5px;
+        list-style: none;
+    }
+
+    /* Placeholder color */
+    ::placeholder {
+        color: rgba(255, 255, 255, 0.5) !important;
+    }
+
+    /* Select options */
+    select option {
+        background: var(--azul-oscuro);
+        color: white;
+    }
+</style>

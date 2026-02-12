@@ -20,9 +20,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
-    #[Assert\NotNull]
+
     #[ORM\Column(length: 180)]
+    #[Assert\NotBlank]
+    #[Assert\Email(message: 'El email {{ value }} no es válido.')]
     private ?string $email = null;
+
 
     /**
      * @var list<string> The user roles
@@ -33,7 +36,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var ?string The hashed password
      */
-    #[Assert\NotNull]
     #[ORM\Column]
     private ?string $password = null;
 
@@ -47,7 +49,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column]
     #[Assert\NotNull]
-    #[Assert\DateTime]
     private ?\DateTimeImmutable $createdAt;
 
     #[ORM\Column]
