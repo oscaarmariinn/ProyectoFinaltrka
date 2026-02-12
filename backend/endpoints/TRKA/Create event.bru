@@ -1,0 +1,26 @@
+meta {
+  name: Create event
+  type: http
+  seq: 2
+}
+
+post {
+  url: '''
+    {
+      "title": "Conferencia de Tecnología 2026",
+      "description": "Evento sobre las últimas tendencias en desarrollo web y IA.",
+      "event_date": "2026-03-15 18:00:00",
+      "location": "Madrid, España",
+      "max_participants": 150,
+      "isPublic": true,
+      "category_id": 1,
+    
+    
+'''
+  body: none
+  auth: inherit
+}
+
+settings {
+  encodeUrl: true
+}
