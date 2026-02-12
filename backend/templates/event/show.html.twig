@@ -1,50 +1,111 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Event{% endblock %}
+{% block title %}Detalle Evento{% endblock %}
 
 {% block body %}
-    <h1>Event</h1>
+    <div style="padding: 40px 20px; max-width: 1000px; margin: 0 auto;">
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ event.id }}</td>
-            </tr>
-            <tr>
-                <th>Titulo</th>
-                <td>{{ event.title }}</td>
-            </tr>
-            <tr>
-                <th>Descripción</th>
-                <td>{{ event.description }}</td>
-            </tr>
-            <tr>
-                <th>Fecha del evento</th>
-                <td>{{ event.eventDate ? event.eventDate|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>Localización</th>
-                <td>{{ event.location }}</td>
-            </tr>
-            <tr>
-                <th>Participantes Máximos</th>
-                <td>{{ event.maxParticipants }}</td>
-            </tr>
-            <tr>
-                <th>Privacidad</th>
-                <td>{{ event.getEventType().name }}</td>
-            </tr>
-            <tr>
-                <th>Creado</th>
-                <td>{{ event.createdAt ? event.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-        </tbody>
-    </table>
+        <!-- Header -->
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
+            <h1 style="color: white; font-size: 28px; font-weight: 600; margin: 0;">
+                Detalle del Evento
+            </h1>
 
-    <a href="{{ path('app_event_index') }}">Volver a la lista</a>
+            <div>
+                <a href="{{ path('app_event_index') }}"
+                   style="margin-right: 15px; color: rgba(255,255,255,0.7); text-decoration: none;">
+                    ← Volver
+                </a>
 
-    <a href="{{ path('app_event_edit', {'id': event.id}) }}">Editar</a>
+                <a href="{{ path('app_event_edit', {'id': event.id}) }}"
+                   style="padding: 10px 18px; background: var(--rosa-neon); color: white;
+                      text-decoration: none; border-radius: 6px; font-weight: 500;">
+                    Editar
+                </a>
+            </div>
+        </div>
 
-    {{ include('event/_delete_form.html.twig') }}
+        <!-- Card -->
+        <div style="background: rgba(255,255,255,0.05);
+                border-radius: 10px;
+                overflow: hidden;
+                border: 1px solid rgba(255,255,255,0.08);">
+
+            <div style="display: grid;
+                    grid-template-columns: 1fr 1fr;
+                    color: white;">
+
+                {% set row = "padding:18px; border-bottom:1px solid rgba(255,255,255,0.06);" %}
+                {% set label = "color:rgba(255,255,255,0.6); font-size:13px; margin-bottom:6px;" %}
+                {% set value = "font-size:16px; font-weight:500;" %}
+
+                <div style="{{ row }}">
+                    <div style="{{ label }}">ID</div>
+                    <div style="{{ value }}">{{ event.id }}</div>
+                </div>
+
+                <div style="{{ row }}">
+                    <div style="{{ label }}">Privacidad</div>
+                    <div style="{{ value }}">
+                        {{ event.getEventType().name }}
+                    </div>
+                </div>
+
+                <div style="{{ row }}">
+                    <div style="{{ label }}">Título</div>
+                    <div style="{{ value }}">{{ event.title }}</div>
+                </div>
+
+                <div style="{{ row }}">
+                    <div style="{{ label }}">Fecha del evento</div>
+                    <div style="{{ value }}">
+                        {{ event.eventDate ? event.eventDate|date('Y-m-d H:i:s') : '—' }}
+                    </div>
+                </div>
+
+                <div style="{{ row }}">
+                    <div style="{{ label }}">Localización</div>
+                    <div style="{{ value }}">{{ event.location }}</div>
+                </div>
+
+                <div style="{{ row }}">
+                    <div style="{{ label }}">Participantes máximos</div>
+                    <div style="{{ value }}">{{ event.maxParticipants }}</div>
+                </div>
+
+                <!-- Descripción ocupa todo el ancho -->
+                <div style="{{ row }} grid-column: span 2;">
+                    <div style="{{ label }}">Descripción</div>
+                    <div style="{{ value }} font-weight:400; line-height:1.5;">
+                        {{ event.description ?: '—' }}
+                    </div>
+                </div>
+
+                <div style="{{ row }} grid-column: span 2;">
+                    <div style="{{ label }}">Creado el</div>
+                    <div style="{{ value }}">
+                        {{ event.createdAt ? event.createdAt|date('Y-m-d H:i:s') : '—' }}
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Delete -->
+        <div style="margin-top: 25px;">
+            {{ include('event/_delete_form.html.twig') }}
+        </div>
+
+    </div>
+
+    <style>
+        div[style*="background: rgba(255,255,255,0.05)"] > div > div:hover {
+            background: rgba(255,255,255,0.03);
+        }
+
+        a[href*="app_event_edit"]:hover {
+            background: #ff3d7f;
+        }
+    </style>
+
 {% endblock %}
