@@ -1,47 +1,77 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}User index{% endblock %}
+{% block title %}Usuarios{% endblock %}
 
 {% block body %}
-    <h1>User index</h1>
+    <div style="padding: 40px 20px; max-width: 1200px; margin: 0 auto;">
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Email</th>
-                <th>Roles</th>
-                <th>Password</th>
-                <th>Name</th>
-                <th>Surname</th>
-                <th>CreatedAt</th>
-                <th>Active</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for user in users %}
-            <tr>
-                <td>{{ user.id }}</td>
-                <td>{{ user.email }}</td>
-                <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
-                <td>{{ user.password }}</td>
-                <td>{{ user.name }}</td>
-                <td>{{ user.surname }}</td>
-                <td>{{ user.createdAt ? user.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ user.active ? 'Yes' : 'No' }}</td>
-                <td>
-                    <a href="{{ path('app_user_show', {'id': user.id}) }}">show</a>
-                    <a href="{{ path('app_user_edit', {'id': user.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="9">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
+            <h1 style="color: white; font-size: 28px; font-weight: 600; margin: 0;">Usuarios</h1>
+            <a href="{{ path('app_user_new') }}" style="padding: 10px 20px; background: var(--rosa-neon); color: white; text-decoration: none; border-radius: 6px; font-weight: 500;">
+                Nuevo Usuario
+            </a>
+        </div>
 
-    <a href="{{ path('app_user_new') }}">Create new</a>
+        <div style="background: rgba(255, 255, 255, 0.05); border-radius: 8px; overflow: hidden;">
+            <table style="width: 100%; border-collapse: collapse;">
+                <thead>
+                <tr style="background: rgba(255, 255, 255, 0.1); border-bottom: 1px solid rgba(255, 255, 255, 0.1);">
+                    <th style="padding: 15px; text-align: left; color: white; font-weight: 500;">Nombre</th>
+                    <th style="padding: 15px; text-align: left; color: white; font-weight: 500;">Apellidos</th>
+                    <th style="padding: 15px; text-align: left; color: white; font-weight: 500;">Email</th>
+                    <th style="padding: 15px; text-align: center; color: white; font-weight: 500;">Estado</th>
+                    <th style="padding: 15px; text-align: left; color: white; font-weight: 500;">Rol</th>
+                    <th style="padding: 15px; text-align: center; color: white; font-weight: 500;">Acciones</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for user in users %}
+                    <tr style="border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
+                        <td style="padding: 15px; color: white;">{{ user.name }}</td>
+                        <td style="padding: 15px; color: rgba(255, 255, 255, 0.8);">{{ user.surname }}</td>
+                        <td style="padding: 15px; color: rgba(255, 255, 255, 0.7);">{{ user.email }}</td>
+                        <td style="padding: 15px; text-align: center;">
+                            {% if user.active %}
+                                <span style="color: #2ed573;">Activo</span>
+                            {% else %}
+                                <span style="color: #e74c3c;">Inactivo</span>
+                            {% endif %}
+                        </td>
+                        <td style="padding: 15px; color: rgba(255, 255, 255, 0.8);">
+                            {% if 'ROLE_ADMIN' in user.roles %}
+                                Admin
+                            {% else %}
+                                Usuario
+                            {% endif %}
+                        </td>
+                        <td style="padding: 15px; text-align: center;">
+                            <a href="{{ path('app_user_show', {'id': user.id}) }}" style="color: var(--morado-electrico); text-decoration: none; margin-right: 15px;">Ver</a>
+                            <a href="{{ path('app_user_edit', {'id': user.id}) }}" style="color: var(--rosa-neon); text-decoration: none;">Editar</a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="6" style="padding: 40px; text-align: center; color: rgba(255, 255, 255, 0.5);">
+                            No hay usuarios registrados
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <style>
+        tbody tr:hover {
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        a[href*="app_user_new"]:hover {
+            background: #ff3d7f;
+        }
+
+        td a:hover {
+            text-decoration: underline;
+        }
+    </style>
 {% endblock %}

@@ -27,7 +27,6 @@ class Event
 
     #[ORM\Column]
     #[Assert\NotNull]
-    #[Assert\DateTime]
     private ?\DateTime $eventDate = null;
 
     #[ORM\Column(length: 255)]
@@ -43,8 +42,7 @@ class Event
 
     #[ORM\Column]
     #[Assert\NotNull]
-    #[Assert\DateTime]
-    private \DateTimeImmutable $createdAt;
+    private ?\DateTimeImmutable $createdAt;
 
     /**
      * @var Collection<int, User>
