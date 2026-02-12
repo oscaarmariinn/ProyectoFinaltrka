@@ -9,10 +9,27 @@
         eventos y nuevas amistades — todo en una sola app.
     </p>
 
-    <button class="cta-btn">
+
+    <a class="cta-btn" routerLink="/register" >
         Únete ahora
-    </button>
+    </a>
+
 </section>
+<!-- Esto para el carrusel
+<section>
+      <div class="content">
+        <div class="grid">
+            <app-carousel (position)="onCarousel($event)" [name]="name" [photo]="image"></app-carousel>
+        </div>
+
+        <div id='render-more'>
+            <button (click)="showMore(-1)">ANTERIORES</button>
+            <button (click)="showMore(1)">SIGUIENTES</button>
+        </div>
+
+</section>
+-->
+
 <section class="container my-5">
     <header>
         <h2>Algunos de nuestros eventos</h2>
