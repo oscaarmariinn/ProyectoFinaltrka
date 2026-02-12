@@ -1,47 +1,71 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Event index{% endblock %}
+{% block title %}Eventos{% endblock %}
 
 {% block body %}
-    <h1>Event index</h1>
+    <div style="padding: 40px 20px; max-width: 1200px; margin: 0 auto;">
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Title</th>
-                <th>Description</th>
-                <th>EventDate</th>
-                <th>Location</th>
-                <th>MaxParticipants</th>
-                <th>IsPublic</th>
-                <th>CreatedAt</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for event in events %}
-            <tr>
-                <td>{{ event.id }}</td>
-                <td>{{ event.title }}</td>
-                <td>{{ event.description }}</td>
-                <td>{{ event.eventDate ? event.eventDate|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ event.location }}</td>
-                <td>{{ event.maxParticipants }}</td>
-                <td>{{ event.isPublic ? 'Yes' : 'No' }}</td>
-                <td>{{ event.createdAt ? event.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>
-                    <a href="{{ path('app_event_show', {'id': event.id}) }}">show</a>
-                    <a href="{{ path('app_event_edit', {'id': event.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="9">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
+            <h1 style="color: white; font-size: 28px; font-weight: 600; margin: 0;">Eventos</h1>
+            <a href="{{ path('app_event_new') }}" style="padding: 10px 20px; background: var(--rosa-neon); color: white; text-decoration: none; border-radius: 6px; font-weight: 500;">
+                Nuevo Evento
+            </a>
+        </div>
 
-    <a href="{{ path('app_event_new') }}">Create new</a>
+        <div style="background: rgba(255, 255, 255, 0.05); border-radius: 8px; overflow: hidden;">
+            <table style="width: 100%; border-collapse: collapse;">
+                <thead>
+                <tr style="background: rgba(255, 255, 255, 0.1); border-bottom: 1px solid rgba(255, 255, 255, 0.1);">
+                    <th style="padding: 15px; text-align: left; color: white; font-weight: 500;">Título</th>
+                    <th style="padding: 15px; text-align: left; color: white; font-weight: 500;">Descripción</th>
+                    <th style="padding: 15px; text-align: left; color: white; font-weight: 500;">Fecha</th>
+                    <th style="padding: 15px; text-align: center; color: white; font-weight: 500;">Participantes Máx.</th>
+                    <th style="padding: 15px; text-align: left; color: white; font-weight: 500;">Tipo</th>
+                    <th style="padding: 15px; text-align: center; color: white; font-weight: 500;">Acciones</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for event in events %}
+                    <tr style="border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
+                        <td style="padding: 15px; color: white;">{{ event.title }}</td>
+                        <td style="padding: 15px; color: rgba(255, 255, 255, 0.8);">{{ event.description }}</td>
+                        <td style="padding: 15px; color: rgba(255, 255, 255, 0.7);">
+                            {{ event.eventDate ? event.eventDate|date('Y-m-d H:i') : '' }}
+                        </td>
+                        <td style="padding: 15px; text-align: center; color: rgba(255, 255, 255, 0.8);">
+                            {{ event.maxParticipants ?: '–' }}
+                        </td>
+                        <td style="padding: 15px; color: rgba(255, 255, 255, 0.8);">
+                            {{ event.eventType ? event.eventType.name : '–' }}
+                        </td>
+                        <td style="padding: 15px; text-align: center;">
+                            <a href="{{ path('app_event_show', {'id': event.id}) }}" style="color: var(--morado-electrico); text-decoration: none; margin-right: 15px;">Ver</a>
+                            <a href="{{ path('app_event_edit', {'id': event.id}) }}" style="color: var(--rosa-neon); text-decoration: none;">Editar</a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="6" style="padding: 40px; text-align: center; color: rgba(255, 255, 255, 0.5);">
+                            No hay eventos registrados
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <style>
+        tbody tr:hover {
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        a[href*="app_event_new"]:hover {
+            background: #ff3d7f;
+        }
+
+        td a:hover {
+            text-decoration: underline;
+        }
+    </style>
 {% endblock %}

@@ -25,17 +25,20 @@ final class EventController extends AbstractController
     #[Route('/new', name: 'app_event_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY'); // <-- evita null
+
         $event = new Event();
+        $user = $this->getUser(); // seguro que es User
+        $event->setCreator($user);
+
         $form = $this->createForm(EventTypeForm::class, $event);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
-
             $entityManager->persist($event);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_event_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_event_index');
         }
 
         return $this->render('event/new.html.twig', [
@@ -43,6 +46,7 @@ final class EventController extends AbstractController
             'form' => $form,
         ]);
     }
+
 
     #[Route('/{id}', name: 'app_event_show', methods: ['GET'])]
     public function show(Event $event): Response

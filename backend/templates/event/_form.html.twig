@@ -1,4 +1,99 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+
+<div style="margin-bottom: 20px;">
+    {{ form_label(form.title, 'Título', {'label_attr': {'style': 'color: white; font-weight: 500; margin-bottom: 8px; display: block;'}}) }}
+    {{ form_widget(form.title, {'attr': {'style': 'width: 100%; padding: 12px; border: 1px solid rgba(255, 255, 255, 0.2); background: rgba(255, 255, 255, 0.1); color: white; border-radius: 8px; font-size: 16px;', 'placeholder': 'Título del evento'}}) }}
+    {{ form_errors(form.title) }}
+</div>
+
+<div style="margin-bottom: 20px;">
+    {{ form_label(form.description, 'Descripción', {'label_attr': {'style': 'color: white; font-weight: 500; margin-bottom: 8px; display: block;'}}) }}
+    {{ form_widget(form.description, {'attr': {'style': 'width: 100%; padding: 12px; border: 1px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.1); color: white; border-radius: 8px; font-size: 16px;', 'placeholder': 'Descripción del evento'}}) }}
+    {{ form_errors(form.description) }}
+</div>
+
+<div style="margin-bottom: 20px;">
+    {{ form_label(form.eventDate, 'Fecha y hora', {'label_attr': {'style': 'color: white; font-weight: 500; margin-bottom: 8px; display: block;'}}) }}
+    {{ form_widget(form.eventDate, {'attr': {'style': 'width: 100%; padding: 12px; border: 1px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.1); color: white; border-radius: 8px; font-size: 16px;'}}) }}
+    {{ form_errors(form.eventDate) }}
+</div>
+
+<div style="margin-bottom: 20px;">
+    {{ form_label(form.location, 'Ubicación', {'label_attr': {'style': 'color: white; font-weight: 500; margin-bottom: 8px; display: block;'}}) }}
+    {{ form_widget(form.location, {'attr': {'style': 'width: 100%; padding: 12px; border: 1px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.1); color: white; border-radius: 8px; font-size: 16px;', 'placeholder': 'Ubicación'}}) }}
+    {{ form_errors(form.location) }}
+</div>
+
+<div style="margin-bottom: 20px;">
+    {{ form_label(form.maxParticipants, 'Participantes máximos', {'label_attr': {'style': 'color: white; font-weight: 500; margin-bottom: 8px; display: block;'}}) }}
+    {{ form_widget(form.maxParticipants, {'attr': {'style': 'width: 100%; padding: 12px; border: 1px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.1); color: white; border-radius: 8px; font-size: 16px;', 'placeholder': 'Número máximo de participantes'}}) }}
+    {{ form_errors(form.maxParticipants) }}
+</div>
+
+<div style="margin-bottom: 20px;">
+    {{ form_label(form.isPublic, 'Evento público', {'label_attr': {'style': 'color: white; font-weight: 500; margin-bottom: 8px; display: block;'}}) }}
+    {{ form_widget(form.isPublic, {'attr': {'style': 'transform: scale(1.2); margin-top: 5px;'}}) }}
+    {{ form_errors(form.isPublic) }}
+</div>
+
+<div style="margin-bottom: 20px;">
+    {{ form_label(form.eventType, 'Tipo de evento', {'label_attr': {'style': 'color: white; font-weight: 500; margin-bottom: 8px; display: block;'}}) }}
+    {{ form_widget(form.eventType, {'attr': {'style': 'width: 100%; padding: 12px; border: 1px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.1); color: white; border-radius: 8px; font-size: 16px;'}}) }}
+    {{ form_errors(form.eventType) }}
+</div>
+
+<div style="margin-bottom: 30px;">
+    {{ form_label(form.categories, 'Categorías', {'label_attr': {'style': 'color: white; font-weight: 500; margin-bottom: 8px; display: block;'}}) }}
+    {{ form_widget(form.categories, {'attr': {'style': 'width: 100%; padding: 12px; border: 1px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.1); color: white; border-radius: 8px; font-size: 16px;'}}) }}
+    {{ form_errors(form.categories) }}
+</div>
+
+<button class="btn-submit">{{ button_label|default('Guardar Evento') }}</button>
+
 {{ form_end(form) }}
+
+<style>
+    .btn-submit {
+        width: 100%;
+        padding: 15px;
+        background: linear-gradient(135deg, #8E2DE2 0%, #FF4B91 100%);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: transform 0.2s, box-shadow 0.3s;
+    }
+
+    .btn-submit:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 25px rgba(255, 75, 145, 0.4);
+    }
+
+    .btn-submit:active {
+        transform: translateY(0);
+    }
+
+    input:focus, select:focus, textarea:focus {
+        outline: none !important;
+        border-color: var(--rosa-neon) !important;
+        box-shadow: 0 0 0 3px rgba(255, 75, 145, 0.1) !important;
+    }
+
+    .form-error-message, .invalid-feedback, ul li {
+        color: #FF4B91 !important;
+        font-size: 14px;
+        margin-top: 5px;
+        list-style: none;
+    }
+
+    ::placeholder {
+        color: rgba(255, 255, 255, 0.5) !important;
+    }
+
+    select option {
+        background: var(--azul-oscuro);
+        color: white;
+    }
+</style>

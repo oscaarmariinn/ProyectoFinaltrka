@@ -1,11 +1,26 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Event{% endblock %}
+{% block title %}Nuevo Evento{% endblock %}
 
 {% block body %}
-    <h1>Create new Event</h1>
+    <div style="min-height: calc(100vh - 100px); display: flex; align-items: center; justify-content: center; padding: 40px 20px;">
+        <div style="background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px); padding: 40px; border-radius: 15px; border: 1px solid rgba(255, 75, 145, 0.3); box-shadow: 0 8px 32px rgba(142, 45, 226, 0.2); max-width: 500px; width: 100%;">
 
-    {{ include('event/_form.html.twig') }}
+            <h1 style="text-align: center; color: white; margin-bottom: 30px; font-size: 28px; font-weight: 600;">Crear nuevo Evento</h1>
 
-    <a href="{{ path('app_event_index') }}">back to list</a>
+            {{ include('event/_form.html.twig', {'button_label': 'Crear Evento'}) }}
+
+            <div style="margin-top: 20px; text-align: center;">
+                <a href="{{ path('app_event_index') }}" style="color: var(--rosa-neon); text-decoration: none; font-weight: 500; transition: color 0.3s;">
+                    ← Volver al listado
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        a[href*="app_event_index"]:hover {
+            color: var(--morado-electrico);
+        }
+    </style>
 {% endblock %}
