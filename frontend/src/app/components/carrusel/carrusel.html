@@ -1,0 +1,13 @@
+<div class="card">
+    <div class='photo' [ngStyle]="{'backgroundImage': 'url(' + photo + ')'}">
+    </div>
+    <div class="footer">
+        <div class="titles">
+            <h2 class='card-title'>{{name}}</h2>
+        </div>
+    </div>
+    <div id='render-more'>
+        <button (click)="showMore(-1)">ANTERIOR</button>
+        <button (click)="showMore(1)">SIGUIENTE</button>
+    </div>
+</div>
