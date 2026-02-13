@@ -17,9 +17,28 @@ class ApiEventController extends AbstractController
 {
 
     #[Route('', name: 'list', methods: ['GET'])]
-    public function list(EntityManagerInterface $em): JsonResponse
+    public function list(EntityManagerInterface $em, Request $request): JsonResponse
     {
-        $events = $em->getRepository(Event::class)->findAll();
+        $allowedFields = ['title', 'eventDate', 'maxParticipants', 'location'];
+        $order = [];
+
+        $orderParams = $request->query->all('order');
+
+        foreach ($orderParams as $field => $direction) {
+            if (in_array($field, $allowedFields, true) &&
+                in_array(strtoupper($direction), ['ASC', 'DESC'], true)
+            ) {
+                $order[$field] = strtoupper($direction);
+            }else{
+                return new JsonResponse(['status' => 'Bad request, order not found'], 400);
+            }
+        }
+
+        if (!$order) {
+            $order['eventDate'] = 'ASC';
+        }
+
+        $events = $em->getRepository(Event::class)->findBy([], $order);
         $data = [];
 
         $data = $this->getData($events, $data);
@@ -27,7 +46,7 @@ class ApiEventController extends AbstractController
         return new JsonResponse($data);
     }
 
-    #[Route('/{id}/created', name: 'listcreated', methods: ['GET'])]
+    #[Route('/created/{id}', name: 'listcreated', methods: ['GET'])]
     public function listCreated(EntityManagerInterface $em, int $id): JsonResponse
     {
         $events = $em->getRepository(Event::class)->findBy(['creator' => $id]);
@@ -37,19 +56,22 @@ class ApiEventController extends AbstractController
         return new JsonResponse($data);
     }
 
-    #[Route('/{id}', name: 'update', methods: ['PUT', 'PATCH'])]
+    #[Route('/{user_id}/{id}', name: 'update', methods: ['PUT', 'PATCH'])]
     public function update(
         int                    $id,
+        int                    $user_id,
         Request                $request,
         EntityManagerInterface $em,
-        CategoryRepository     $categoryRepository,
-        EventTypeRepository    $eventTypeRepository
+        CategoryRepository     $categoryRepository
     ): JsonResponse {
 
         $event = $em->getRepository(Event::class)->find($id);
 
         if (!$event) {
             return new JsonResponse(['message' => 'Event not found'], 404);
+        }
+        if ($user_id !== $event->getCreator()->getId()) {
+            return new JsonResponse(['message' => 'No tienes permisos para realizar esta acción'], 403);
         }
 
         $data = json_decode($request->getContent(), true);
@@ -66,11 +88,11 @@ class ApiEventController extends AbstractController
 
         if (isset($data['isPublic'])) {
             if ($event->isPublic() === 1) {
-                $eventType = $em->getRepository(Event::class)->find(0);
+                $eventType = $em->getRepository(Event::class)->find(1);
                 $event->setEventType($eventType);
             }
             if ($event->isPublic() === 0) {
-                $eventType = $em->getRepository(Event::class)->find(0);
+                $eventType = $em->getRepository(Event::class)->find(2);
                 $event->setEventType($eventType);
             }
         }
@@ -101,17 +123,11 @@ class ApiEventController extends AbstractController
         $category_id = $data['category_id'] ?? null;
         $category = $categoryRepository->find($category_id);
 
-        $eventType_id = $data['eventType_id'] ?? null;
-        $eventType = $eventTypeRepository->find($eventType_id);
-
         $creator_id = $data['creator_name'] ?? null;
         $creator = $userRepository->find($creator_id);
 
         if (!$category) {
             return new JsonResponse(['status' => 'Bad request, category not found'], 400);
-        }
-        if (!$eventType) {
-            return new JsonResponse(['status' => 'Bad request, eventType not found'], 400);
         }
         if (!$creator) {
             return new JsonResponse(['status' => 'Bad request, creator not found'], 400);
@@ -126,7 +142,6 @@ class ApiEventController extends AbstractController
         $event->setMaxParticipants($data['max_participants'] ?? null);
         $event->setIsPublic($data['isPublic'] ?? false);
         $event->addCategory($category);
-        $event->setEventType($eventType);
         $event->setCreator($creator);
 
         $em->persist($event);
@@ -146,10 +161,6 @@ class ApiEventController extends AbstractController
                 'category' => [
                     'id' => $category->getId(),
                     'name' => $category->getName(),
-                ],
-                'eventType' => [
-                    'id' => $eventType->getId(),
-                    'name' => $eventType->getName(),
                 ],
                 'creator' => [
                     'id' => $creator->getId(),
@@ -176,8 +187,6 @@ class ApiEventController extends AbstractController
                 ];
             }
 
-            $eventType = $event->getEventType();
-
             $data[] = [
                 'id' => $event->getId(),
                 'title' => $event->getTitle(),
@@ -187,10 +196,6 @@ class ApiEventController extends AbstractController
                 'max_participants' => $event->getMaxParticipants(),
                 'isPublic' => $event->isPublic(),
                 'isVerified' => $event->isVerified(),
-                'eventType' => $eventType ? [
-                    'id' => $eventType->getId(),
-                    'name' => $eventType->getName(),
-                ] : null,
                 'categories' => $categories,
             ];
         }

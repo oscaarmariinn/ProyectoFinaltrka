@@ -54,10 +54,6 @@ class Event
     #[ORM\ManyToOne(inversedBy: 'events')]
     private ?Group $eventGroup = null;
 
-
-    #[ORM\ManyToOne(inversedBy: 'events')]
-    private ?EventType $eventType = null;
-
     /**
      * @var Collection<int, Category>
      */
@@ -204,19 +200,6 @@ class Event
     public function setEventGroup(?Group $eventGroup): static
     {
         $this->eventGroup = $eventGroup;
-
-        return $this;
-    }
-
-
-    public function getEventType(): ?EventType
-    {
-        return $this->eventType;
-    }
-
-    public function setEventType(?EventType $eventType): static
-    {
-        $this->eventType = $eventType;
 
         return $this;
     }

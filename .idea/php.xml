@@ -140,6 +140,7 @@
       <path value="$PROJECT_DIR$/backend/vendor/masterminds/html5" />
       <path value="$PROJECT_DIR$/backend/vendor/phpdocumentor/reflection-common" />
       <path value="$PROJECT_DIR$/backend/vendor/composer" />
+      <path value="$PROJECT_DIR$/backend/vendor/nelmio/cors-bundle" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.2">

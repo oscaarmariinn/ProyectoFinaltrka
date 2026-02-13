@@ -20,7 +20,7 @@
                     <th style="padding: 15px; text-align: left; color: white; font-weight: 500;">Descripción</th>
                     <th style="padding: 15px; text-align: left; color: white; font-weight: 500;">Fecha</th>
                     <th style="padding: 15px; text-align: center; color: white; font-weight: 500;">Participantes Máx.</th>
-                    <th style="padding: 15px; text-align: left; color: white; font-weight: 500;">Tipo</th>
+                    <th style="padding: 15px; text-align: left; color: white; font-weight: 500;">Privacidad</th>
                     <th style="padding: 15px; text-align: center; color: white; font-weight: 500;">Acciones</th>
                 </tr>
                 </thead>
@@ -36,7 +36,7 @@
                             {{ event.maxParticipants ?: '–' }}
                         </td>
                         <td style="padding: 15px; color: rgba(255, 255, 255, 0.8);">
-                            {{ event.eventType ? event.eventType.name : '–' }}
+                            {{ event.isPublic ? event.isPublic : '–' }}
                         </td>
                         <td style="padding: 15px; text-align: center;">
                             <a href="{{ path('app_event_show', {'id': event.id}) }}" style="color: var(--morado-electrico); text-decoration: none; margin-right: 15px;">Ver</a>
