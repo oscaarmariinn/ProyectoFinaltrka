@@ -1,38 +1,88 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Group{% endblock %}
+{% block title %}Detalle Grupo{% endblock %}
 
 {% block body %}
-    <h1>Group</h1>
+    <div style="padding: 40px 20px; max-width: 900px; margin: 0 auto;">
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ group.id }}</td>
-            </tr>
-            <tr>
-                <th>Name</th>
-                <td>{{ group.name }}</td>
-            </tr>
-            <tr>
-                <th>Description</th>
-                <td>{{ group.description }}</td>
-            </tr>
-            <tr>
-                <th>CreatedAt</th>
-                <td>{{ group.createdAt ? group.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>IsPrivate</th>
-                <td>{{ group.isPrivate ? 'Yes' : 'No' }}</td>
-            </tr>
-        </tbody>
-    </table>
+        <!-- Header -->
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
+            <h1 style="color: white; font-size: 28px; font-weight: 600; margin: 0;">Detalle de Grupo</h1>
 
-    <a href="{{ path('app_group_index') }}">back to list</a>
+            <div>
+                <a href="{{ path('app_group_index') }}" style="margin-right: 15px; color: rgba(255,255,255,0.7); text-decoration: none;">← Volver</a>
+                <a href="{{ path('app_group_edit', {'id': group.id}) }}" style="padding: 10px 18px; background: var(--rosa-neon); color: white; text-decoration: none; border-radius: 6px; font-weight: 500;">Editar</a>
+            </div>
+        </div>
 
-    <a href="{{ path('app_group_edit', {'id': group.id}) }}">edit</a>
+        <!-- Card -->
+        <div style="background: rgba(255,255,255,0.05); border-radius: 10px; overflow: hidden; border: 1px solid rgba(255,255,255,0.08); padding: 0;">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0; color: white;">
 
-    {{ include('group/_delete_form.html.twig') }}
+                {% set rowStyle = "padding:18px; border-bottom:1px solid rgba(255,255,255,0.06);" %}
+                {% set labelStyle = "color:rgba(255,255,255,0.6); font-size:13px; margin-bottom:6px;" %}
+                {% set valueStyle = "font-size:16px; font-weight:500;" %}
+
+                <div style="{{ rowStyle }}">
+                    <div style="{{ labelStyle }}">ID</div>
+                    <div style="{{ valueStyle }}">{{ group.id }}</div>
+                </div>
+
+                <div style="{{ rowStyle }}">
+                    <div style="{{ labelStyle }}">Privacidad</div>
+                    <div style="{{ valueStyle }}">
+                        {% if group.isPrivate %}
+                            <span style="color:#e74c3c;">Privado</span>
+                        {% else %}
+                            <span style="color:#2ed573;">Público</span>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div style="{{ rowStyle }}">
+                    <div style="{{ labelStyle }}">Nombre</div>
+                    <div style="{{ valueStyle }}">{{ group.name }}</div>
+                </div>
+
+                <div style="{{ rowStyle }}">
+                    <div style="{{ labelStyle }}">Descripción</div>
+                    <div style="{{ valueStyle }}">{{ group.description ?: '—' }}</div>
+                </div>
+
+                <div style="{{ rowStyle }}">
+                    <div style="{{ labelStyle }}">Creador</div>
+                    <div style="{{ valueStyle }}">{{ group.creator ? group.creator.email : '—' }}</div>
+                </div>
+
+                <div style="{{ rowStyle }}">
+                    <div style="{{ labelStyle }}">Miembros ({{ group.users|length }})</div>
+                    <div style="{{ valueStyle }}">
+                        {% for user in group.users %}
+                            {{ user.email }}<br>
+                        {% else %}
+                            Sin miembros
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div style="{{ rowStyle }} grid-column: span 2;">
+                    <div style="{{ labelStyle }}">Creado el</div>
+                    <div style="{{ valueStyle }}">{{ group.createdAt ? group.createdAt|date('Y-m-d H:i:s') : '—' }}</div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Delete -->
+        <div style="margin-top: 25px;">
+            {{ include('group/_delete_form.html.twig') }}
+        </div>
+
+    </div>
+
+    <style>
+        div[style*="background: rgba(255,255,255,0.05)"] > div > div:hover {
+            background: rgba(255,255,255,0.03);
+        }
+    </style>
 {% endblock %}

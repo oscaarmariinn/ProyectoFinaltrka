@@ -28,7 +28,6 @@ class Group
 
     #[ORM\Column]
     #[Assert\NotNull]
-    #[Assert\DateTime]
     private \DateTimeImmutable $createdAt;
 
     #[ORM\Column]

@@ -68,7 +68,9 @@
         <div class="d-flex gap-3">
             {% if not app.user %}
                 <a class="nav-link" href="{{ path('app_login') }}">Login</a>
-                <a class="nav-link" href="{{ path('app_register') }}">Registrarse</a>
+                {% if is_granted('ROLE_SUPERADMIN') %}
+                    <a class="nav-link" href="{{ path('app_register') }}">Registrarse</a>
+                {% endif %}
             {% else %}
                 <a class="nav-link" href="{{ path('app_logout') }}">Cerrar sesión</a>
             {% endif %}

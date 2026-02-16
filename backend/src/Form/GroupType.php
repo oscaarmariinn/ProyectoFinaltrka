@@ -26,15 +26,19 @@ class GroupType extends AbstractType
             ->add('isPrivate', ChoiceType::class, [
                 'label'=>'Privacidad del grupo',
                 'choices'=>[
-                    'Publico'=>'publico',
-                    'Privado'=>'privado',
+                    'Publico'=>false,
+                    'Privado'=>true,
                 ]
             ])
-            ->add('users', EntityType::class, [
-                'class' => User::class,
-                'choice_label' => 'name',
-                'multiple' => true,
+            ->add('userEmails', TextType::class, [
+                'mapped' => false,
+                'required' => false,
+                'label' => 'Añadir usuarios (emails separados por coma)',
+                'attr' => [
+                    'placeholder' => 'user1@mail.com, user2@mail.com'
+                ]
             ])
+
         ;
     }
 
