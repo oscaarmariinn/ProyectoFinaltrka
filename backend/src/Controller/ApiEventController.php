@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Event;
+use App\Entity\User;
 use App\Repository\CategoryRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -28,7 +29,7 @@ class ApiEventController extends AbstractController
                 in_array(strtoupper($direction), ['ASC', 'DESC'], true)
             ) {
                 $order[$field] = strtoupper($direction);
-            }else{
+            } else {
                 return new JsonResponse(['status' => 'Bad request, order not found'], 400);
             }
         }
@@ -45,15 +46,35 @@ class ApiEventController extends AbstractController
         return new JsonResponse($data);
     }
 
-    #[Route('/created/{id}', name: 'listcreated', methods: ['GET'])]
+    #[Route('/{id}/created', name: 'listcreated', methods: ['GET'])]
     public function listCreated(EntityManagerInterface $em, int $id): JsonResponse
     {
+        $user = $em->getRepository(User::class)->find(['id' => $id]);
+        if (!$user) {
+            return new JsonResponse(['message' => 'User not found'], 404);
+        }
         $events = $em->getRepository(Event::class)->findBy(['creator' => $id]);
         $data = [];
 
         $data = $this->getData($events, $data);
         return new JsonResponse($data);
     }
+
+    #[Route('/{id}/attending', name: 'listIn', methods: ['GET'])]
+    public function listInEvent(EntityManagerInterface $em, int $id): JsonResponse
+    {
+        $user = $em->getRepository(User::class)->find(['id' => $id]);
+        if (!$user) {
+            return new JsonResponse(['message' => 'User not found'], 404);
+        }
+
+        $events = $user->getAttendingEvents()->toArray();
+
+        $data = [];
+        $data = $this->getData($events, $data);
+        return new JsonResponse($data);
+    }
+
 
     #[Route('/{user_id}/{id}', name: 'update', methods: ['PUT', 'PATCH'])]
     public function update(
@@ -186,6 +207,14 @@ class ApiEventController extends AbstractController
                 ];
             }
 
+            $users = [];
+            foreach ($event->getUsers() as $user) {
+                $users[] = [
+                    'id' => $user->getId(),
+                    'name' => $user->getName(),
+                ];
+            }
+
             $data[] = [
                 'id' => $event->getId(),
                 'title' => $event->getTitle(),
@@ -196,6 +225,7 @@ class ApiEventController extends AbstractController
                 'isPublic' => $event->isPublic(),
                 'isVerified' => $event->isVerified(),
                 'categories' => $categories,
+                'participants' => $users,
             ];
         }
         return $data;
