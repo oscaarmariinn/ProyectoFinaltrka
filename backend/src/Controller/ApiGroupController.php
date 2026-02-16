@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[Route('/api/group', name: 'app_api_group')]
+#[Route('/api/groups', name: 'app_api_group')]
 class ApiGroupController extends AbstractController
 {
     #[Route('', name: 'list', methods: ['GET'])]
@@ -57,54 +57,22 @@ class ApiGroupController extends AbstractController
         int                    $user_id,
         Request                $request,
         EntityManagerInterface $em,
-        CategoryRepository     $categoryRepository
     ): JsonResponse {
 
-        $event = $em->getRepository(Event::class)->find($id);
+        $group = $em->getRepository(Group::class)->find($id);
 
-        if (!$event) {
+        if (!$group) {
             return new JsonResponse(['message' => 'Event not found'], 404);
         }
-        if ($user_id !== $event->getCreator()->getId()) {
+        if ($user_id !== $group->getCreator()->getId()) {
             return new JsonResponse(['message' => 'No tienes permisos para realizar esta acción'], 403);
         }
 
         $data = json_decode($request->getContent(), true);
 
-        $event->setTitle($data['title'] ?? $event->getTitle());
-        $event->setDescription($data['description'] ?? $event->getDescription());
-        $event->setLocation($data['location'] ?? $event->getLocation());
-        $event->setMaxParticipants($data['max_participants'] ?? $event->getMaxParticipants());
-        $event->setIsPublic($data['isPublic'] ?? $event->isPublic());
-
-        if (isset($data['event_date'])) {
-            $event->setEventDate(new \DateTime($data['event_date']));
-        }
-
-        if (isset($data['isPublic'])) {
-            if ($event->isPublic() === 1) {
-                $eventType = $em->getRepository(Event::class)->find(1);
-                $event->setEventType($eventType);
-            }
-            if ($event->isPublic() === 0) {
-                $eventType = $em->getRepository(Event::class)->find(2);
-                $event->setEventType($eventType);
-            }
-        }
-
-        if (isset($data['categories'])) {
-            foreach ($event->getCategories() as $category) {
-                $event->removeCategory($category);
-            }
-            foreach ($data['categories'] as $categoryId) {
-                $category = $categoryRepository->find($categoryId);
-                if ($category) {
-                    $event->addCategory($category);
-                } else {
-                    return new JsonResponse(['status' => 'Bad request, category not found'], 400);
-                }
-            }
-        }
+        $group->setName($data['name'] ?? $group->getTitle());
+        $group->setDescription($data['description'] ?? $group->getDescription());
+        $group->setIsPrivate($data['isPrivate'] ?? $group->isPublic());
 
         $em->flush();
         return new JsonResponse(['message' => 'Event updated successfully']);
@@ -156,6 +124,7 @@ class ApiGroupController extends AbstractController
     {
 
         $responsibles = [];
+        $users = [];
 
         foreach ($groups as $group) {
 
@@ -166,6 +135,13 @@ class ApiGroupController extends AbstractController
                 ];
             }
 
+            foreach ($group->getUsers() as $user) {
+                $users[] = [
+                    'id' => $user->getId(),
+                    'name' => $user->getName(),
+                ];
+            }
+
             $data[] = [
                 'id' => $group->getId(),
                 'name' => $group->getName(),
@@ -173,6 +149,7 @@ class ApiGroupController extends AbstractController
                 'created_at' => $group->getCreatedAt()?->format('Y-m-d H:i:s'),
                 'is_private' => $group->isPrivate(),
                 'responsibles' => $responsibles,
+                'users' => $users,
             ];
         }
         return $data;

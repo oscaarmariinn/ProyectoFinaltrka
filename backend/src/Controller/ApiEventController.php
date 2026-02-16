@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Entity\Event;
 use App\Repository\CategoryRepository;
-use App\Repository\EventTypeRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -116,7 +115,7 @@ class ApiEventController extends AbstractController
     }
 
     #[Route('', name: 'create', methods: ['POST'])]
-    public function create(Request $request, EntityManagerInterface $em, CategoryRepository $categoryRepository, EventTypeRepository $eventTypeRepository, UserRepository $userRepository): JsonResponse
+    public function create(Request $request, EntityManagerInterface $em, CategoryRepository $categoryRepository, UserRepository $userRepository): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
 
