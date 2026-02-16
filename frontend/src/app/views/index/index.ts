@@ -2,6 +2,7 @@ import { ChangeDetectorRef, Component, inject } from '@angular/core';
 import { NgStyle } from '@angular/common';
 import { Carrusel } from '../../components/carrusel/carrusel';
 import { RouterLink } from '@angular/router';
+
 @Component({
   selector: 'app-index',
   imports: [NgStyle, Carrusel, RouterLink],
@@ -9,6 +10,37 @@ import { RouterLink } from '@angular/router';
   styleUrl: './index.css',
 })
 export class Index {
+  images = [
+    'https://ocioenvalencia.es/wp-content/uploads/2025/01/convento.jpg',
+    'https://www.hellovalencia.es/wp-content/uploads/2019/07/Discoteca_Valencia_Marina-Beach-Club.jpg',
+    'https://offloadmedia.feverup.com/valenciasecreta.com/wp-content/uploads/2022/10/13124225/sala-cine-mas-visitada-valencia.jpg',
+    'https://bergamonte.es/wp-content/uploads/2022/08/clases-de-padel-Valencia-Deporte-scaled.jpg',
+    'https://sp-ao.shortpixel.ai/client/to_webp,q_glossy,ret_img,w_1536,h_2048/https://unicovalencia.com/wp-content/uploads/2025/09/2-3b7fca34-1536x2048.jpg',
+    'https://img.freepik.com/fotos-premium/vibrante-fiesta-playa-al-atardecer-dj-invitados-bailar_252600-24073.jpg?semt=ais_hybrid&w=740&q=80',
+    'https://www.visita-valencia.com/wp-content/uploads/2021/05/imagenes-almuerzos-valencia_0003_almuerzo-bar-mistela.jpg',
+  ];
+
+  currentImage = this.images[3];
+  index = 0;
+  
+  _auto = this.rotateImages();
+  
+  public rotateImages(): void {
+    setTimeout(() => {
+      this.index = (this.index + 1) % this.images.length;
+      this.currentImage = this.images[this.index];
+      this.rotateImages();
+    }, 30000);
+  }
+}
+  
+
+
+  
+
+
+
+
 /*
   private cdr = inject(ChangeDetectorRef);
   private service = inject(Requests);
@@ -66,4 +98,4 @@ export class Index {
       }
     }
   }*/
-}
+
