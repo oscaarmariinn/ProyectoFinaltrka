@@ -1,38 +1,71 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Log in!{% endblock %}
+{% block title %}Login{% endblock %}
 
 {% block body %}
-    <form method="post">
-        {% if error %}
-            <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-        {% endif %}
+    <div style="min-height:100vh; display:flex; align-items:center; justify-content:center;">
+        <div style="width:100%; max-width:420px; background:#1e1e2f; padding:40px; border-radius:16px; box-shadow:0 10px 30px rgba(0,0,0,.4);">
 
-        {% if app.user %}
-            <div class="mb-3">
-                You are logged in as {{ app.user.userIdentifier }}, <a href="{{ logout_path() }}">Logout</a>
-            </div>
-        {% endif %}
+            <h1 style="color:white; text-align:center; margin-bottom:30px;">Iniciar sesión</h1>
 
-        <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-        <label for="username">Email</label>
-        <input type="email" value="{{ last_username }}" name="_username" id="username" class="form-control" autocomplete="email" required autofocus>
-        <label for="password">Password</label>
-        <input type="password" name="_password" id="password" class="form-control" autocomplete="current-password" required>
-        <input type="hidden" name="_csrf_token" data-controller="csrf-protection" value="{{ csrf_token('authenticate') }}">
+            {% if error %}
+                <div style="background:#ff7675; color:white; padding:12px; border-radius:8px; margin-bottom:20px;">
+                    {{ error.messageKey|trans(error.messageData, 'security') }}
+                </div>
+            {% endif %}
 
-        {#
-            Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
-            See https://symfony.com/doc/current/security/remember_me.html
+            {% if app.user %}
+                <div style="color:white; margin-bottom:20px;">
+                    Ya has iniciado sesión como {{ app.user.userIdentifier }},
+                    <a href="{{ logout_path() }}" style="color:#a29bfe;">Salir</a>
+                </div>
+            {% endif %}
 
-            <div class="checkbox mb-3">
-                <input type="checkbox" name="_remember_me" id="_remember_me">
-                <label for="_remember_me">Remember me</label>
-            </div>
-        #}
+            <form method="post">
 
-        <button class="btn btn-lg btn-primary" type="submit">
-            Sign in
-        </button>
-    </form>
+                <div style="margin-bottom:20px;">
+                    <label style="color:white; font-weight:500; margin-bottom:8px; display:block;">
+                        Email
+                    </label>
+                    <input type="email" name="_username" value="{{ last_username }}"
+                           class="input" autocomplete="email" required autofocus>
+                </div>
+
+                <div style="margin-bottom:25px;">
+                    <label style="color:white; font-weight:500; margin-bottom:8px; display:block;">
+                        Contraseña
+                    </label>
+                    <input type="password" name="_password"
+                           class="input" autocomplete="current-password" required>
+                </div>
+
+                <input type="hidden" name="_csrf_token"
+                       value="{{ csrf_token('authenticate') }}">
+
+                <button type="submit"
+                        style="width:100%; padding:14px; background:#6c5ce7; border:none; border-radius:10px; color:white; font-weight:600; font-size:16px; cursor:pointer;">
+                    Entrar
+                </button>
+
+            </form>
+
+        </div>
+    </div>
+
+    <style>
+        .input {
+            width:100%;
+            padding:12px 14px;
+            border-radius:10px;
+            border:1px solid #3a3a55;
+            background:#2a2a40;
+            color:white;
+            font-size:14px;
+        }
+        .input:focus {
+            outline:none;
+            border-color:#6c5ce7;
+            box-shadow:0 0 0 2px rgba(108,92,231,.25);
+        }
+    </style>
 {% endblock %}

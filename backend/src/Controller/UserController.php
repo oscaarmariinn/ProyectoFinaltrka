@@ -31,15 +31,13 @@ final class UserController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // Obtener el rol seleccionado y convertirlo a array
             $selectedRole = $form->get('roles')->getData();
             if ($selectedRole) {
                 $user->setRoles([$selectedRole]);
             } else {
-                $user->setRoles(['ROLE_USER']); // Rol por defecto
+                $user->setRoles(['ROLE_USER']);
             }
 
-            // Hashear la contraseña
             $plainPassword = $form->get('password')->getData();
             if ($plainPassword) {
                 $hashedPassword = $passwordHasher->hashPassword($user, $plainPassword);

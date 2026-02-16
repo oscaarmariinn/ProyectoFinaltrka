@@ -1,41 +1,71 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Group index{% endblock %}
+{% block title %}Grupos{% endblock %}
 
 {% block body %}
-    <h1>Group index</h1>
+    <div style="padding: 40px 20px; max-width: 1200px; margin: 0 auto;">
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Description</th>
-                <th>CreatedAt</th>
-                <th>IsPrivate</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for group in groups %}
-            <tr>
-                <td>{{ group.id }}</td>
-                <td>{{ group.name }}</td>
-                <td>{{ group.description }}</td>
-                <td>{{ group.createdAt ? group.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ group.isPrivate ? 'Yes' : 'No' }}</td>
-                <td>
-                    <a href="{{ path('app_group_show', {'id': group.id}) }}">show</a>
-                    <a href="{{ path('app_group_edit', {'id': group.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="6">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
+            <h1 style="color: white; font-size: 28px; font-weight: 600; margin: 0;">Grupos</h1>
 
-    <a href="{{ path('app_group_new') }}">Create new</a>
+            <a href="{{ path('app_group_new') }}"
+               style="padding: 10px 20px; background: var(--rosa-neon); color: white; text-decoration: none; border-radius: 6px; font-weight: 500;">
+                Nuevo Grupo
+            </a>
+        </div>
+
+        <div style="background: rgba(255, 255, 255, 0.05); border-radius: 8px; overflow: hidden;">
+            <table style="width: 100%; border-collapse: collapse;">
+
+                <thead>
+                <tr style="background: rgba(255, 255, 255, 0.1); border-bottom: 1px solid rgba(255, 255, 255, 0.1);">
+                    <th style="padding: 15px; text-align: left; color: white; font-weight: 500;">Nombre</th>
+                    <th style="padding: 15px; text-align: left; color: white; font-weight: 500;">Descripción</th>
+                    <th style="padding: 15px; text-align: center; color: white; font-weight: 500;">Miembros</th>
+                    <th style="padding: 15px; text-align: left; color: white; font-weight: 500;">Creador</th>
+                    <th style="padding: 15px; text-align: center; color: white; font-weight: 500;">Privacidad</th>
+                    <th style="padding: 15px; text-align: left; color: white; font-weight: 500;">Creado</th>
+                    <th style="padding: 15px; text-align: center; color: white; font-weight: 500;">Acciones</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                {% for group in groups %}
+                    <tr style="border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
+
+                        <td style="padding: 15px; color: white; font-weight: 500;">{{ group.name }}</td>
+                        <td style="padding: 15px; color: rgba(255,255,255,0.75);">{{ group.description ?: '—' }}</td>
+                        <td style="padding: 15px; text-align: center; color: rgba(255,255,255,0.85);">{{ group.users|length }}</td>
+                        <td style="padding: 15px; color: rgba(255,255,255,0.75);">{{ group.creator ? group.creator.email : '—' }}</td>
+                        <td style="padding: 15px; text-align: center;">
+                            {% if group.isPrivate %}
+                                <span style="color:#e74c3c;">Privado</span>
+                            {% else %}
+                                <span style="color:#2ed573;">Público</span>
+                            {% endif %}
+                        </td>
+                        <td style="padding: 15px; color: rgba(255,255,255,0.65);">{{ group.createdAt|date('Y-m-d') }}</td>
+                        <td style="padding: 15px; text-align: center;">
+                            <a href="{{ path('app_group_show', {'id': group.id}) }}" style="color: var(--morado-electrico); text-decoration: none; margin-right: 15px;">Ver</a>
+                            <a href="{{ path('app_group_edit', {'id': group.id}) }}" style="color: var(--rosa-neon); text-decoration: none;">Editar</a>
+                        </td>
+
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="7" style="padding: 40px; text-align: center; color: rgba(255,255,255,0.5);">No hay grupos creados</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+
+    <style>
+        tbody tr:hover { background: rgba(255,255,255,0.03); }
+        a[href*="app_group_new"]:hover { filter: brightness(1.15); }
+        td a:hover { text-decoration: underline; }
+    </style>
+
 {% endblock %}

@@ -1,4 +1,70 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+
+<div style="margin-bottom: 20px;">
+    {{ form_label(form.name, 'Nombre del grupo', {'label_attr': {'style': 'color: white; font-weight: 500; margin-bottom: 8px; display: block;'}}) }}
+    {{ form_widget(form.name, {'attr': {'style': 'width: 100%; padding: 12px; border: 1px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.1); color: white; border-radius: 8px; font-size: 16px;', 'placeholder': 'Nombre del grupo'}}) }}
+    {{ form_errors(form.name) }}
+</div>
+
+<div style="margin-bottom: 20px;">
+    {{ form_label(form.description, 'Descripción', {'label_attr': {'style': 'color: white; font-weight: 500; margin-bottom: 8px; display: block;'}}) }}
+    {{ form_widget(form.description, {'attr': {'style': 'width: 100%; padding: 12px; border: 1px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.1); color: white; border-radius: 8px; font-size: 16px;', 'placeholder': 'Descripción del grupo'}}) }}
+    {{ form_errors(form.description) }}
+</div>
+
+<div style="margin-bottom: 20px;">
+    {{ form_label(form.isPrivate, 'Privacidad', {'label_attr': {'style': 'color: white; font-weight: 500; margin-bottom: 8px; display: block;'}}) }}
+    {{ form_widget(form.isPrivate, {'attr': {'style': 'width: 100%; padding: 12px; border: 1px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.1); color: white; border-radius: 8px; font-size: 16px;'}}) }}
+    {{ form_errors(form.isPrivate) }}
+</div>
+
+<div style="margin-bottom: 30px;">
+    {{ form_label(form.userEmails, 'Emails de miembros (separados por coma)', {'label_attr': {'style': 'color: white; font-weight: 500; margin-bottom: 8px; display: block;'}}) }}
+    {{ form_widget(form.userEmails, {'attr': {'style': 'width: 100%; padding: 12px; border: 1px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.1); color: white; border-radius: 8px; font-size: 16px;', 'placeholder': 'email1@mail.com, email2@mail.com'}}) }}
+    {{ form_errors(form.userEmails) }}
+    <small style="color: rgba(255,255,255,0.6); font-size: 13px;">Los emails se separan con comas.</small>
+</div>
+
+<button class="btn-submit">{{ button_label|default('Guardar Grupo') }}</button>
 {{ form_end(form) }}
+
+<style>
+    .btn-submit {
+        width: 100%;
+        padding: 15px;
+        background: linear-gradient(135deg, #8E2DE2 0%, #FF4B91 100%);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: transform 0.2s, box-shadow 0.3s;
+    }
+
+    .btn-submit:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 25px rgba(255, 75, 145, 0.4);
+    }
+
+    .btn-submit:active {
+        transform: translateY(0);
+    }
+
+    input:focus, select:focus, textarea:focus {
+        outline: none !important;
+        border-color: var(--rosa-neon) !important;
+        box-shadow: 0 0 0 3px rgba(255,75,145,0.1) !important;
+    }
+
+    ::placeholder {
+        color: rgba(255,255,255,0.5) !important;
+    }
+
+    .form-error-message, .invalid-feedback, ul li {
+        color: #FF4B91 !important;
+        font-size: 14px;
+        margin-top: 5px;
+        list-style: none;
+    }
+</style>

@@ -7,9 +7,13 @@
 
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
             <h1 style="color: white; font-size: 28px; font-weight: 600; margin: 0;">Usuarios</h1>
-            <a href="{{ path('app_user_new') }}" style="padding: 10px 20px; background: var(--rosa-neon); color: white; text-decoration: none; border-radius: 6px; font-weight: 500;">
-                Nuevo Usuario
-            </a>
+            {% if app.user %}
+                {% if is_granted("ROLE_SUPERADMIN") %}
+                    <a href="{{ path('app_user_new') }}" style="padding: 10px 20px; background: var(--rosa-neon); color: white; text-decoration: none; border-radius: 6px; font-weight: 500;">
+                        Nuevo Usuario
+                    </a>
+                    {% endif %}
+            {% endif %}
         </div>
 
         <div style="background: rgba(255, 255, 255, 0.05); border-radius: 8px; overflow: hidden;">
@@ -38,9 +42,11 @@
                             {% endif %}
                         </td>
                         <td style="padding: 15px; color: rgba(255, 255, 255, 0.8);">
-                            {% if 'ROLE_ADMIN' in user.roles %}
+                            {% if 'ROLE_SUPERADMIN' in user.roles %}
+                                SuperAdmin
+                            {% elseif 'ROLE_ADMIN' in user.roles %}
                                 Admin
-                            {% else %}
+                            {% elseif 'ROLE_USER' in user.roles %}
                                 Usuario
                             {% endif %}
                         </td>
