@@ -12,7 +12,8 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-}
+  cursor: url("/imgs/cursor.png") 16 16, auto !important;
+ }
 
 body {
   background-color: var(--azul-oscuro);
@@ -22,6 +23,7 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+
 }
 
 a {
