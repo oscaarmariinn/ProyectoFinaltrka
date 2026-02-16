@@ -3,12 +3,87 @@
 {% block title %}Intranet Trka{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+    <style>
+        .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+        .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
 
-<div class="example-wrapper">
-    <h1>Intranet TRKA</h1>
-</div>
+        .btn-register {
+            display: inline-block;
+            padding: 10px 20px;
+            background: linear-gradient(135deg, #8E2DE2 0%, #FF4B91 100%);
+            color: white;
+            font-weight: 600;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: transform 0.2s, box-shadow 0.3s;
+        }
+
+        .btn-register:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(255, 75, 145, 0.4);
+        }
+    </style>
+
+    <div class="example-wrapper">
+        <h1>Intranet TRKA</h1>
+        <div style="margin-top: 40px; display: flex; gap: 20px; flex-wrap: wrap;">
+
+            <!-- Últimos 5 Usuarios -->
+            <div style="flex: 1; min-width: 300px; background: rgba(255,255,255,0.05); border-radius: 12px; padding: 20px;">
+                <h3 style="color: white; font-weight: 500; margin-bottom: 15px;">Últimos 5 Usuarios</h3>
+                <ul style="list-style: none; padding: 0; margin: 0;">
+                    {% for user in lastUsers %}
+                        <li style="padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.1); color: rgba(255,255,255,0.8);">
+                            {{ user.name }} {{ user.surname }} - <span style="color: rgba(255,255,255,0.6); font-size: 14px;">{{ user.email }}</span>
+                        </li>
+                    {% else %}
+                        <li style="padding: 10px 0; color: rgba(255,255,255,0.5);">No hay usuarios recientes</li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <!-- Eventos Próximos -->
+            <div style="flex: 1; min-width: 300px; background: rgba(255,255,255,0.05); border-radius: 12px; padding: 20px;">
+                <h3 style="color: white; font-weight: 500; margin-bottom: 15px;">Eventos Próximos</h3>
+                <ul style="list-style: none; padding: 0; margin: 0;">
+                    {% for event in upcomingEvents %}
+                        <li style="padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.1); color: rgba(255,255,255,0.8);">
+                            <strong>{{ event.title }}</strong><br>
+                            <span style="color: rgba(255,255,255,0.6); font-size: 14px;">
+                    {{ event.eventDate|date('d/m/Y H:i') }}
+                                {% if event.location %} - {{ event.location }} {% endif %}
+                </span>
+                        </li>
+                    {% else %}
+                        <li style="padding: 10px 0; color: rgba(255,255,255,0.5);">No hay eventos próximos</li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+
+        </div>
+
+
+        <div style="display: flex; gap: 20px; flex-wrap: wrap; margin-top: 40px;">
+
+            <!-- Card Usuarios -->
+            <div style="flex: 1; min-width: 250px; background: rgba(255,255,255,0.05); border-radius: 12px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 5px 15px rgba(0,0,0,0.1); transition: transform 0.2s;">
+                <h3 style="color: white; font-size: 18px; font-weight: 500; margin-bottom: 15px;">Usuarios</h3>
+                <span style="font-size: 36px; font-weight: 700; color: #FF4B91;">{{ usersCount }}</span>
+            </div>
+
+            <!-- Card Grupos -->
+            <div style="flex: 1; min-width: 250px; background: rgba(255,255,255,0.05); border-radius: 12px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 5px 15px rgba(0,0,0,0.1); transition: transform 0.2s;">
+                <h3 style="color: white; font-size: 18px; font-weight: 500; margin-bottom: 15px;">Grupos</h3>
+                <span style="font-size: 36px; font-weight: 700; color: #8E2DE2;">{{ groupsCount }}</span>
+            </div>
+
+            <!-- Card Eventos -->
+            <div style="flex: 1; min-width: 250px; background: rgba(255,255,255,0.05); border-radius: 12px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 5px 15px rgba(0,0,0,0.1); transition: transform 0.2s;">
+                <h3 style="color: white; font-size: 18px; font-weight: 500; margin-bottom: 15px;">Eventos</h3>
+                <span style="font-size: 36px; font-weight: 700; color: #2ED573;">{{ eventsCount }}</span>
+            </div>
+
+        </div>
+    </div>
 {% endblock %}

@@ -8,7 +8,7 @@
 
 <div style="margin-bottom: 20px;">
     {{ form_label(form.description, 'Descripción', {'label_attr': {'style': 'color: white; font-weight: 500; margin-bottom: 8px; display: block;'}}) }}
-    {{ form_widget(form.description, {'attr': {'style': 'width: 100%; padding: 12px; border: 1px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.1); color: white; border-radius: 8px; font-size: 16px;', 'placeholder': 'Descripción del evento'}}) }}
+    {{ form_widget(form.description, {'attr': {'style': 'width: 100%; padding: 12px; border: 1px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.1); color: white; border-radius: 8px; font-size: 16px; min-height: 100px;', 'placeholder': 'Descripción del evento', 'rows': 4}}) }}
     {{ form_errors(form.description) }}
 </div>
 
@@ -26,27 +26,167 @@
 
 <div style="margin-bottom: 20px;">
     {{ form_label(form.maxParticipants, 'Participantes máximos', {'label_attr': {'style': 'color: white; font-weight: 500; margin-bottom: 8px; display: block;'}}) }}
-    {{ form_widget(form.maxParticipants, {'attr': {'style': 'width: 100%; padding: 12px; border: 1px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.1); color: white; border-radius: 8px; font-size: 16px;', 'placeholder': 'Número máximo de participantes'}}) }}
+    {{ form_widget(form.maxParticipants, {'attr': {'style': 'width: 100%; padding: 12px; border: 1px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.1); color: white; border-radius: 8px; font-size: 16px;', 'placeholder': 'Número máximo de participantes', 'min': 1}}) }}
     {{ form_errors(form.maxParticipants) }}
 </div>
 
 <div style="margin-bottom: 20px;">
-    {{ form_label(form.isPublic, 'Evento público', {'label_attr': {'style': 'color: white; font-weight: 500; margin-bottom: 8px; display: block;'}}) }}
-    {{ form_widget(form.isPublic, {'attr': {'style': 'transform: scale(1.2); margin-top: 5px;'}}) }}
+    <label style="color: white; font-weight: 500; margin-bottom: 12px; display: block;">Privacidad del evento</label>
+    <div class="privacy-selector">
+        <div class="privacy-option">
+            <input type="radio" name="event_privacy" id="privacy_public" value="1" {{ form.isPublic.vars.data ? 'checked' : '' }}>
+            <label for="privacy_public">
+                <div class="privacy-text">
+                    <div class="privacy-title">Público</div>
+                </div>
+            </label>
+        </div>
+        <div class="privacy-option">
+            <input type="radio" name="event_privacy" id="privacy_private" value="0" {{ not form.isPublic.vars.data ? 'checked' : '' }}>
+            <label for="privacy_private">
+                <div class="privacy-text">
+                    <div class="privacy-title">Privado</div>
+                </div>
+            </label>
+        </div>
+    </div>
+    {{ form_widget(form.isPublic, {'attr': {'style': 'display: none;', 'id': 'hidden_is_public'}}) }}
     {{ form_errors(form.isPublic) }}
 </div>
 
 <div style="margin-bottom: 30px;">
-    {{ form_label(form.categories, 'Categorías', {'label_attr': {'style': 'color: white; font-weight: 500; margin-bottom: 8px; display: block;'}}) }}
-    {{ form_widget(form.categories, {'attr': {'style': 'width: 100%; padding: 12px; border: 1px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.1); color: white; border-radius: 8px; font-size: 16px;'}}) }}
+    <label style="color: white; font-weight: 500; margin-bottom: 12px; display: block;">Categorías</label>
+    <div class="categories-grid">
+        {% for child in form.categories %}
+            <div class="category-checkbox">
+                {{ form_widget(child, {'attr': {'class': 'category-input'}}) }}
+                <label for="{{ child.vars.id }}" class="category-label">
+                    {{ child.vars.label }}
+                </label>
+            </div>
+        {% endfor %}
+    </div>
     {{ form_errors(form.categories) }}
 </div>
 
-<button class="btn-submit">{{ button_label|default('Guardar Evento') }}</button>
+<button type="submit" class="btn-submit">{{ button_label|default('Guardar Evento') }}</button>
 
 {{ form_end(form) }}
 
 <style>
+    /* Privacy Selector Styles */
+    .privacy-selector {
+        display: flex;
+        gap: 15px;
+        flex-wrap: wrap;
+    }
+
+    .privacy-option {
+        flex: 1;
+        min-width: 200px;
+    }
+
+    .privacy-option input[type="radio"] {
+        display: none;
+    }
+
+    .privacy-option label {
+        display: flex;
+        align-items: center;
+        padding: 16px;
+        background: rgba(255, 255, 255, 0.05);
+        border: 2px solid rgba(255, 255, 255, 0.1);
+        border-radius: 12px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .privacy-option label:hover {
+        background: rgba(255, 255, 255, 0.08);
+        border-color: rgba(255, 75, 145, 0.3);
+    }
+
+    .privacy-option input[type="radio"]:checked + label {
+        background: rgba(255, 75, 145, 0.15);
+        border-color: #FF4B91;
+        box-shadow: 0 0 20px rgba(255, 75, 145, 0.2);
+    }
+
+    .privacy-icon {
+        font-size: 32px;
+        margin-right: 15px;
+    }
+
+    .privacy-text {
+        flex: 1;
+    }
+
+    .privacy-title {
+        color: white;
+        font-weight: 600;
+        font-size: 16px;
+        margin-bottom: 4px;
+    }
+
+    .privacy-desc {
+        color: rgba(255, 255, 255, 0.6);
+        font-size: 13px;
+    }
+
+    /* Categories Grid Styles */
+    .categories-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        gap: 12px;
+    }
+
+    .category-checkbox {
+        position: relative;
+    }
+
+    .category-input {
+        position: absolute;
+        opacity: 0;
+        cursor: pointer;
+    }
+
+    .category-label {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 12px 16px;
+        background: rgba(255, 255, 255, 0.05);
+        border: 2px solid rgba(255, 255, 255, 0.1);
+        border-radius: 10px;
+        color: white;
+        font-size: 14px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-align: center;
+        min-height: 50px;
+    }
+
+    .category-label:hover {
+        background: rgba(255, 255, 255, 0.08);
+        border-color: rgba(142, 45, 226, 0.4);
+        transform: translateY(-2px);
+    }
+
+    .category-input:checked + .category-label {
+        background: linear-gradient(135deg, rgba(142, 45, 226, 0.3) 0%, rgba(255, 75, 145, 0.3) 100%);
+        border-color: #8E2DE2;
+        box-shadow: 0 4px 15px rgba(142, 45, 226, 0.3);
+        transform: translateY(-2px);
+    }
+
+    .category-input:checked + .category-label::before {
+        content: '✓ ';
+        margin-right: 5px;
+        font-weight: bold;
+    }
+
+    /* Submit Button */
     .btn-submit {
         width: 100%;
         padding: 15px;
@@ -58,6 +198,7 @@
         font-weight: 600;
         cursor: pointer;
         transition: transform 0.2s, box-shadow 0.3s;
+        margin-top: 10px;
     }
 
     .btn-submit:hover {
@@ -69,12 +210,14 @@
         transform: translateY(0);
     }
 
+    /* Form Input Focus States */
     input:focus, select:focus, textarea:focus {
         outline: none !important;
-        border-color: var(--rosa-neon) !important;
+        border-color: #FF4B91 !important;
         box-shadow: 0 0 0 3px rgba(255, 75, 145, 0.1) !important;
     }
 
+    /* Error Messages */
     .form-error-message, .invalid-feedback, ul li {
         color: #FF4B91 !important;
         font-size: 14px;
@@ -82,12 +225,49 @@
         list-style: none;
     }
 
+    /* Placeholder Styles */
     ::placeholder {
         color: rgba(255, 255, 255, 0.5) !important;
     }
 
+    /* Select Options */
     select option {
-        background: var(--azul-oscuro);
+        background: #1a1a2e;
         color: white;
     }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .privacy-selector {
+            flex-direction: column;
+        }
+
+        .categories-grid {
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 10px;
+        }
+
+        .category-label {
+            padding: 10px 12px;
+            font-size: 13px;
+        }
+    }
 </style>
+
+<script>
+    // Sync privacy radio buttons with hidden isPublic field
+    document.addEventListener('DOMContentLoaded', function() {
+        const privacyRadios = document.querySelectorAll('input[name="event_privacy"]');
+        const isPublicSelect = document.querySelector('#hidden_is_public');
+
+        if (isPublicSelect) {
+            privacyRadios.forEach(radio => {
+                radio.addEventListener('change', function() {
+                    isPublicSelect.value = this.value;
+                    // Trigger change event para que Symfony lo detecte
+                    isPublicSelect.dispatchEvent(new Event('change'));
+                });
+            });
+        }
+    });
+</script>
