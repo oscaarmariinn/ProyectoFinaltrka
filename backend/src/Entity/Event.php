@@ -27,10 +27,16 @@ class Event
 
     #[ORM\Column]
     #[Assert\NotNull]
+    #[Assert\GreaterThanOrEqual(
+        value: "today",
+        message: "La fecha del evento no puede ser anterior a hoy"
+    )]
     private ?\DateTime $eventDate = null;
 
     #[ORM\Column(length: 255)]
     #[Assert\NotNull]
+    #[Assert\NotBlank]
+    #[Assert\Length(min: 3, max: 255)]
     private ?string $location = null;
 
     #[ORM\Column(nullable: true)]
