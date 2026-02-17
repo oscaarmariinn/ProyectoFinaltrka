@@ -27,6 +27,9 @@ class Category
     #[ORM\ManyToMany(targetEntity: Event::class, mappedBy: 'categories')]
     private Collection $events;
 
+    #[ORM\Column(length: 255)]
+    private ?string $img = null;
+
     /**
      * @var Collection<int, Event>
      */
@@ -80,6 +83,18 @@ class Category
         if ($this->events->removeElement($event)) {
             $event->removeCategory($this);
         }
+
+        return $this;
+    }
+
+    public function getImg(): ?string
+    {
+        return $this->img;
+    }
+
+    public function setImg(string $img): static
+    {
+        $this->img = $img;
 
         return $this;
     }
