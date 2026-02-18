@@ -3,13 +3,12 @@ import { EventService } from '../../services/event-service';
 import { EventInterface } from '../../interfaces/event-interface';
 
 @Component({
-  selector: 'app-events-cards',
+  selector: 'app-events-cards-asc',
   imports: [],
-  templateUrl: './events-cards.html',
-  styleUrl: './events-cards.css',
+  templateUrl: './events-cards-asc.html',
+  styleUrl: './events-cards-asc.css',
 })
-export class EventsCards {
-
+export class EventsCardsAsc {
   constructor() {
     afterNextRender(() => {
       this.getResponse();
@@ -21,9 +20,9 @@ export class EventsCards {
   events: EventInterface[] = []
 
   public getResponse(): void {
-    this.data.getDataEvent().subscribe({
+    this.data.getDataEventASC().subscribe({
       next: (response) => {
-        this.events = response;
+        this.events = response.slice(0, 3);
         console.log('Eventos cargados:', this.events);
         this.cdr.markForCheck();
       },
@@ -37,5 +36,4 @@ export class EventsCards {
   selectEvent(event: EventInterface): void {
     this.select.emit(event);
   }
-
 }

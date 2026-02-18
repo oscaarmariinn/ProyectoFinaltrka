@@ -262,4 +262,104 @@ footer {
   max-width: 800px;
   padding: 0 1rem;
 }
+/* CARD GENERAL */
+.trka-card {
+  background: linear-gradient(
+    145deg,
+    rgba(26, 26, 64, 0.85),
+    rgba(18, 18, 40, 0.9)
+  );
+  border-radius: 1.5rem;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(10px);
+  transition: all 0.35s ease;
+}
+
+/* EFECTO HOVER */
+.trka-card:hover {
+  transform: translateY(-10px) scale(1.02);
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.65);
+}
+
+/* IMAGEN */
+.trka-card img {
+  height: 25em;
+  object-fit: cover;
+  filter: brightness(0.85) contrast(1.1);
+  transition: all 0.4s ease;
+}
+
+/* ZOOM SUAVE AL HOVER */
+.trka-card:hover img {
+  transform: scale(1.05);
+  filter: brightness(1) contrast(1.15);
+}
+
+/* CUERPO */
+.trka-card .card-body {
+  color: var(--blanco-suave);
+  padding: 1.5rem;
+  gap: 0.5rem;
+}
+
+/* TÍTULO */
+.trka-card .card-title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  margin-bottom: 0.3rem;
+}
+
+/* UBICACIÓN */
+.trka-card h6 {
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.7);
+  font-weight: 500;
+}
+
+/* DESCRIPCIÓN */
+.trka-card p {
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+/* FECHA */
+.trka-card p:last-of-type {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* BOTÓN */
+.trka-btn {
+  background: linear-gradient(135deg, #ff4ecd, #6c63ff);
+  color: white;
+  font-weight: 600;
+  border-radius: 50px;
+  padding: 0.6rem 1.5rem;
+  border: none;
+  box-shadow: 0 10px 25px rgba(108, 99, 255, 0.4);
+  transition: all 0.3s ease;
+}
+
+/* BOTÓN HOVER */
+.trka-btn:hover {
+  background: linear-gradient(135deg, #6c63ff, #ff4ecd);
+  transform: translateY(-2px);
+  box-shadow: 0 15px 35px rgba(255, 78, 205, 0.5);
+}
+.trka-modal {
+  background: rgba(26, 26, 64, 0.95);
+  color: var(--blanco-suave);
+  border-radius: 1.5rem;
+}
+
+.trka-modal img {
+  width: 100%;
+  max-height: 300px;
+  object-fit: cover;
+}
+
 

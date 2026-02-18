@@ -14,4 +14,12 @@ export class EventService {
   public getDataEvent(): Observable<EventInterface[]> {
     return this.http.get<EventInterface[]>(this.url);
   }
+
+  private urlASC = "http://127.0.0.1:8000/api/events?order[eventDate]=ASC";
+  private httpp = inject(HttpClient);
+
+  public getDataEventASC(): Observable<EventInterface[]> {
+    return this.httpp.get<EventInterface[]>(this.urlASC);
+  }
+
 }

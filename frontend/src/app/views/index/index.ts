@@ -2,11 +2,15 @@ import { ChangeDetectorRef, Component, inject, OnInit, OnDestroy } from '@angula
 import { NgStyle } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { Carrusel } from '../../components/carrusel/carrusel';
+import { EventInterface } from '../../interfaces/event-interface';
+import { EventsCardsAsc } from '../../components/events-cards-asc/events-cards-asc';
+import { ModalAsc } from '../../components/modal-asc/modal-asc';
+import { Modal } from '../../components/modal/modal';
 
 @Component({
   selector: 'app-index',
   standalone: true,
-  imports: [NgStyle, Carrusel, RouterLink],
+  imports: [NgStyle, Carrusel, RouterLink, Modal, EventsCardsAsc],
   templateUrl: './index.html',
   styleUrl: './index.css',
 })
@@ -74,4 +78,9 @@ export class Index implements OnInit, OnDestroy {
       });
     });
   }
+  selectedEvent: EventInterface | null = null;
+  
+    onSelect(event: EventInterface) {
+      this.selectedEvent = event;
+    }
 }

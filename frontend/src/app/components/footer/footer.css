@@ -1,0 +1,28 @@
+footer {
+  background-color: #1A1A40; /* Igual que la navbar */
+  color: #F8F9FA; /* Texto claro */
+  margin-top: auto; /* Empuja el footer al fondo de la página */
+}
+
+/* Contenedor principal centrado vertical y horizontalmente */
+section.container {
+  flex: 1; /* Ocupa el espacio restante */
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Centra verticalmente */
+  align-items: center; /* Centra horizontalmente */
+}
+
+.map-container {
+  border-radius: 12px; /* Bordes redondeados */
+}
+.Logos {
+  width: 52px;
+  height: 50px;
+  margin-right: 20px;
+  transition: transform 0.2s ease; /* Animación suave */
+}
+
+.Logos:hover {
+  transform: scale(1.15); /* Efecto zoom */
+}
