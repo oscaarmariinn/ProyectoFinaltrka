@@ -10,7 +10,7 @@
 
             {% if error %}
                 <div style="background:#ff7675; color:white; padding:12px; border-radius:8px; margin-bottom:20px;">
-                    {{ error.messageKey|trans(error.messageData, 'security') }}
+                    {{ dump(error) }}
                 </div>
             {% endif %}
 
