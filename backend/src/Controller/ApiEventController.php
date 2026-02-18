@@ -204,6 +204,7 @@ class ApiEventController extends AbstractController
                 $categories[] = [
                     'id' => $category->getId(),
                     'name' => $category->getName(),
+                    'img' => $category->getImg(),
                 ];
             }
 

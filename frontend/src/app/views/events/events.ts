@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { EventsCards } from "../../components/events-cards/events-cards";
+import { EventService } from '../../services/event-service';
 
 @Component({
   selector: 'app-events',
@@ -10,3 +11,4 @@ import { EventsCards } from "../../components/events-cards/events-cards";
 export class Events {
 
 }
+

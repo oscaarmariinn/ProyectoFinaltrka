@@ -1,0 +1,16 @@
+import { inject, Injectable } from '@angular/core';
+import { GroupInterface } from '../interfaces/group-interface';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+
+@Injectable({
+  providedIn: 'root',
+})
+export class GroupService {
+  private url = "http://127.0.0.1:8000/api/groups";
+  private http = inject(HttpClient);
+
+  public getDataGroup(): Observable<GroupInterface[]> {
+    return this.http.get<GroupInterface[]>(this.url);
+  }
+}
