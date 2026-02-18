@@ -20,17 +20,16 @@ export class Index {
     'https://www.visita-valencia.com/wp-content/uploads/2021/05/imagenes-almuerzos-valencia_0003_almuerzo-bar-mistela.jpg',
   ];
 
-  currentImage = this.images[3];
+  private cdr = inject(ChangeDetectorRef);
+  currentImage = this.images[0];
   index = 0;
   
-  _auto = this.rotateImages();
-  
-  public rotateImages(): void {
-    setTimeout(() => {
+  public ngOnInit(): void {
+    setInterval(() => {
       this.index = (this.index + 1) % this.images.length;
       this.currentImage = this.images[this.index];
-      this.rotateImages();
-    }, 30000);
+      this.cdr.markForCheck();
+    }, 3000);
   }
 }
   
