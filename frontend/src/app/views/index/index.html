@@ -1,22 +1,29 @@
-<section class="hero" [ngStyle]="{
-    'background':
-    'linear-gradient(rgb(142 45 226 / 50%), rgb(142 45 226 / 80%)), url(' + currentImage + ')'
-    }">
+<section class="hero">
+
+  <img
+    class="hero-img"
+    [src]="currentImage"
+    alt=""
+  />
+
+  <img
+    class="hero-img hero-img-next"
+    [src]="nextImage"
+    [class.show]="transitioning"
+    alt=""
+  />
+
+  <div class="hero-overlay"></div>
+
+  <div class="hero-content">
     <h1>Conecta. Sal. Disfruta.</h1>
-
-    <p>
-        Descubre los mejores planes en Valencia. Fiestas,
-        eventos y nuevas amistades — todo en una sola app.
-    </p>
-
-
-    <a class="cta-btn" routerLink="/register" >
-        Únete ahora
-    </a>
+    <p>Descubre los mejores planes en Valencia.</p>
+  </div>
 
 </section>
+
 <!-- Esto para el carrusel
- 
+
 <section>
       <div class="content">
         <div class="grid">
