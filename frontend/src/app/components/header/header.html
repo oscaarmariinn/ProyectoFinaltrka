@@ -1,55 +1,45 @@
 <nav class="navbar navbar-expand-md header-container">
-    <div class="container-fluid align-items-center">
+  <div class="container-fluid align-items-center">
 
-        <a class="navbar-brand logo" routerLink="/">
-            <img src="../../../../imgs/logo.png" alt="Trka Logo">
-        </a>
+    <a class="navbar-brand logo" routerLink="/">
+      <img src="../../../../imgs/logo.png" alt="Trka Logo">
+    </a>
 
-        <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-
-        <!-- Links -->
-        <div class="collapse navbar-collapse justify-content-end" id="mainNavbar">
-            <ul class="navbar-nav gap-md-3">
-
-                <li class="nav-item">
-                    <a class="nav-link" routerLink="index" routerLinkActive="active">Inicio</a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" routerLink="events" routerLinkActive="active">Eventos</a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" routerLink="contact" routerLinkActive="active">Contacto</a>
-                </li>
+    <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar">
+      <span class="navbar-toggler-icon"></span>
+    </button>
 
 
-            </ul>
+    <!-- Links -->
+    <div class="collapse navbar-collapse justify-content-end" id="mainNavbar">
+      <ul class="navbar-nav gap-md-3">
 
-          @if(!user){
-            <li class="nav-item dropdown" style="list-style: none;">
-              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Cuenta
-              </a>
-              <ul class="dropdown-menu dropdown-menu-lg-end">
-                <li>
-                  <a class="dropdown-item" routerLink="login">Iniciar sesión</a>
-                </li>
-                <li>
-                  <a class="dropdown-item" routerLink="register">Registrarse</a>
-                </li>
-              </ul>
-            </li>
-          } @else {
-            <li class="nav-item">
-              <a class="nav-link" routerLink="user" routerLinkActive="active">
-                <img src="../../../../imgs/Usuario-icon.png" height="50px" width="50px" alt="">
-              </a>
-            </li>
-          }
-        </div>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="index" routerLinkActive="active">Inicio</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" routerLink="events" routerLinkActive="active">Eventos</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" routerLink="contact" routerLinkActive="active">Contacto</a>
+        </li>
+        @if(!user){
+        <li class="nav-item">
+          <a class="nav-link" routerLink="login">Iniciar sesión</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="register">Registrarse</a>
+        </li>
+        } @else {
+        <li class="nav-item">
+          <a class="nav-link" routerLink="user" routerLinkActive="active">
+            <img src="../../../../imgs/Usuario-icon.png" height="50px" width="50px" alt="">
+          </a>
+        </li>
+        }
+      </ul>
     </div>
+  </div>
 </nav>

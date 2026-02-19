@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import { Component, inject } from '@angular/core';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { AuthService } from '../../services/auth-service';
 
 @Component({
   selector: 'app-user',
@@ -8,5 +9,15 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
   styleUrl: './user.css',
 })
 export class User {
+
+  public data = inject(AuthService);
+  private router = inject(Router);
+
+
+  public closeSesion(): void {
+    this.data.logout();
+    alert('Has cerrado sesión correctamente')
+    this.router.navigate(['/index']);
+  }
 
 }

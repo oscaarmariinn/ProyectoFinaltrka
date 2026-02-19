@@ -1,69 +1,67 @@
+<section class="hero hero--small">
+    <h1 style="color: var(--blanco-suave);">
+        Mi <span style="color: var(--rosa-neon);">Perfil</span>
+    </h1>
+</section>
 
-                    <section class="hero hero--small">
-                        <h1 style="color: var(--blanco-suave);">
-                            Mi <span style="color: var(--rosa-neon);">Perfil</span>
-                        </h1>
-                    </section>
+<main>
+    <div class="container my-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8 col-lg-6">
+                <div class="feature-card p-4">
 
-                    <main>
-                        <div class="container my-5">
-                            <div class="row justify-content-center">
-                                <div class="col-md-8 col-lg-6">
-                                    <div class="feature-card p-4">
-
-                                        <!-- Avatar -->
-                                        <div class="text-center mb-4">
-                                            <div class="rounded-circle mx-auto mb-3"
-                                                style="width:120px; height:120px; background:#222;">
-                                            </div>
-                                            <p class="text-muted mb-0" style="color: var(--blanco-suave) !important;">Foto de perfil</p>
-                                        </div>
-
-                                        <!-- Datos -->
-                                        <div class="mb-3">
-                                            <p class="mb-1 text-muted" style="color: var(--blanco-suave) !important;">Nombre</p>
-                                            <p class="fw-bold">—</p>
-                                        </div>
-
-                                        <div class="mb-3">
-                                            <p class="mb-1 text-muted" style="color: var(--blanco-suave) !important;">Apellidos</p>
-                                            <p class="fw-bold">—</p>
-                                        </div>
-
-                                        <div class="mb-3">
-                                            <p class="mb-1 text-muted" style="color: var(--blanco-suave) !important;">Correo electrónico</p>
-                                            <p class="fw-bold">-</p>
-                                        </div>
-
-                                        <div class="mb-4">
-                                            <p class="mb-1 text-muted" style="color: var(--blanco-suave) !important;">Teléfono</p>
-                                            <p class="fw-bold">—</p>
-                                        </div>
-                                        <hr>
-
-                                        <h6 class="mb-3"><a routerLink="/newpassword" routerLinkActive="active">Cambiar
-                                                contraseña </a></h6>
-
-
-
-                                        <div class="d-grid gap-2">
-                                            <button type="submit" class="btn btn-dark fw-bold">
-                                                Guardar cambios
-                                            </button>
-
-                                            <button type="button" class="btn btn-outline-danger">
-                                                Eliminar cuenta
-                                            </button>
-                                        </div>
-                                        <br>
-
-                                        <a style="cursor: pointer;" routerLink="/index" routerLinkActive="active">
-                                            Volver al inicio
-                                        </a>
-
-                                    </div>
-                                </div>
-                            </div>
+                    <!-- Avatar -->
+                    <div class="text-center mb-4">
+                        <div class="rounded-circle mx-auto mb-3" style="width:120px; height:120px; background:#222;">
                         </div>
-    
+                        <p class="text-muted mb-0" style="color: var(--blanco-suave) !important;">Foto de perfil</p>
+                    </div>
+
+                    <!-- Datos -->
+                    <div class="mb-3">
+                        <p class="mb-1 text-muted" style="color: var(--blanco-suave) !important;">Nombre</p>
+                        <p class="fw-bold">—</p>
+                    </div>
+
+                    <div class="mb-3">
+                        <p class="mb-1 text-muted" style="color: var(--blanco-suave) !important;">Apellidos</p>
+                        <p class="fw-bold">—</p>
+                    </div>
+
+                    <div class="mb-3">
+                        <p class="mb-1 text-muted" style="color: var(--blanco-suave) !important;">Correo electrónico</p>
+                        <p class="fw-bold">-</p>
+                    </div>
+
+                    <div class="mb-4">
+                        <p class="mb-1 text-muted" style="color: var(--blanco-suave) !important;">Teléfono</p>
+                        <p class="fw-bold">—</p>
+                    </div>
+                    <hr>
+
+                    <h6 class="mb-3"><a routerLink="/newpassword" routerLinkActive="active">Cambiar
+                            contraseña </a></h6>
+
+
+
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-dark fw-bold">
+                            Guardar cambios
+                        </button>
+
+                        <button (click)="closeSesion()" type="button" class="btn btn-outline-danger">
+                           Cerrar sesión 
+                        </button>
+                    </div>
+                    <br>
+
+                    <a style="cursor: pointer;" routerLink="/index" routerLinkActive="active">
+                        Volver al inicio
+                    </a>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
 </main>
