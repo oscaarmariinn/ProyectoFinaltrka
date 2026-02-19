@@ -12,23 +12,7 @@
     </div>
 
 </section>
-
-<!-- Esto para el carrusel
-
-<section>
-      <div class="content">
-        <div class="grid">
-            <app-carousel (position)="onCarousel($event)" [name]="name" [photo]="image"></app-carousel>
-        </div>
-
-        <div id='render-more'>
-            <button (click)="showMore(-1)">ANTERIORES</button>
-            <button (click)="showMore(1)">SIGUIENTES</button>
-        </div>
-
-</section>
--->
-
+@if (index){
 <section class="container my-5">
     <h3>
         <h2>Nuestros próximos eventos</h2>
@@ -39,3 +23,8 @@
     <app-modal [selectedEvent]="selectedEvent"></app-modal>
 
 </section>
+} @else {
+  <section class="container my-5">
+  <h3>Inicia sesión para ver nuestro contenido</h3>
+  </section>
+}
