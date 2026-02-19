@@ -83,6 +83,8 @@ nav a:hover {
       var(--azul-oscuro) 80%);
   background-size: cover;
   background-position: center;
+  height: calc(100vh - 80px);
+  margin-top: 0;
 }
 
 .hero h1 {
@@ -361,5 +363,37 @@ footer {
   max-height: 300px;
   object-fit: cover;
 }
+.navbar-nav .dropdown-menu {
+  background-color: #1A1A40 !important; /* sin transparencia para que se vea sólido */
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 0.75rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+  padding: 0.5rem;
+  min-width: 180px;
+  margin-top: 0.5rem !important;
+  z-index: 9999;
+}
 
+.navbar-nav .dropdown-item {
+  color: var(--blanco-suave) !important;
+  border-radius: 0.4rem;
+  padding: 0.6rem 1.2rem;
+  font-weight: 500;
+  transition: color 0.2s ease, background 0.2s ease;
+}
+
+.navbar-nav .dropdown-item:hover,
+.navbar-nav .dropdown-item:focus {
+  background-color: rgba(255, 75, 145, 0.15) !important;
+  color: var(--rosa-neon) !important;
+}
+
+.navbar-nav .nav-link.dropdown-toggle {
+  color: var(--blanco-suave) !important;
+}
+
+.navbar-nav .nav-link.dropdown-toggle:hover,
+.navbar-nav .nav-link.dropdown-toggle.show {
+  color: var(--rosa-neon) !important;
+}
 

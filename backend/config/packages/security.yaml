@@ -1,53 +1,53 @@
 security:
-    # Configuración del hasher de contraseñas
     password_hashers:
         Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto'
 
-    # Proveedor de usuarios (de dónde cargar los usuarios)
     providers:
         app_user_provider:
             entity:
                 class: App\Entity\User
                 property: email
 
-    # Firewalls (reglas de seguridad por rutas)
     firewalls:
-        # Desactivar seguridad para el profiler de desarrollo
         dev:
             pattern: ^/(_(profiler|wdt))/
             security: false
 
-        # Firewall para el endpoint de login
+        # ✅ Nuevo: firewall para la intranet web
+        main:
+            pattern: ^/
+            lazy: true
+            provider: app_user_provider
+            form_login:
+                login_path: app_login
+                check_path: app_login
+                default_target_path: /
+                username_parameter: _username
+                password_parameter: _password
+                enable_csrf: true
+            logout:
+                path: app_logout
+                target: /login
+
+        # Firewall JWT para la API
         login:
             pattern: ^/api/login
             stateless: true
             json_login:
-                # Ruta donde se envían las credenciales
                 check_path: /api/login_check
-                # Campos del JSON que contienen email y password
                 username_path: email
                 password_path: password
-                # Handlers de Lexik para generar el token
                 success_handler: lexik_jwt_authentication.handler.authentication_success
                 failure_handler: lexik_jwt_authentication.handler.authentication_failure
 
-        # Firewall para todas las rutas /api/* (excepto login)
         api:
             pattern: ^/api
             stateless: true
-            jwt: ~  # Activar autenticación JWT
+            jwt: ~
 
-    # Control de acceso (qué roles pueden acceder a qué rutas)
     access_control:
+        - { path: ^/login, roles: PUBLIC_ACCESS }
         - { path: ^/api/login, roles: PUBLIC_ACCESS }
         - { path: ^/api/register, roles: PUBLIC_ACCESS }
         - { path: ^/api, roles: IS_AUTHENTICATED_FULLY }
-
-when@test:
-    security:
-        password_hashers:
-            Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface:
-                algorithm: auto
-                cost: 4
-                time_cost: 3
-                memory_cost: 10
+        - { path: ^/, roles: IS_AUTHENTICATED_FULLY }
