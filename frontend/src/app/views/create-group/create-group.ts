@@ -61,7 +61,7 @@ private groupService = inject(GroupService);
       next: () => {
         this.isLoading = false;
         this.successMessage = '¡Grupo creado correctamente!';
-        setTimeout(() => this.router.navigate(['/groups']), 1500);
+        setTimeout(() => this.router.navigate(['/group']), 1500);
       },
       error: () => {
         this.isLoading = false;

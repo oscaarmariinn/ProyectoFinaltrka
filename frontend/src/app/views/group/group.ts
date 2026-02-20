@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 import { GroupCards } from '../../components/group-cards/group-cards';
 import { ModalGroup } from '../../components/modal-group/modal-group';
 import { GroupInterface } from '../../interfaces/group-interface';
 
 @Component({
   selector: 'app-group',
-  imports: [RouterLink, GroupCards, ModalGroup],
+  imports: [RouterLink, GroupCards, ModalGroup, RouterLinkActive],
   templateUrl: './group.html',
   styleUrl: './group.css',
 })

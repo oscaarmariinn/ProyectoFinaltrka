@@ -7,6 +7,7 @@ import { Register } from './views/register/register';
 import {Events} from './views/events/events';
 import { UserPasssord } from './views/user-passsord/user-passsord';
 import { Group } from './views/group/group';
+import { CreateGroup } from './views/create-group/create-group';
 
 export const routes: Routes = [
     { path: '', redirectTo: 'index', pathMatch: 'full' },
@@ -17,5 +18,6 @@ export const routes: Routes = [
     { path: 'events', component: Events },
     {path: 'user', component: User},
     {path: 'newpassword', component: UserPasssord},
-    {path: 'group', component: Group}
+    {path: 'group', component: Group},
+    {path: 'create-group', component: CreateGroup},
 ];
