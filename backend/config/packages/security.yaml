@@ -13,6 +13,22 @@ security:
             pattern: ^/(_(profiler|wdt))/
             security: false
 
+        main:
+            pattern: ^/
+            lazy: true
+            provider: app_user_provider
+            form_login:
+                login_path: app_login
+                check_path: app_login
+                default_target_path: /
+                username_parameter: _username
+                password_parameter: _password
+                enable_csrf: true
+            logout:
+                path: app_logout
+                target: /login
+
+        # Firewall JWT para la API
         login:
             pattern: ^/api/login
             stateless: true
@@ -29,6 +45,8 @@ security:
             jwt: ~
 
     access_control:
+        - { path: ^/login, roles: PUBLIC_ACCESS }
         - { path: ^/api/login, roles: PUBLIC_ACCESS }
         - { path: ^/api/register, roles: PUBLIC_ACCESS }
         - { path: ^/api, roles: IS_AUTHENTICATED_FULLY }
+        - { path: ^/, roles: IS_AUTHENTICATED_FULLY }
