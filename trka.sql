@@ -18,17 +18,17 @@ SET FOREIGN_KEY_CHECKS = 1;
 -- ============================================
 -- INSERTAR CATEGORÍAS
 -- ============================================
-INSERT INTO category (id, name) VALUES
-                                    (1, 'Comida'),
-                                    (2, 'Cena'),
-                                    (3, 'Almuerzo'),
-                                    (4, 'Tardeo'),
-                                    (5, 'Fiesta'),
-                                    (6, 'Cine'),
-                                    (7, 'Centro Comercial'),
-                                    (8, 'Tomar algo'),
-                                    (9, 'Deporte'),
-                                    (10, 'Cumpleaños');
+INSERT INTO category (id, name, img) VALUES
+                                    (1, 'Comida', 'comida'),
+                                    (2, 'Cena', 'cena'),
+                                    (3, 'Almuerzo', 'almuerzo'),
+                                    (4, 'Tardeo', 'tardeo'),
+                                    (5, 'Fiesta', 'fiesta'),
+                                    (6, 'Cine', 'cine'),
+                                    (7, 'Centro Comercial', 'centro_comercial'),
+                                    (8, 'Tomar algo', 'tomar_algo'),
+                                    (9, 'Deporte', 'deporte'),
+                                    (10, 'Cumpleaños', 'cumpleanos');
 
 -- ============================================
 -- INSERTAR USUARIOS

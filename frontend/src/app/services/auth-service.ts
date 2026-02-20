@@ -13,7 +13,7 @@ export class AuthService {
     return this.http.post(`${this.apiUrl}/register`, userData);
   }
 
-  // ✅ Guarda el token automáticamente al hacer login
+  // Guarda el token automáticamente al hacer login
   login(email: string, password: string): Observable<any> {
     return this.http.post<{ token: string }>(`${this.apiUrl}/login_check`, { email, password }).pipe(
       tap((response: any) => {

@@ -13,4 +13,8 @@ export class GroupService {
   public getDataGroup(): Observable<GroupInterface[]> {
     return this.http.get<GroupInterface[]>(this.url);
   }
+
+  public createGroup(group: GroupInterface): Observable<GroupInterface> {
+    return this.http.post<GroupInterface>(this.url, group);
+  }
 }
