@@ -2,11 +2,12 @@ import { afterNextRender, ChangeDetectorRef, Component, EventEmitter, inject, Ou
 
 import { GroupInterface } from '../../interfaces/group-interface';
 import { GroupService } from '../../services/group-service';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 
 
 @Component({
   selector: 'app-group-cards',
-  imports: [],
+  imports: [RouterLink, RouterLinkActive],
   templateUrl: './group-cards.html',
   styleUrl: './group-cards.css',
 })

@@ -1,5 +1,6 @@
 <button class="btn trka-btn" routerLink="/create-group" routerLinkActive="active">
     Crear grupo
 </button>
+
 <app-group-cards (select)="onSelect($event)"></app-group-cards>
 <app-modal-group [selectedGroup]="selectedGroup"></app-modal-group>

@@ -3,10 +3,11 @@ import { EventsCards } from "../../components/events-cards/events-cards";
 import { EventService } from '../../services/event-service';
 import { Modal } from '../../components/modal/modal';
 import { EventInterface } from '../../interfaces/event-interface';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
   selector: 'app-events',
-  imports: [EventsCards, Modal],
+  imports: [EventsCards, Modal, RouterLink, RouterLinkActive],
   templateUrl: './events.html',
   styleUrl: './events.css',
 })

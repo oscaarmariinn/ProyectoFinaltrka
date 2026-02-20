@@ -17,4 +17,12 @@ export class GroupService {
   public createGroup(group: GroupInterface): Observable<GroupInterface> {
     return this.http.post<GroupInterface>(this.url, group);
   }
+
+  public getGroupById(id: number): Observable<any> {
+    return this.http.get<any>(`${this.url}/${id}`);
+  }
+
+  public updateGroup(userId: number, groupId: number, payload: any): Observable<any> {
+    return this.http.patch<any>(`${this.url}/${userId}/${groupId}`, payload);
+  }
 }

@@ -2,7 +2,7 @@
     <div class="row g-4">
 
         @for(group of groups ; track $index){
-            
+
         <div class="col-md-6">
             <div class="card trka-card h-100" style="background: rgba(26, 26, 64, 0.8); border: 60px white !important;">
                 <div class="card-body d-flex flex-column" style="color: var(--blanco-suave); ">
@@ -20,6 +20,7 @@
                         (click)="selectEvent(group)">
                         Ver más
                     </button>
+                   <button [routerLink]="['/groups/edit', group.id]" routerLinkActive="active" class="btn trka-btn mt-2">Editar</button>
                 </div>
             </div>
         </div>

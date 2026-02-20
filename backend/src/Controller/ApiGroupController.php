@@ -50,6 +50,22 @@ class ApiGroupController extends AbstractController
         $data = $this->getData($groups, $data);
         return new JsonResponse($data);
     }
+    #[Route('/{id}', name: 'show', methods: ['GET'])]
+    public function show(int $id, EntityManagerInterface $em): JsonResponse
+    {
+        $group = $em->getRepository(Group::class)->find($id);
+
+        if (!$group) {
+            return new JsonResponse(['message' => 'Group not found'], 404);
+        }
+
+        return new JsonResponse([
+            'id'          => $group->getId(),
+            'name'        => $group->getName(),
+            'description' => $group->getDescription(),
+            'is_private'  => $group->isPrivate(),
+        ]);
+    }
 
     #[Route('/{user_id}/{id}', name: 'update', methods: ['PUT', 'PATCH'])]
     public function update(
@@ -70,9 +86,9 @@ class ApiGroupController extends AbstractController
 
         $data = json_decode($request->getContent(), true);
 
-        $group->setName($data['name'] ?? $group->getTitle());
+        $group->setName($data['name'] ?? $group->getName());
         $group->setDescription($data['description'] ?? $group->getDescription());
-        $group->setIsPrivate($data['isPrivate'] ?? $group->isPublic());
+        $group->setIsPrivate($data['is_private'] ?? $group->isPrivate());
 
         $em->flush();
         return new JsonResponse(['message' => 'Event updated successfully']);
@@ -151,4 +167,5 @@ class ApiGroupController extends AbstractController
         }
         return $data;
     }
+
 }
