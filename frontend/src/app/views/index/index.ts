@@ -10,7 +10,7 @@ import { Modal } from '../../components/modal/modal';
 @Component({
   selector: 'app-index',
   standalone: true,
-  imports: [NgStyle, Carrusel, RouterLink, Modal, EventsCardsAsc],
+  imports: [ RouterLink, Modal, EventsCardsAsc],
   templateUrl: './index.html',
   styleUrl: './index.css',
 })
@@ -27,8 +27,8 @@ export class Index implements OnInit, OnDestroy {
     'imgs/eventosimgs/cumpleanos.jpg',
     'imgs/eventosimgs/deporte.jpg',
   ];
-  currentImage!: string;
-  nextImage!: string;
+  currentImage: string= "imgs/eventosimgs/cine.jpg"
+  nextImage: string = "imgs/eventosimgs/cine.jpg";
   index = 0;
   transitioning = false;
 
@@ -79,7 +79,7 @@ export class Index implements OnInit, OnDestroy {
     });
   }
   selectedEvent: EventInterface | null = null;
-  
+
     onSelect(event: EventInterface) {
       this.selectedEvent = event;
     }

@@ -1,49 +1,112 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable, inject, signal, computed } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, tap } from 'rxjs';  // ✅ importar tap
+import { Router } from '@angular/router';
+import { Observable, tap } from 'rxjs';
+
+export interface AuthUser {
+  id: number;
+  email: string;
+  roles: string[];
+  name: string;
+  surname: string;
+}
+
+export interface LoginResponse {
+  token: string;
+  user: AuthUser;
+}
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private http = inject(HttpClient);
-  private apiUrl = 'http://localhost:8000/api';
+  private http      = inject(HttpClient);
+  private router    = inject(Router);
+  private apiUrl    = 'http://localhost:8000/api';
 
-  register(userData: { email: string, password: string, name: string, surname: string }): Observable<any> {
+  private readonly TOKEN_KEY = 'jwt_token';
+  private readonly USER_KEY  = 'auth_user';
+
+  private _currentUser = signal<AuthUser | null>(this.loadUserFromStorage());
+
+  readonly currentUser     = this._currentUser.asReadonly();
+  readonly isAuthenticated = computed(() => this._currentUser() !== null);
+
+  register(userData: { email: string; password: string; name: string; surname: string }): Observable<any> {
     return this.http.post(`${this.apiUrl}/register`, userData);
   }
 
-  // Guarda el token automáticamente al hacer login
-  login(email: string, password: string): Observable<any> {
-    return this.http.post<{ token: string }>(`${this.apiUrl}/login_check`, { email, password }).pipe(
-      tap((response: any) => {
-        if (response.token) {
+  login(email: string, password: string): Observable<LoginResponse> {
+    return this.http
+      .post<LoginResponse>(`${this.apiUrl}/login_check`, { email, password })
+      .pipe(
+        tap((response) => {
           this.saveToken(response.token);
-        }
-      })
-    );
-  }
-
-  saveToken(token: string): void {
-    localStorage.setItem('jwt_token', token);
-  }
-
-  getToken(): string | null {
-    return localStorage.getItem('jwt_token');
+          this.saveUser(response.user);
+          this._currentUser.set(response.user);
+        })
+      );
   }
 
   logout(): void {
-    localStorage.removeItem('jwt_token');
+    localStorage.removeItem(this.TOKEN_KEY);
+    localStorage.removeItem(this.USER_KEY);
+    this._currentUser.set(null);
+    this.router.navigate(['/login']);
+  }
+
+  saveToken(token: string): void {
+    localStorage.setItem(this.TOKEN_KEY, token);
+  }
+
+  getToken(): string | null {
+    return localStorage.getItem(this.TOKEN_KEY);
   }
 
   isLoggedIn(): boolean {
-    return !!this.getToken();  // ✅ más limpio
+    return this.isAuthenticated();
+  }
+
+  isTokenExpired(): boolean {
+    const token = this.getToken();
+    if (!token) return true;
+    try {
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      return payload.exp < Math.floor(Date.now() / 1000);
+    } catch {
+      return true;
+    }
   }
 
   getAuthHeaders(): HttpHeaders {
-    const token = this.getToken();
-    return new HttpHeaders({
-      'Authorization': `Bearer ${token}`
-    });
+    return new HttpHeaders({ Authorization: `Bearer ${this.getToken()}` });
+  }
+
+  updateCurrentUser(user: AuthUser): void {
+  this.saveUser(user);
+  this._currentUser.set(user);
+}
+
+  private saveUser(user: AuthUser): void {
+    localStorage.setItem(this.USER_KEY, JSON.stringify(user));
+  }
+
+  private loadUserFromStorage(): AuthUser | null {
+    try {
+      const stored = localStorage.getItem(this.USER_KEY);
+      const token  = localStorage.getItem(this.TOKEN_KEY);
+      if (!stored || !token) return null;
+
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      if (payload.exp < Math.floor(Date.now() / 1000)) {
+        localStorage.removeItem(this.USER_KEY);
+        localStorage.removeItem(this.TOKEN_KEY);
+        return null;
+      }
+
+      return JSON.parse(stored) as AuthUser;
+    } catch {
+      return null;
+    }
   }
 }

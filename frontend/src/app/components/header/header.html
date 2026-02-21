@@ -9,8 +9,6 @@
       <span class="navbar-toggler-icon"></span>
     </button>
 
-
-    <!-- Links -->
     <div class="collapse navbar-collapse justify-content-end" id="mainNavbar">
       <ul class="navbar-nav gap-md-3">
 
@@ -23,12 +21,14 @@
         </li>
 
         <li class="nav-item">
-          <a class="nav-link" routerLink="contact" routerLinkActive="active">Contacto</a>
-        </li>
-        <li class="nav-item">
           <a class="nav-link" routerLink="group" routerLinkActive="active">Grupos</a>
         </li>
-        @if(!user){
+
+        <li class="nav-item">
+          <a class="nav-link" routerLink="contact" routerLinkActive="active">Contacto</a>
+        </li>
+        
+        @if (!authService.isAuthenticated()) {
         <li class="nav-item">
           <a class="nav-link" routerLink="login">Iniciar sesión</a>
         </li>
@@ -38,10 +38,17 @@
         } @else {
         <li class="nav-item">
           <a class="nav-link" routerLink="user" routerLinkActive="active">
-            <img src="../../../../imgs/Usuario-icon.png" height="50px" width="50px" alt="">
+            <img src="../../../../imgs/Usuario-icon.png" height="50px" width="50px"
+              [title]="authService.currentUser()?.name + ' ' + authService.currentUser()?.surname" alt="">
           </a>
         </li>
+        <li class="nav-item d-flex align-items-center">
+          <button class="btn btn-sm nav-link" style="cursor:pointer;" (click)="authService.logout()">
+            Cerrar sesión
+          </button>
+        </li>
         }
+
       </ul>
     </div>
   </div>

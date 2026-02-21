@@ -1,6 +1,6 @@
-import { afterNextRender, ChangeDetectorRef, Component, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
-
+import { AuthService } from '../../services/auth-service';
 
 @Component({
   selector: 'app-header',
@@ -9,21 +9,5 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
   styleUrl: './header.css',
 })
 export class Header {
-  public user: boolean = false;
-  constructor() {
-    afterNextRender(() => {
-      this.reload();
-    });
-  }
-
-  private cdr = inject(ChangeDetectorRef);
-
-  public reload(): void {
-    let local = localStorage.getItem('jwt_token');
-    if (local !== null) {
-      this.user = true;
-    }
-    this.cdr.markForCheck();
-  }
-
+  protected authService = inject(AuthService);
 }
