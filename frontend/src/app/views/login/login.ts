@@ -24,11 +24,11 @@ export class Login {
         let data = this.reactiveForm.getRawValue();
 
         this.authService.login(data.email, data.password).subscribe({
-          next: (response) => {
-            alert('Has iniciado sesión correctamente')
-            this.router.navigate(['/index']);
+            next: (response) => {
+                alert('Has iniciado sesión correctamente')
+                this.router.navigate(['/index']);
 
-          },
+            },
             error: (err) => {
                 this.errorMessage = 'Email o contraseña incorrectos';
             }

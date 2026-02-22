@@ -21,6 +21,7 @@ class Category
     #[Assert\NotNull]
     private ?string $name = null;
 
+
     /**
      * @var Collection<int, Event>
      */

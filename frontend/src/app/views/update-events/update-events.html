@@ -1,8 +1,9 @@
 <section class="hero hero--small" style="height: 30em;">
     <h1 style="color: var(--blanco-suave);">
-        Crear un evento con <span style="color: var(--rosa-neon);">nosotros</span>
+        Editar <span style="color: var(--rosa-neon);">evento</span>
     </h1>
 </section>
+
 <main>
     <section class="container my-5">
         <div class="row justify-content-center">
@@ -19,7 +20,16 @@
                         <span>❌</span> {{ errorMessage }}
                     </div>
                     }
+
+                    @if(isLoadingData) {
+                    <div class="d-flex justify-content-center my-5">
+                        <span class="spinner-border" role="status"></span>
+                    </div>
+                    } @else {
+
                     <form [formGroup]="reactiveForm" (ngSubmit)="onSubmit()" novalidate>
+
+
                         <div class="mb-3">
                             <label for="title" class="form-label">Título del evento</label>
                             <input id="title" type="text" class="form-control"
@@ -37,6 +47,8 @@
                                 }
                             </div>
                         </div>
+
+
                         <div class="mb-3">
                             <label for="description" class="form-label">Descripción</label>
                             <textarea id="description" class="form-control"
@@ -52,6 +64,8 @@
                                 }
                             </div>
                         </div>
+
+
                         <div class="mb-3">
                             <label for="event_date" class="form-label">Fecha y hora</label>
                             <input id="event_date" type="datetime-local" class="form-control"
@@ -63,6 +77,8 @@
                                 }
                             </div>
                         </div>
+
+
                         <div class="mb-3">
                             <label for="location" class="form-label">Ubicación</label>
                             <input id="location" type="text" class="form-control"
@@ -77,6 +93,8 @@
                                 }
                             </div>
                         </div>
+
+
                         <div class="mb-3">
                             <label for="max_participants" class="form-label">Máximo de participantes</label>
                             <input id="max_participants" type="number" class="form-control"
@@ -91,6 +109,8 @@
                                 }
                             </div>
                         </div>
+
+
                         <div class="mb-3">
                             <label for="category_id" class="form-label">Categoría</label>
                             <select id="category_id" class="form-select"
@@ -114,6 +134,8 @@
                                 }
                             </div>
                         </div>
+
+
                         <div class="mb-4">
                             <label for="isPublic" class="form-label">Visibilidad</label>
                             <select id="isPublic" class="form-select" formControlName="isPublic">
@@ -121,23 +143,27 @@
                                 <option [ngValue]="false">Privado — solo por invitación</option>
                             </select>
                         </div>
+
+
                         <div class="d-flex gap-2">
                             <button type="button" class="btn btn-outline-secondary flex-fill" (click)="goBack()"
                                 [disabled]="isLoading">
                                 Cancelar
                             </button>
-                            <button type="submit" class="btn btn-dark fw-bold flex-fill" [disabled]="isLoading"
-                                id="Boton Crear evento">
+                            <button type="submit" class="btn btn-dark fw-bold flex-fill" [disabled]="isLoading">
                                 @if(isLoading) {
                                 <span class="spinner-border spinner-border-sm me-2" role="status"
                                     style="color: azure !important;"></span>
-                                Creando...
+                                Guardando...
                                 } @else {
-                                Crear evento
+                                Guardar cambios
                                 }
                             </button>
                         </div>
+
                     </form>
+                    }
+
                 </div>
             </div>
         </div>

@@ -31,27 +31,15 @@
 </div>
 
 <div style="margin-bottom: 20px;">
-    <label style="color: white; font-weight: 500; margin-bottom: 12px; display: block;">Privacidad del evento</label>
-    <div class="privacy-selector">
-        <div class="privacy-option">
-            <input type="radio" name="event_privacy" id="privacy_public" value="1" {{ form.isPublic.vars.data ? 'checked' : '' }}>
-            <label for="privacy_public">
-                <div class="privacy-text">
-                    <div class="privacy-title">Público</div>
-                </div>
-            </label>
-        </div>
-        <div class="privacy-option">
-            <input type="radio" name="event_privacy" id="privacy_private" value="0" {{ not form.isPublic.vars.data ? 'checked' : '' }}>
-            <label for="privacy_private">
-                <div class="privacy-text">
-                    <div class="privacy-title">Privado</div>
-                </div>
-            </label>
-        </div>
-    </div>
-    {{ form_widget(form.isPublic, {'attr': {'style': 'display: none;', 'id': 'hidden_is_public'}}) }}
+    {{ form_label(form.isPublic, 'Privacidad del evento', {'label_attr': {'style': 'color: white; font-weight: 500; margin-bottom: 8px; display: block;'}}) }}
+    {{ form_widget(form.isPublic, {'attr': {'style': 'width: 100%; padding: 12px; border: 1px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.1); color: white; border-radius: 8px; font-size: 16px;'}}) }}
     {{ form_errors(form.isPublic) }}
+</div>
+
+<div style="margin-bottom: 20px;">
+    {{ form_label(form.isVerified, 'Verificación', {'label_attr': {'style': 'color: white; font-weight: 500; margin-bottom: 8px; display: block;'}}) }}
+    {{ form_widget(form.isVerified, {'attr': {'style': 'width: 100%; padding: 12px; border: 1px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.1); color: white; border-radius: 8px; font-size: 16px;'}}) }}
+    {{ form_errors(form.isVerified) }}
 </div>
 
 <div style="margin-bottom: 30px;">
@@ -266,6 +254,17 @@
                     isPublicSelect.value = this.value;
                     // Trigger change event para que Symfony lo detecte
                     isPublicSelect.dispatchEvent(new Event('change'));
+                });
+            });
+        }
+        const verifiedRadios = document.querySelectorAll('input[name="event_verified"]');
+        const isVerifiedSelect = document.querySelector('#hidden_is_verified');
+
+        if (isVerifiedSelect) {
+            verifiedRadios.forEach(radio => {
+                radio.addEventListener('change', function() {
+                    isVerifiedSelect.value = this.value;
+                    isVerifiedSelect.dispatchEvent(new Event('change'));
                 });
             });
         }

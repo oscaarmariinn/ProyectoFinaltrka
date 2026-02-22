@@ -8,5 +8,5 @@ import { EventInterface } from '../../interfaces/event-interface';
   styleUrl: './modal.css',
 })
 export class Modal {
-@Input() selectedEvent: EventInterface | null = null;
+  @Input() selectedEvent: EventInterface | null = null;
 }

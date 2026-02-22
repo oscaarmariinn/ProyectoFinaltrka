@@ -24,7 +24,7 @@ export class EventsCards {
     this.data.getDataEvent().subscribe({
       next: (response) => {
         response.forEach(event => {
-          if(event.isPublic === true || event.isVerified === true){
+          if (event.isPublic === true || event.isVerified === true) {
             this.events.push(event)
           }
         });

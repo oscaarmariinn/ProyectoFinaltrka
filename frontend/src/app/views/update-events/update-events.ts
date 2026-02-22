@@ -1,24 +1,34 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit, ChangeDetectorRef } from '@angular/core';
 import { EventService } from '../../services/event-service';
-import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth-service';
+import { Router, ActivatedRoute } from '@angular/router';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-create-event',
+  selector: 'app-update-events',
   imports: [ReactiveFormsModule, CommonModule],
-  templateUrl: './create-event.html',
-  styleUrl: './create-event.css',
+  templateUrl: './update-events.html',
+  styleUrl: './update-events.css',
 })
-export class CreateEvent {
+export class UpdateEvents implements OnInit {
+
   private eventService = inject(EventService);
+  private authService = inject(AuthService);
   private router = inject(Router);
+  private route = inject(ActivatedRoute);
+  private cdr = inject(ChangeDetectorRef);
 
   errorMessage = '';
   successMessage = '';
   isLoading = false;
+  isLoadingData = true;
 
-  private currentUserId = 1;
+  private eventId!: number;
+
+  private get currentUserId(): number {
+    return this.authService.currentUser()?.id ?? 0;
+  }
 
   reactiveForm = new FormGroup({
     title: new FormControl('', {
@@ -54,6 +64,32 @@ export class CreateEvent {
   get category_id() { return this.reactiveForm.get('category_id')!; }
   get isPublic() { return this.reactiveForm.get('isPublic')!; }
 
+  ngOnInit(): void {
+    this.eventId = Number(this.route.snapshot.paramMap.get('id'));
+    this.eventService.getEventById(this.eventId).subscribe({
+      next: (event) => {
+        this.reactiveForm.patchValue({
+          title: event.title,
+          description: event.description,
+          event_date: event.event_date
+            ? new Date(event.event_date).toISOString().slice(0, 16)
+            : '',
+          location: event.location,
+          max_participants: event.max_participants,
+          isPublic: event.isPublic,
+        });
+        this.isLoadingData = false;
+        this.cdr.detectChanges();
+      },
+      error: (err) => {
+        console.error(err);
+        this.errorMessage = 'No se pudo cargar el evento.';
+        this.isLoadingData = false;
+        this.cdr.detectChanges();
+      },
+    });
+  }
+
   onSubmit(): void {
     if (this.reactiveForm.invalid) {
       this.reactiveForm.markAllAsTouched();
@@ -73,18 +109,25 @@ export class CreateEvent {
       max_participants: raw.max_participants,
       category_id: raw.category_id,
       isPublic: raw.isPublic,
-      creator_name: this.currentUserId,
     };
 
-    this.eventService.createEvent(payload as any).subscribe({
+    this.eventService.updateEvent(this.currentUserId, this.eventId, payload).subscribe({
       next: () => {
         this.isLoading = false;
-        this.successMessage = '¡Evento creado correctamente!';
+        this.successMessage = '¡Evento actualizado correctamente!';
+        this.cdr.detectChanges();
         setTimeout(() => this.router.navigate(['/events']), 1500);
       },
-      error: () => {
+      error: (err) => {
         this.isLoading = false;
-        this.errorMessage = 'Error al crear el evento. Inténtalo de nuevo.';
+        if (err.status === 403) {
+          this.errorMessage = 'No tienes permisos para editar este evento.';
+        } else if (err.status === 404) {
+          this.errorMessage = 'El evento no existe.';
+        } else {
+          this.errorMessage = 'Error al actualizar el evento. Inténtalo de nuevo.';
+        }
+        this.cdr.detectChanges();
       },
     });
   }
@@ -93,3 +136,4 @@ export class CreateEvent {
     this.router.navigate(['/events']);
   }
 }
+

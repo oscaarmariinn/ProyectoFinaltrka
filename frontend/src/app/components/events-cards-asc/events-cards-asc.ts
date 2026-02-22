@@ -20,10 +20,9 @@ export class EventsCardsAsc {
   events: EventInterface[] = []
 
   public getResponse(): void {
-    this.data.getDataEventASC().subscribe({
+    this.data.getUpcomingEvents().subscribe({
       next: (response) => {
         this.events = response.slice(0, 3);
-        console.log('Eventos cargados:', this.events);
         this.cdr.markForCheck();
       },
       error: (error) => {

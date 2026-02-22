@@ -26,12 +26,14 @@ class UserType extends AbstractType
                 'choices' => [
                     'Administrador' => 'ROLE_ADMIN',
                     'Usuario' => 'ROLE_USER',
+                    'Super Administrador' => 'ROLE_SUPERADMIN',
                 ],
                 'multiple' => false,
                 'expanded' => false,
                 'mapped' => false,
                 'label' => 'Rol',
                 'data' => !empty($options['data']->getRoles()) ? $options['data']->getRoles()[0] : 'ROLE_USER',
+                'required' => false,
             ])
             ->add('password', PasswordType::class, [
                 'mapped' => false,

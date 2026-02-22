@@ -26,4 +26,8 @@ export class GroupService {
   public updateGroup(userId: number, groupId: number, payload: any): Observable<any> {
     return this.http.patch<any>(`${this.url}/${userId}/${groupId}`, payload);
   }
+
+  public getCreatedGroups(): Observable<GroupInterface[]> {
+    return this.http.get<GroupInterface[]>(`${this.url}/created`);
+  }
 }

@@ -1,4 +1,4 @@
-<section class="hero hero--small">
+<section class="hero hero--small" style="height: 30em;">
     <h1 style="color: var(--blanco-suave);">
         Editar <span style="color: var(--rosa-neon);">grupo</span>
     </h1>
@@ -29,12 +29,11 @@
 
                     <form [formGroup]="reactiveForm" (ngSubmit)="onSubmit()" novalidate>
 
-                        <!-- Nombre -->
+
                         <div class="mb-3">
                             <label for="name" class="form-label">Nombre del grupo</label>
                             <input id="name" type="text" class="form-control"
-                                [class.is-invalid]="name.invalid && name.touched"
-                                formControlName="name"
+                                [class.is-invalid]="name.invalid && name.touched" formControlName="name"
                                 placeholder="Ej: Matemáticas avanzadas" />
                             <div class="invalid-feedback">
                                 @if(name.errors?.['required']) {
@@ -49,7 +48,7 @@
                             </div>
                         </div>
 
-                        <!-- Descripción -->
+
                         <div class="mb-3">
                             <label for="description" class="form-label">Descripción</label>
                             <textarea id="description" class="form-control"
@@ -66,7 +65,7 @@
                             </div>
                         </div>
 
-                        <!-- Privacidad -->
+
                         <div class="mb-4">
                             <label for="is_private" class="form-label">Privacidad</label>
                             <select id="is_private" class="form-select" formControlName="is_private">
@@ -75,14 +74,13 @@
                             </select>
                         </div>
 
-                        <!-- Botones -->
+
                         <div class="d-flex gap-2">
-                            <button type="button" class="btn btn-outline-secondary flex-fill"
-                                (click)="goBack()" [disabled]="isLoading">
+                            <button type="button" class="btn btn-outline-secondary flex-fill" (click)="goBack()"
+                                [disabled]="isLoading">
                                 Cancelar
                             </button>
-                            <button type="submit" class="btn btn-dark fw-bold flex-fill"
-                                [disabled]="isLoading">
+                            <button type="submit" class="btn btn-dark fw-bold flex-fill" [disabled]="isLoading">
                                 @if(isLoading) {
                                 <span class="spinner-border spinner-border-sm me-2" role="status"
                                     style="color: azure !important;"></span>

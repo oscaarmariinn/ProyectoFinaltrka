@@ -12,15 +12,15 @@ import { CommonModule } from '@angular/common';
   styleUrl: './create-group.css',
 })
 export class CreateGroup {
-private groupService = inject(GroupService);
+  private groupService = inject(GroupService);
   private router = inject(Router);
 
   errorMessage = '';
   successMessage = '';
   isLoading = false;
 
-  
-  private currentUserId = 1; 
+
+  private currentUserId = 1;
 
   reactiveForm = new FormGroup({
     name: new FormControl('', {
@@ -54,7 +54,7 @@ private groupService = inject(GroupService);
       name: raw.name,
       description: raw.description,
       is_private: raw.is_private,
-      creator_name: this.currentUserId, 
+      creator_name: this.currentUserId,
     };
 
     this.groupService.createGroup(payload as any).subscribe({

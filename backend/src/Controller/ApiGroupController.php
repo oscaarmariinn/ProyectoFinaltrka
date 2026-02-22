@@ -42,7 +42,7 @@ class ApiGroupController extends AbstractController
     }
 
     #[Route('/created', name: 'listcreated', methods: ['GET'])]
-    public function listCreated(EntityManagerInterface $em, int $id): JsonResponse
+    public function listCreated(EntityManagerInterface $em): JsonResponse
     {
         $user = $this->getUser();
         $groups = $em->getRepository(Group::class)->findBy(['creator' => $user->getId()]);

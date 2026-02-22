@@ -1,7 +1,6 @@
 import { ChangeDetectorRef, Component, inject, OnInit, OnDestroy } from '@angular/core';
 import { NgStyle } from '@angular/common';
 import { RouterLink } from '@angular/router';
-import { Carrusel } from '../../components/carrusel/carrusel';
 import { EventInterface } from '../../interfaces/event-interface';
 import { EventsCardsAsc } from '../../components/events-cards-asc/events-cards-asc';
 import { ModalAsc } from '../../components/modal-asc/modal-asc';
@@ -10,7 +9,7 @@ import { Modal } from '../../components/modal/modal';
 @Component({
   selector: 'app-index',
   standalone: true,
-  imports: [ RouterLink, Modal, EventsCardsAsc],
+  imports: [RouterLink, Modal, EventsCardsAsc],
   templateUrl: './index.html',
   styleUrl: './index.css',
 })
@@ -27,10 +26,22 @@ export class Index implements OnInit, OnDestroy {
     'imgs/eventosimgs/cumpleanos.jpg',
     'imgs/eventosimgs/deporte.jpg',
   ];
-  currentImage: string= "imgs/eventosimgs/cine.jpg"
+  categories: string[] = [
+  'tardeo.jpg',
+  'almuerzo.jpg',
+  'cenar.jpg',
+  'centro_comercial.jpg',
+  'cine.jpg',
+  'tomar_algo.jpg',
+  'comida.jpg',
+  'cumpleanos.jpg',
+  'deporte.jpg',
+];
+  currentImage: string = "imgs/eventosimgs/cine.jpg"
   nextImage: string = "imgs/eventosimgs/cine.jpg";
   index = 0;
   transitioning = false;
+  currentCategory: string = 'cine';
 
   private intervalId!: number;
   private cdr = inject(ChangeDetectorRef);
@@ -38,6 +49,7 @@ export class Index implements OnInit, OnDestroy {
   async ngOnInit(): Promise<void> {
     await this.preloadImages();
     this.currentImage = this.images[0];
+    this.currentCategory = this.categories[0];
     this.intervalId = window.setInterval(() => {
       this.changeImage();
     }, 4000);
@@ -54,6 +66,7 @@ export class Index implements OnInit, OnDestroy {
     this.transitioning = true;
     setTimeout(() => {
       this.currentImage = this.nextImage;
+      this.currentCategory = this.categories[nextIndex];
       this.index = nextIndex;
       this.transitioning = false;
       this.cdr.markForCheck();
@@ -66,7 +79,7 @@ export class Index implements OnInit, OnDestroy {
       this.images.forEach(src => {
         const img = new Image();
         img.src = src;
-        img.decode?.().catch(() => {});
+        img.decode?.().catch(() => { });
         img.onload = () => {
           loaded++;
           if (loaded === total) resolve();
@@ -80,7 +93,7 @@ export class Index implements OnInit, OnDestroy {
   }
   selectedEvent: EventInterface | null = null;
 
-    onSelect(event: EventInterface) {
-      this.selectedEvent = event;
-    }
+  onSelect(event: EventInterface) {
+    this.selectedEvent = event;
+  }
 }
