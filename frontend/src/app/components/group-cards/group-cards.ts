@@ -25,7 +25,12 @@ constructor() {
   public getResponse(): void {
     this.data.getDataGroup().subscribe({
       next: (response) => {
-        this.groups = response;
+        response.forEach(group => {
+          if(group.is_private === false){
+            this.groups.push(group)
+          }
+        });
+        
         console.log('Grupos cargados:', this.groups);
         this.cdr.markForCheck();
       },
@@ -34,6 +39,7 @@ constructor() {
       }
     });
   }
+
   @Output() select = new EventEmitter<GroupInterface>();
 
   selectEvent(group: GroupInterface): void {

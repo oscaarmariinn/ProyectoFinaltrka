@@ -23,7 +23,11 @@ export class EventsCards {
   public getResponse(): void {
     this.data.getDataEvent().subscribe({
       next: (response) => {
-        this.events = response;
+        response.forEach(event => {
+          if(event.isPublic === true || event.isVerified === true){
+            this.events.push(event)
+          }
+        });
         console.log('Eventos cargados:', this.events);
         this.cdr.markForCheck();
       },
