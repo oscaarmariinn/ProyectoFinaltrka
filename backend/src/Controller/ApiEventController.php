@@ -189,6 +189,20 @@ class ApiEventController extends AbstractController
             ],
         ], 201);
     }
+    #[Route('/upcoming', name: 'upcoming', methods: ['GET'])]
+    public function upcoming(EntityManagerInterface $em): JsonResponse
+    {
+        $now = new \DateTime();
+        $events = $em->getRepository(Event::class)->createQueryBuilder('e')
+            ->where('e.eventDate > :now')
+            ->setParameter('now', $now)
+            ->orderBy('e.eventDate', 'ASC')
+            ->getQuery()
+            ->getResult();
+
+        $data = $this->getData($events, []);
+        return new JsonResponse($data);
+    }
 
     /**
      * @param array $events

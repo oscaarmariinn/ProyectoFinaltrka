@@ -17,6 +17,11 @@ export class EventService {
 
   private urlASC = "http://127.0.0.1:8000/api/events?order[eventDate]=ASC";
   private httpp = inject(HttpClient);
+  private urlUpcoming = "http://127.0.0.1:8000/api/events/upcoming";
+
+  public getUpcomingEvents(): Observable<EventInterface[]> {
+    return this.http.get<EventInterface[]>(this.urlUpcoming);
+  }
 
   public getDataEventASC(): Observable<EventInterface[]> {
     return this.httpp.get<EventInterface[]>(this.urlASC);

@@ -1,6 +1,10 @@
+<section class="container my-5">
+
 <button class="btn trka-btn" routerLink="/create-event" routerLinkActive="active">
     Crear evento
 </button>
+
+</section>
 <app-events-cards (select)="onSelect($event)"></app-events-cards>
 
 <app-modal [selectedEvent]="selectedEvent"></app-modal>
