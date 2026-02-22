@@ -46,12 +46,19 @@ class EventTypeForm extends AbstractType
             ])
             ->add('isPublic', ChoiceType::class, [
                 'choices' => [
-                    'Público' => '1',
-                    'Privado' => '0',
+                    'Público' => true,
+                    'Privado' => false,
                 ],
                 'label' => 'Privacidad del evento',
                 'required' => true,
-                'data' => '1', // Por defecto público
+            ])
+            ->add('isVerified', ChoiceType::class, [
+                'choices' => [
+                    'Verificado' => true,
+                    'No verificado' => false,
+                ],
+                'label' => 'Verificación',
+                'required' => true,
             ])
             ->add('categories', EntityType::class, [
                 'class' => Category::class,
