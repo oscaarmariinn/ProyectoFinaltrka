@@ -12,7 +12,7 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
   styleUrl: './group-cards.css',
 })
 export class GroupCards {
-constructor() {
+  constructor() {
     afterNextRender(() => {
       this.getResponse();
     });
@@ -26,11 +26,11 @@ constructor() {
     this.data.getDataGroup().subscribe({
       next: (response) => {
         response.forEach(group => {
-          if(group.is_private === false){
+          if (group.is_private === false) {
             this.groups.push(group)
           }
         });
-        
+
         console.log('Grupos cargados:', this.groups);
         this.cdr.markForCheck();
       },

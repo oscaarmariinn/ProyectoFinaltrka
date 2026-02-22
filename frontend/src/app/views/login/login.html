@@ -1,46 +1,45 @@
 <section class="hero hero--small" style="height: 30em;">
-    <h1 style="color: var(--blanco-suave);">Inicio de <span style="color: var(--rosa-neon);">sesión</span></h1>
+  <h1 style="color: var(--blanco-suave);">Inicio de <span style="color: var(--rosa-neon);">sesión</span></h1>
 </section>
 <main>
 
-    <section class="container my-5">
-        <div class="row justify-content-center">
-            <div class="col-md-8 col-lg-6">
-                <div class="feature-card p-4">
-                  <form [formGroup]="reactiveForm" (ngSubmit)="onSubmit()">
-                    <div class="mb-3">
-                      <label for="email" class="form-label">Correo electrónico</label>
-                      <input type="email" class="form-control" formControlName="email"
-                             placeholder="nombre@correo.com" required>
-                    </div>
-
-                    <div class="mb-3">
-                      <label for="contraseña" class="form-label">Contraseña</label>
-                      <input type="password" class="form-control" formControlName="password"
-                             placeholder="Contraseña..." required>
-                    </div>
-
-                    <label class="mb-4">
-                      <input type="checkbox" />
-                      Acepto los <a routerLink="/terms-conditions">Términos y Condiciones</a>
-                    </label>
-
-                    @if (errorMessage) {
-                      <div class="alert alert-danger">{{ errorMessage }}</div>
-                    }
-
-                    <div class="d-grid">
-                      <button type="submit" class="btn btn-dark fw-bold">Iniciar sesión</button>
-                    </div>
-                  </form>
-
-                    <br>
-                    <a class="" style="cursor: pointer;" routerLink="/register" routerLinkActive="active">¿Aún no tienes
-                        cuenta? Regístrate</a>
-
-                </div>
+  <section class="container my-5">
+    <div class="row justify-content-center">
+      <div class="col-md-8 col-lg-6">
+        <div class="feature-card p-4">
+          <form [formGroup]="reactiveForm" (ngSubmit)="onSubmit()">
+            <div class="mb-3">
+              <label for="email" class="form-label">Correo electrónico</label>
+              <input type="email" class="form-control" formControlName="email" placeholder="nombre@correo.com" required>
             </div>
+
+            <div class="mb-3">
+              <label for="contraseña" class="form-label">Contraseña</label>
+              <input type="password" class="form-control" formControlName="password" placeholder="Contraseña..."
+                required>
+            </div>
+
+            <label class="mb-4">
+              <input type="checkbox" />
+              Acepto los <a routerLink="/terms-conditions">Términos y Condiciones</a>
+            </label>
+
+            @if (errorMessage) {
+            <div class="alert alert-danger">{{ errorMessage }}</div>
+            }
+
+            <div class="d-grid">
+              <button type="submit" class="btn btn-dark fw-bold">Iniciar sesión</button>
+            </div>
+          </form>
+
+          <br>
+          <a class="" style="cursor: pointer;" routerLink="/register" routerLinkActive="active">¿Aún no tienes
+            cuenta? Regístrate</a>
+
         </div>
-    </section>
+      </div>
+    </div>
+  </section>
 
 </main>

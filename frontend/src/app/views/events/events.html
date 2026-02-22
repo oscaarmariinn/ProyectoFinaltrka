@@ -1,10 +1,22 @@
 <section class="container my-5">
-
+@if(mostrarMisEventos) {
+    <h1 >Mis eventos</h1> 
+    }
+    @else{
+    <h1>Todos los eventos</h1>
+    }
 <button class="btn trka-btn" routerLink="/create-event" routerLinkActive="active">
     Crear evento
 </button>
-
+  <button class="btn trka-btn ms-2" (click)="toggleMisEventos()">
+    {{ mostrarMisEventos ? 'Todos los eventos' : 'Mis eventos' }}
+  </button>
+    
 </section>
-<app-events-cards (select)="onSelect($event)"></app-events-cards>
-
+@if(!mostrarMisEventos) {
+  <app-events-cards (select)="onSelect($event)"></app-events-cards>
+} @else {
+  <app-my-events (select)="onSelect($event)"></app-my-events>
+  
+}
 <app-modal [selectedEvent]="selectedEvent"></app-modal>

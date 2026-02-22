@@ -23,7 +23,7 @@
 
                     <form [formGroup]="reactiveForm" (ngSubmit)="onSubmit()" novalidate>
 
-                        
+
                         <div class="mb-3">
                             <label for="name" class="form-label">Nombre del grupo</label>
                             <input id="name" type="text" class="form-control"
@@ -40,7 +40,7 @@
                                 <ng-container>Máximo 60 caracteres.</ng-container>
                                 }
                             </div>
-                            
+
                         </div>
                         <div class="mb-3">
                             <label for="description" class="form-label">Descripción</label>
@@ -56,7 +56,7 @@
                                 <ng-container>Máximo 300 caracteres.</ng-container>
                                 }
                             </div>
-                            
+
                         </div>
                         <div class="mb-3">
                             <label for="is_private" class="form-label">Privacidad</label>
@@ -66,28 +66,32 @@
                             </select>
                         </div>
 
-                        
+
                         <div class="mb-4">
                             <label for="userEmails" class="form-label">
-                                Invitar usuarios <span class="text-muted fw-normal" style="color: azure !important;">(opcional)</span>
+                                Invitar usuarios <span class="text-muted fw-normal"
+                                    style="color: azure !important;">(opcional)</span>
                             </label>
                             <input id="userEmails" type="text" class="form-control" formControlName="userEmails"
                                 placeholder="email1@ejemplo.com, email2@ejemplo.com" />
-                            <div class="form-text" style="color: azure !important;">Separa múltiples emails con comas.</div>
+                            <div class="form-text" style="color: azure !important;">Separa múltiples emails con comas.
+                            </div>
                         </div>
 
-                        
+
                         <div class="d-flex gap-2">
                             <button type="button" class="btn btn-outline-secondary flex-fill" (click)="goBack()"
                                 [disabled]="isLoading">
                                 Cancelar
                             </button>
-                            <button type="submit" class="btn btn-dark fw-bold flex-fill" [disabled]="isLoading" id="Boton Crear grupo">
+                            <button type="submit" class="btn btn-dark fw-bold flex-fill" [disabled]="isLoading"
+                                id="Boton Crear grupo">
                                 @if(isLoading) {
-                                <span class="spinner-border spinner-border-sm me-2" role="status" style="color: azure !important;"></span>
+                                <span class="spinner-border spinner-border-sm me-2" role="status"
+                                    style="color: azure !important;"></span>
                                 {{ isLoading ? 'Creando...' : 'Crear grupo' }}
                                 }
-                                
+
                             </button>
                         </div>
 

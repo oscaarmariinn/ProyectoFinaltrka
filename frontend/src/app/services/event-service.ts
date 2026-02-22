@@ -26,23 +26,17 @@ export class EventService {
   public getDataEventASC(): Observable<EventInterface[]> {
     return this.httpp.get<EventInterface[]>(this.urlASC);
   }
-
-  private categoriesUrl = "http://127.0.0.1:8000/api/categories";
-
-  public getCategories(): Observable<Category[]> {
-    return this.http.get<Category[]>(this.categoriesUrl);
+  public getCreatedEvents(): Observable<EventInterface[]> {
+    return this.http.get<EventInterface[]>(`${this.url}/created`);
   }
 
-  public createEvent(payload: {
-    title: string;
-    description: string;
-    event_date: string;
-    location: string;
-    max_participants: number;
-    category_id: number;
-    isPublic: boolean;
-    creator_name: number;
-  }): Observable<any> {
-    return this.http.post<any>(this.categoriesUrl, payload);
+  public createEvent(payload: any): Observable<any> {
+    return this.http.post<any>(this.url, payload);
   }
+  public updateEvent(userId: number, eventId: number, payload: any): Observable<any> {
+    return this.http.patch<any>(`${this.url}/${userId}/${eventId}`, payload);
+  }
+  public getEventById(id: number): Observable<EventInterface> {
+  return this.http.get<EventInterface>(`${this.url}/${id}`);
+}
 }

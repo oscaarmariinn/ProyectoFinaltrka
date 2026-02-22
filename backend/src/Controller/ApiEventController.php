@@ -46,14 +46,11 @@ class ApiEventController extends AbstractController
         return new JsonResponse($data);
     }
 
-    #[Route('/{id}/created', name: 'listcreated', methods: ['GET'])]
-    public function listCreated(EntityManagerInterface $em, int $id): JsonResponse
+    #[Route('/created', name: 'listcreated', methods: ['GET'])]
+    public function listCreated(EntityManagerInterface $em): JsonResponse
     {
-        $user = $em->getRepository(User::class)->find(['id' => $id]);
-        if (!$user) {
-            return new JsonResponse(['message' => 'User not found'], 404);
-        }
-        $events = $em->getRepository(Event::class)->findBy(['creator' => $id]);
+        $profile = $this->getUser();
+        $events = $em->getRepository(Event::class)->findBy(['creator' => $profile->getId()]);
         $data = [];
 
         $data = $this->getData($events, $data);
@@ -134,7 +131,16 @@ class ApiEventController extends AbstractController
         $em->flush();
         return new JsonResponse(['message' => 'Event updated successfully']);
     }
-
+    #[Route('/{id}', name: 'show', methods: ['GET'])]
+    public function show(EntityManagerInterface $em, int $id): JsonResponse
+    {
+        $event = $em->getRepository(Event::class)->find($id);
+        if (!$event) {
+            return new JsonResponse(['message' => 'Event not found'], 404);
+        }
+        $data = $this->getData([$event], []);
+        return new JsonResponse($data[0]);
+    }
     #[Route('', name: 'create', methods: ['POST'])]
     public function create(Request $request, EntityManagerInterface $em, CategoryRepository $categoryRepository, UserRepository $userRepository): JsonResponse
     {

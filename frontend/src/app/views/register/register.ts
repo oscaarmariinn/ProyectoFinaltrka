@@ -14,7 +14,6 @@ export class Register {
 
   errorMessage = '';
 
-  // Formulario actualizado con todos los campos necesarios
   reactiveForm = new FormGroup({
     email: new FormControl('', {
       nonNullable: true,

@@ -47,6 +47,7 @@ class ApiGroupController extends AbstractController
         $user = $this->getUser();
         $groups = $em->getRepository(Group::class)->findBy(['creator' => $user->getId()]);
         $data = [];
+
         $data = $this->getData($groups, $data);
         return new JsonResponse($data);
     }

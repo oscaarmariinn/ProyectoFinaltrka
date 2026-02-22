@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { Carrusel } from './carrusel';
+import { UpdateEvents } from './update-events';
 
-describe('Carrusel', () => {
-  let component: Carrusel;
-  let fixture: ComponentFixture<Carrusel>;
+describe('UpdateEvents', () => {
+  let component: UpdateEvents;
+  let fixture: ComponentFixture<UpdateEvents>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [Carrusel]
+      imports: [UpdateEvents]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(Carrusel);
+    fixture = TestBed.createComponent(UpdateEvents);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });

@@ -13,27 +13,27 @@ import { AuthService, AuthUser } from '../../services/auth-service';
 export class User {
 
   protected authService = inject(AuthService);
-  private http          = inject(HttpClient);
-  private router        = inject(Router);
+  private http = inject(HttpClient);
+  private router = inject(Router);
 
   editing = signal(false);
   successMessage = '';
-  errorMessage   = '';
+  errorMessage = '';
 
   editForm = new FormGroup({
-    name:    new FormControl('', { nonNullable: true }),
+    name: new FormControl('', { nonNullable: true }),
     surname: new FormControl('', { nonNullable: true }),
   });
 
   startEdit(): void {
     const user = this.authService.currentUser();
     this.editForm.setValue({
-      name:    user?.name    ?? '',
+      name: user?.name ?? '',
       surname: user?.surname ?? '',
     });
     this.editing.set(true);
     this.successMessage = '';
-    this.errorMessage   = '';
+    this.errorMessage = '';
   }
 
   cancelEdit(): void {

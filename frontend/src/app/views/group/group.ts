@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { GroupCards } from '../../components/group-cards/group-cards';
 import { ModalGroup } from '../../components/modal-group/modal-group';
-import { MyGroupsComponent} from '../my-groups/my-groups';
+import { MyGroupsComponent } from '../my-groups/my-groups';
 import { GroupInterface } from '../../interfaces/group-interface';
 import { CommonModule } from '@angular/common';
 
