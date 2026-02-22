@@ -14,7 +14,7 @@
 
         @if (selectedEvent) {
         <img src="../../../../imgs/eventosimgs/{{ selectedEvent.categories[0].img }}.jpg" class="img-fluid rounded mb-3"
-          alt="evento">
+          [alt]="selectedEvent.categories[0].img + '.jpg'" />
 
         <p class="mb-1">📍 {{ selectedEvent.location }}</p>
         <p class="mb-0">📅 {{ selectedEvent.event_date }}</p>

@@ -131,7 +131,7 @@ class ApiEventController extends AbstractController
         $em->flush();
         return new JsonResponse(['message' => 'Event updated successfully']);
     }
-    #[Route('/{id}', name: 'show', methods: ['GET'])]
+    #[Route('/{id}', name: 'show', methods: ['GET'], requirements: ['id' => '\d+'])]
     public function show(EntityManagerInterface $em, int $id): JsonResponse
     {
         $event = $em->getRepository(Event::class)->find($id);
