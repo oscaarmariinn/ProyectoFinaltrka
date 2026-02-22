@@ -2,6 +2,7 @@ import { Injectable, inject, signal, computed } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Observable, tap } from 'rxjs';
+import {environment} from '../../environments/environment';
 
 export interface AuthUser {
   id: number;
@@ -22,8 +23,7 @@ export interface LoginResponse {
 export class AuthService {
   private http      = inject(HttpClient);
   private router    = inject(Router);
-  private apiUrl    = 'http://localhost:8000/api';
-
+  private apiUrl = `${environment.apiUrl}/api`;
   private readonly TOKEN_KEY = 'jwt_token';
   private readonly USER_KEY  = 'auth_user';
 

@@ -2,13 +2,14 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Category, EventInterface } from '../interfaces/event-interface';
+import {environment} from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class EventService {
 
-  private url = "http://127.0.0.1:8000/api/events";
+  private url = `${environment.apiUrl}/api/events`;
   private http = inject(HttpClient);
 
   public getDataEvent(): Observable<EventInterface[]> {

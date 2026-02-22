@@ -3,6 +3,7 @@ import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { AuthService, AuthUser } from '../../services/auth-service';
+import {environment} from '../../../environments/environment';
 
 @Component({
   selector: 'app-user',
@@ -12,6 +13,7 @@ import { AuthService, AuthUser } from '../../services/auth-service';
 })
 export class User {
 
+  private url = `${environment.apiUrl}/api/groups`;
   protected authService = inject(AuthService);
   private http          = inject(HttpClient);
   private router        = inject(Router);
@@ -43,7 +45,7 @@ export class User {
   saveChanges(): void {
     const { name, surname } = this.editForm.getRawValue();
 
-    this.http.patch<AuthUser>('http://localhost:8000/api/user/profile', { name, surname })
+    this.http.patch<AuthUser>(this.url + '/api/user/profile', { name, surname })
       .subscribe({
         next: (updatedUser) => {
           this.authService.updateCurrentUser(updatedUser);

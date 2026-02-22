@@ -2,6 +2,7 @@ import { Component, inject, signal } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
+import {environment} from '../../../environments/environment';
 
 @Component({
   selector: 'app-user-passsord',
@@ -11,6 +12,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class UserPasssord {
 
+  private url = `${environment.apiUrl}/api/groups`;
   private http = inject(HttpClient);
 
   loading        = signal(false);
@@ -41,7 +43,7 @@ export class UserPasssord {
 
     this.loading.set(true);
 
-    this.http.patch('http://localhost:8000/api/user/password', { currentPassword, newPassword })
+    this.http.patch(this.url + '/api/user/password', { currentPassword, newPassword })
       .subscribe({
         next: () => {
           this.successMessage = 'Contraseña actualizada correctamente';
