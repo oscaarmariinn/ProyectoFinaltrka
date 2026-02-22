@@ -1,54 +1,79 @@
 <section class="hero hero--small" style="height: 30em;">
     <h1 style="color: var(--blanco-suave);">Registrate en <span style="color: var(--rosa-neon);">trka</span></h1>
 </section>
-<main>
 
+<main>
     <section class="container my-5">
         <div class="row justify-content-center">
             <div class="col-md-8 col-lg-6">
                 <div class="feature-card p-4">
-                    <form>
+
+                    @if(successMessage) {
+                    <div class="alert alert-success d-flex align-items-center gap-2 mb-4" role="alert">
+                        <span>✅</span> {{ successMessage }}
+                    </div>
+                    }
+                    @if(errorMessage) {
+                    <div class="alert alert-danger d-flex align-items-center gap-2 mb-4" role="alert">
+                        <span>❌</span> {{ errorMessage }}
+                    </div>
+                    }
+
+                    <form [formGroup]="reactiveForm" (ngSubmit)="onSubmit()" novalidate>
+
                         <div class="mb-3">
                             <label for="name" class="form-label">Nombre</label>
-                            <input type="text" class="form-control" id="name" placeholder="Nombre..." required>
+                            <input type="text" class="form-control" id="name"
+                                [class.is-invalid]="name.invalid && name.touched" formControlName="name"
+                                placeholder="Nombre..." />
+                            <div class="invalid-feedback">El nombre es obligatorio.</div>
                         </div>
+
                         <div class="mb-3">
                             <label for="surname" class="form-label">Apellidos</label>
-                            <input type="text" class="form-control" id="surname" placeholder="Apellidos..." required>
+                            <input type="text" class="form-control" id="surname"
+                                [class.is-invalid]="surname.invalid && surname.touched" formControlName="surname"
+                                placeholder="Apellidos..." />
+                            <div class="invalid-feedback">Los apellidos son obligatorios.</div>
                         </div>
 
                         <div class="mb-3">
                             <label for="email" class="form-label">Correo electrónico</label>
-                            <input type="email" class="form-control" id="email" placeholder="nombre@correo.com"
-                                required>
+                            <input type="email" class="form-control" id="email"
+                                [class.is-invalid]="email.invalid && email.touched" formControlName="email"
+                                placeholder="nombre@correo.com" />
+                            <div class="invalid-feedback">
+                                @if(email.errors?.['required']) { El correo es obligatorio. }
+                                @if(email.errors?.['email']) { El formato del correo no es válido. }
+                            </div>
                         </div>
 
-                        <div class="mb-3">
-                            <label for="contraseña" class="form-label">Contraseña</label>
-                            <input type="password" class="form-control" id="password" placeholder="Contraseña..."
-                                required>
+                        <div class="mb-4">
+                            <label for="password" class="form-label">Contraseña</label>
+                            <input type="password" class="form-control" id="password"
+                                [class.is-invalid]="password.invalid && password.touched" formControlName="password"
+                                placeholder="Contraseña..." />
+                            <div class="invalid-feedback">
+                                @if(password.errors?.['required']) { La contraseña es obligatoria. }
+                                @if(password.errors?.['minlength']) { Mínimo 6 caracteres. }
+                            </div>
                         </div>
-
-                        <label class="mb-4">
-                            <input type="checkbox" formControlName="acceptTerms" />
-                            Acepto los <a routerLink="/terms-conditions">Términos y Condiciones</a> y la <a
-                                routerLink="/privacy-policy">Política de Privacidad</a>
-                        </label>
 
                         <div class="d-grid">
                             <button type="submit" class="btn btn-dark fw-bold">
                                 Registrarse
                             </button>
                         </div>
+
                     </form>
 
                     <br>
-                    <a class="" style="cursor: pointer;" routerLink="/login" routerLinkActive="active">¿Ya tienes
-                        cuenta? Inicia sesión</a>
+                    <a style="cursor: pointer;" routerLink="/login" routerLinkActive="active">
+                        ¿Ya tienes cuenta? Inicia sesión
+                    </a>
 
                 </div>
             </div>
         </div>
     </section>
-
 </main>
