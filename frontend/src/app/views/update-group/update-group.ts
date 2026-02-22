@@ -1,5 +1,6 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, ChangeDetectorRef } from '@angular/core';
 import { GroupService } from '../../services/group-service';
+import { AuthService } from '../../services/auth-service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -10,22 +11,24 @@ import { CommonModule } from '@angular/common';
   templateUrl: './update-group.html',
   styleUrl: './update-group.css',
 })
-export class UpdateGroup implements OnInit{
+export class UpdateGroup implements OnInit {
 
   private groupService = inject(GroupService);
+  private authService = inject(AuthService);
   private router = inject(Router);
   private route = inject(ActivatedRoute);
+  private cdr = inject(ChangeDetectorRef);
 
   errorMessage = '';
   successMessage = '';
   isLoading = false;
   isLoadingData = true;
 
-  // ID del grupo obtenido desde la URL (ej: /groups/edit/3)
   private groupId!: number;
 
-  // TODO: reemplazar por el ID del usuario autenticado (ej. desde AuthService)
-  private currentUserId = 1;
+  private get currentUserId(): number {
+    return this.authService.currentUser()?.id ?? 0;
+  }
 
   reactiveForm = new FormGroup({
     name: new FormControl('', {
@@ -45,7 +48,6 @@ export class UpdateGroup implements OnInit{
 
   ngOnInit(): void {
     this.groupId = Number(this.route.snapshot.paramMap.get('id'));
-    console.log('groupId:', this.groupId);
     this.groupService.getGroupById(this.groupId).subscribe({
       next: (group) => {
         this.reactiveForm.patchValue({
@@ -54,10 +56,13 @@ export class UpdateGroup implements OnInit{
           is_private: group.is_private,
         });
         this.isLoadingData = false;
+        this.cdr.detectChanges();
       },
-      error: () => {
+      error: (err) => {
+        console.error(err);
         this.errorMessage = 'No se pudo cargar el grupo.';
         this.isLoadingData = false;
+        this.cdr.detectChanges();
       },
     });
   }
@@ -77,13 +82,13 @@ export class UpdateGroup implements OnInit{
       name: raw.name,
       description: raw.description,
       is_private: raw.is_private,
-      creator_name: this.currentUserId,
     };
 
-    this.groupService.updateGroup(this.currentUserId, this.groupId, payload as any).subscribe({
+    this.groupService.updateGroup(this.currentUserId, this.groupId, payload).subscribe({
       next: () => {
         this.isLoading = false;
         this.successMessage = '¡Grupo actualizado correctamente!';
+        this.cdr.detectChanges();
         setTimeout(() => this.router.navigate(['/groups']), 1500);
       },
       error: (err) => {
@@ -95,6 +100,7 @@ export class UpdateGroup implements OnInit{
         } else {
           this.errorMessage = 'Error al actualizar el grupo. Inténtalo de nuevo.';
         }
+        this.cdr.detectChanges();
       },
     });
   }

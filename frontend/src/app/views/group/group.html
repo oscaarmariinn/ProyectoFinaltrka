@@ -1,6 +1,16 @@
 <button class="btn trka-btn" routerLink="/create-group" routerLinkActive="active">
-    Crear grupo
+  Crear grupo
 </button>
 
-<app-group-cards (select)="onSelect($event)"></app-group-cards>
+<button class="btn trka-btn ms-2" (click)="toggleMisGrupos()">
+  {{ mostrarMisGrupos ? 'Todos los grupos' : 'Mis grupos' }}
+</button>
+
+@if(!mostrarMisGrupos) {
+  <app-group-cards (select)="onSelect($event)"></app-group-cards>
+}
+@if(mostrarMisGrupos) {
+  <app-my-groups (select)="onSelect($event)"></app-my-groups>
+}
+
 <app-modal-group [selectedGroup]="selectedGroup"></app-modal-group>

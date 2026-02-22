@@ -16,7 +16,6 @@ import { UpdateGroup } from './views/update-group/update-group';
 export const routes: Routes = [
     { path: '', redirectTo: 'index', pathMatch: 'full' },
     { path: 'index', component: Index },
-    { path: 'contact', component: Contact },
     { path: 'login', component: Login },
     { path: 'register', component: Register},
     { path: 'events', component: Events },
