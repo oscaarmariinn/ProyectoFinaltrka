@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class GroupService {
-  private url = "http://127.0.0.1:8000/api/groups";
+  private url = "http://54.157.71.229/api/groups";
   private http = inject(HttpClient);
 
   public getDataGroup(): Observable<GroupInterface[]> {

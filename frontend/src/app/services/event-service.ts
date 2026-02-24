@@ -8,16 +8,16 @@ import { Category, EventInterface } from '../interfaces/event-interface';
 })
 export class EventService {
 
-  private url = "http://127.0.0.1:8000/api/events";
+  private url = "http://54.157.71.229/api/events";
   private http = inject(HttpClient);
 
   public getDataEvent(): Observable<EventInterface[]> {
     return this.http.get<EventInterface[]>(this.url);
   }
 
-  private urlASC = "http://127.0.0.1:8000/api/events?order[eventDate]=ASC";
+  private urlASC = "http://54.157.71.229/api/events?order[eventDate]=ASC";
   private httpp = inject(HttpClient);
-  private urlUpcoming = "http://127.0.0.1:8000/api/events/upcoming";
+  private urlUpcoming = "http://54.157.71.229/api/events/upcoming";
 
   public getUpcomingEvents(): Observable<EventInterface[]> {
     return this.http.get<EventInterface[]>(this.urlUpcoming);
