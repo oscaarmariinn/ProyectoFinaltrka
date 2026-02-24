@@ -24,7 +24,7 @@
           <a class="nav-link" routerLink="group" routerLinkActive="active">Grupos</a>
         </li>
 
-        
+
 
         @if (!authService.isAuthenticated()) {
         <li class="nav-item">
@@ -39,11 +39,6 @@
             <img src="../../../../imgs/Usuario-icon.png" height="50px" width="50px"
               [title]="authService.currentUser()?.name + ' ' + authService.currentUser()?.surname" alt="">
           </a>
-        </li>
-        <li class="nav-item d-flex align-items-center">
-          <button class="btn btn-sm nav-link" style="cursor:pointer;" (click)="authService.logout()">
-            Cerrar sesión
-          </button>
         </li>
         }
 
