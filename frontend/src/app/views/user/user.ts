@@ -43,7 +43,7 @@ export class User {
   saveChanges(): void {
     const { name, surname } = this.editForm.getRawValue();
 
-    this.http.patch<AuthUser>('http://localhost:8000/api/user/profile', { name, surname })
+    this.http.patch<AuthUser>('http://54.157.71.229/api/user/profile', { name, surname })
       .subscribe({
         next: (updatedUser) => {
           this.authService.updateCurrentUser(updatedUser);

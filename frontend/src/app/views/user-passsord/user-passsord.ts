@@ -41,7 +41,7 @@ export class UserPasssord {
 
     this.loading.set(true);
 
-    this.http.patch('http://localhost:8000/api/user/password', { currentPassword, newPassword })
+    this.http.patch('http://54.157.71.229/api/user/password', { currentPassword, newPassword })
       .subscribe({
         next: () => {
           this.successMessage = 'Contraseña actualizada correctamente';

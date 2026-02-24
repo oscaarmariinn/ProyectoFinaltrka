@@ -22,7 +22,7 @@ export interface LoginResponse {
 export class AuthService {
   private http      = inject(HttpClient);
   private router    = inject(Router);
-  private apiUrl    = 'http://localhost:8000/api';
+  private apiUrl    = 'http://54.157.71.229/api';
 
   private readonly TOKEN_KEY = 'jwt_token';
   private readonly USER_KEY  = 'auth_user';
