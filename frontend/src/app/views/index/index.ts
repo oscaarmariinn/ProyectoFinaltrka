@@ -3,8 +3,8 @@ import { NgStyle } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { EventInterface } from '../../interfaces/event-interface';
 import { EventsCardsAsc } from '../../components/events-cards-asc/events-cards-asc';
-import { ModalAsc } from '../../components/modal-asc/modal-asc';
 import { Modal } from '../../components/modal/modal';
+import { AuthService } from '../../services/auth-service';
 
 @Component({
   selector: 'app-index',
@@ -15,6 +15,8 @@ import { Modal } from '../../components/modal/modal';
 })
 export class Index implements OnInit, OnDestroy {
 
+  private authService = inject(AuthService);
+  isLoggedIn = this.authService.isAuthenticated;
   images: string[] = [
     'imgs/eventosimgs/tardeo.jpg',
     'imgs/eventosimgs/almuerzo.jpg',
