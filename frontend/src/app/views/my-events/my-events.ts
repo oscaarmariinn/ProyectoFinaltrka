@@ -20,7 +20,6 @@ export class MyEventsComponent implements OnInit {
   ngOnInit(): void {
     this.eventService.getCreatedEvents().subscribe({
       next: (data) => {
-        console.log(data);
         this.events = data;
         this.loading = false;
         this.cdr.detectChanges();
@@ -35,5 +34,9 @@ export class MyEventsComponent implements OnInit {
 
   selectEvent(event: EventInterface): void {
     this.select.emit(event);
+  }
+
+  exportParticipants(event: EventInterface): void {
+    this.eventService.exportEventParticipants(event.id, 'csv');
   }
 }

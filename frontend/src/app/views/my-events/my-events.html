@@ -1,38 +1,58 @@
 <div class="container my-5">
 
-    @if(loading) {
+  @if(loading) {
     <p style="color: white;">Cargando...</p>
-    }
+  }
 
-    @if(!loading && events.length === 0) {
+  @if(!loading && events.length === 0) {
     <p style="color: white;">No has creado ningún evento todavía.</p>
-    }
+  }
 
-    <div class="row g-4">
-        @for(event of events; track $index) {
-        <div class="col-md-6">
-            <div class="card trka-card h-100" style="background: rgba(26, 26, 64, 0.8);">
-                <div class="card-body d-flex flex-column" style="color: var(--blanco-suave);">
-                    <h5 class="card-title">{{ event.title }}</h5>
-                    @if(event.isPublic) {
-                    <h6 class="card-text">Público</h6>
-                    } @else {
-                    <h6 class="card-text">Privado</h6>
-                    }
-                    <p class="card-text">{{ event.description }}</p>
-                    <p class="card-text">{{ event.location }}</p>
-                    <p class="card-text">{{ event.event_date }}</p>
-                    <button class="btn trka-btn mt-auto" data-bs-toggle="modal" data-bs-target="#eventModal"
-                        (click)="selectEvent(event)">
-                        Ver más
-                    </button>
-                    <button [routerLink]="['/events/edit', event.id]" routerLinkActive="active"
-                        class="btn trka-btn mt-2">
-                        Editar
-                    </button>
-                </div>
-            </div>
+  <div class="row g-4">
+    @for(event of events; track $index) {
+      <div class="col-md-6">
+        <div class="card trka-card h-100" style="background: rgba(26, 26, 64, 0.8);">
+          <div class="card-body d-flex flex-column" style="color: var(--blanco-suave);">
+            <h5 class="card-title">{{ event.title }}</h5>
+            @if(event.isPublic) {
+              <h6 class="card-text">Público</h6>
+            } @else {
+              <h6 class="card-text">Privado</h6>
+            }
+            <p class="card-text">{{ event.description }}</p>
+            <p class="card-text">{{ event.location }}</p>
+            <p class="card-text">{{ event.event_date }}</p>
+            <p class="card-text">
+              Inscritos: {{ event.participants?.length ?? 0 }}
+              @if(event.max_participants) {
+                / {{ event.max_participants }}
+              }
+            </p>
+            <button
+              class="btn trka-btn mt-auto"
+              data-bs-toggle="modal"
+              data-bs-target="#eventModal"
+              (click)="selectEvent(event)"
+            >
+              Ver más
+            </button>
+            <button
+              [routerLink]="['/events/edit', event.id]"
+              routerLinkActive="active"
+              class="btn trka-btn mt-2"
+            >
+              Editar
+            </button>
+            <button
+              class="btn btn-outline-secondary mt-2"
+              (click)="exportParticipants(event)"
+            >
+              ⬇ Exportar asistentes CSV
+            </button>
+          </div>
         </div>
-        }
-    </div>
+      </div>
+    }
+  </div>
+
 </div>

@@ -1,29 +1,128 @@
-<div class="container my-5">
-  <div class="row g-4">
+<div class="container my-4">
 
-    @for(event of events ; track $index){
-    <div class="col-md-6">
-      <div class="card trka-card h-100" style="background: rgba(26, 26, 64, 0.8); border: 60px white !important;">
-        <img src="../../../../imgs/eventosimgs/{{event.categories[0].img}}.jpg" class="card-img-top" alt=" La imagen de la categoría preterminada es {{event.categories[0].name}}"
-          style="height: 25em; ">
-        <div class="card-body d-flex flex-column" style="color: var(--blanco-suave); ">
-          <h5 class="card-title">{{event.title}}</h5>
-          <h6 class="card-text">{{event.location}}</h6>
-          <p class="card-text">
-            {{event.description}}
-          </p>
-          <p class="card-text">
-            {{event.event_date}}
-          </p>
-          <button class="btn trka-btn mt-auto" data-bs-toggle="modal" data-bs-target="#eventModal"
-            (click)="selectEvent(event)">
-            Ver más
-          </button>
+  <div class="d-flex align-items-center justify-content-between mb-3">
+    <button type="button" class="btn trka-btn d-flex align-items-center gap-2" (click)="toggleFilters()">
+      <i class="bi bi-funnel"></i>
+      Filtros
+      <i class="bi" [class.bi-chevron-down]="!filtersOpen" [class.bi-chevron-up]="filtersOpen"></i>
+    </button>
+  </div>
+
+  @if (filtersOpen) {
+    <form [formGroup]="filterForm" class="card p-4 mb-4"
+          style="background: rgba(26, 26, 64, 0.85); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px;">
+
+      <div class="row g-3">
+
+        <div class="col-md-6">
+          <label class="form-label" style="color: var(--blanco-suave);">Nombre</label>
+          <input
+            type="text"
+            class="form-control trka-input"
+            placeholder="Buscar por nombre..."
+            formControlName="title"
+          />
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label" style="color: var(--blanco-suave);">Descripción</label>
+          <input
+            type="text"
+            class="form-control trka-input"
+            placeholder="Buscar en descripción..."
+            formControlName="description"
+          />
+        </div>
+
+        <div class="col-md-3">
+          <label class="form-label" style="color: var(--blanco-suave);">Fecha desde</label>
+          <input
+            type="date"
+            class="form-control trka-input"
+            formControlName="date_from"
+          />
+        </div>
+
+        <div class="col-md-3">
+          <label class="form-label" style="color: var(--blanco-suave);">Fecha hasta</label>
+          <input
+            type="date"
+            class="form-control trka-input"
+            formControlName="date_to"
+          />
+        </div>
+
+        <div class="col-md-3">
+          <label class="form-label" style="color: var(--blanco-suave);">Categoría</label>
+          <select class="form-select trka-input" formControlName="category">
+            <option value="">Todas</option>
+            @for (cat of categories; track cat.id) {
+              <option [value]="cat.id">{{ cat.name }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="col-md-3">
+          <label class="form-label" style="color: var(--blanco-suave);">Capacidad máxima</label>
+          <input
+            type="number"
+            class="form-control trka-input"
+            placeholder="Ej: 100"
+            min="1"
+            formControlName="max_participants"
+          />
+        </div>
+
+      </div>
+
+      <div class="d-flex flex-wrap gap-2 mt-4">
+        <button type="button" class="btn trka-btn" (click)="applyFilters()">
+          Aplicar filtros
+        </button>
+        <button type="button" class="btn btn-outline-secondary" (click)="resetFilters()">
+          Limpiar
+        </button>
+      </div>
+
+    </form>
+  }
+
+  @if (loading) {
+    <p style="color: var(--blanco-suave);">Cargando eventos...</p>
+  }
+
+  @if (!loading && events.length === 0) {
+    <p style="color: var(--blanco-suave);">No se encontraron eventos con los filtros aplicados.</p>
+  }
+
+  <div class="row g-4">
+    @for (event of events; track $index) {
+      <div class="col-md-6">
+        <div class="card trka-card h-100"
+             style="background: rgba(26, 26, 64, 0.8); border: 1px solid rgba(255,255,255,0.08);">
+          <img
+            src="../../../../imgs/eventosimgs/{{ event.categories[0].img }}.jpg"
+            class="card-img-top"
+            alt="Categoría {{ event.categories[0].name }}"
+            style="height: 25em; object-fit: cover;"
+          />
+          <div class="card-body d-flex flex-column" style="color: var(--blanco-suave);">
+            <h5 class="card-title">{{ event.title }}</h5>
+            <h6 class="card-text">{{ event.location }}</h6>
+            <p class="card-text">{{ event.description }}</p>
+            <p class="card-text">{{ event.event_date }}</p>
+            <button
+              class="btn trka-btn mt-auto"
+              data-bs-toggle="modal"
+              data-bs-target="#eventModal"
+              (click)="selectEvent(event)"
+            >
+              Ver más
+            </button>
+          </div>
         </div>
       </div>
-    </div>
     }
-
-
   </div>
+
 </div>

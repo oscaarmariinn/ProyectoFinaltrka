@@ -13,7 +13,8 @@ nelmio_cors:
         skip_same_as_origin: true
     paths:
         '^/api/':
-            allow_origin: ['*']
+            allow_origin: ['http://localhost:4200']
             allow_headers: ['Content-Type', 'Authorization', 'X-Custom-Auth']
             allow_methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS']
+            allow_credentials: true
             max_age: 3600
